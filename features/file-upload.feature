@@ -52,3 +52,4 @@ And o usuário deverá ser promptado com um input para a legenda
 When o usuário digitar a legenda "Teste"
 And o usuário apertar o botão Publicar
 Then a imagem deve ser enviada ao seu histórico de postagens
+And a legenda "Teste" deve estar associada a esta publicação.
