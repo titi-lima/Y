@@ -1,0 +1,1 @@
+A user should be able to upload videos and pictures with subtitles to the app.
