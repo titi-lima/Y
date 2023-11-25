@@ -31,3 +31,12 @@ When o usuário Breno Miranda selecionar o botão referente a arquivos
 Then o usuário selecionará um arquivo .mp3 do seu computador
 When o usuário selecionar e confirmar o arquivo
 Then uma mensagem de erro deve aparecer.
+
+Cenário: Publicar um arquivo sem conexão com a internet
+Given o usuário Breno Miranda está na página Home
+And o usuário Breno Miranda está sem internet.
+And o usuário Breno Miranda apertou no botão fazer publicação
+When o usuário Breno Miranda selecionar o botão referente a arquivos
+Then o usuário selecionará um arquivo do seu computador
+When o usuário selecionar e confirmar o arquivo
+Then uma mensagem de erro deve aparecer após 10 segundos.
