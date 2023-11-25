@@ -40,3 +40,4 @@ When o usuário Breno Miranda selecionar o botão referente a arquivos
 Then o usuário selecionará um arquivo do seu computador
 When o usuário selecionar e confirmar o arquivo
 Then uma mensagem de erro deve aparecer após 10 segundos.
+And o usuário deve ser redirecionado para a página Home
