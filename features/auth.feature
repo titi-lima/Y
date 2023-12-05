@@ -1,24 +1,24 @@
-SCENARIO: login de um usuário na plataforma
-	GIVEN estou na tela de login
-	WHEN preencho os campos email com “gpms@cin.ufpe.br”, senha com “123456”
-  AND tento fazer login
-	THEN sou redirecionado para a tela do feed
+Scenario: login de um usuário na plataforma
+	Given estou na tela de login
+	When preencho os campos email com 'gpms@cin.ufpe.br', senha com '123456'
+  And tento fazer login
+	Then sou redirecionado para a tela do feed
 
-SCENARIO: logout de um usuário na plataforma
-  GIVEN estou na tela do feed
-  WHEN tento fazer logout
-  THEN sou redirecionado para a tela de login
+Scenario: logout de um usuário na plataforma
+  Given estou na tela do feed
+  When tento fazer logout
+  Then sou redirecionado para a tela de login
 
-SCENARIO: login de um usuário na plataforma sem senha
-  GIVEN estou na tela de login
-  WHEN preencho os campos email com “gpms@cin.ufpe.br”, senha com ""
-  AND tento fazer login
-  THEN vejo uma mensagem de erro
-  AND continuo na tela de login
+Scenario: login de um usuário na plataforma sem senha
+  Given estou na tela de login
+  When preencho os campos email com 'gpms@cin.ufpe.br', senha com ''
+  And tento fazer login
+  Then vejo uma mensagem de erro
+  And continuo na tela de login
 
-SCENARIO: login de um usuário na plataforma sem email
-  GIVEN estou na tela de login
-  WHEN preencho os campos email com "", senha com “123456”
-  AND tento fazer login
-  THEN vejo uma mensagem de erro
-  AND continuo na tela de login
+Scenario: login de um usuário na plataforma sem email
+  Given estou na tela de login
+  When preencho os campos email com '', senha com '123456'
+  And tento fazer login
+  Then vejo uma mensagem de erro
+  And continuo na tela de login
