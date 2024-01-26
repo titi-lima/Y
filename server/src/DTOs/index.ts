@@ -1,9 +1,11 @@
-export { z } from 'zod';
+import { z } from 'zod';
 
 export const User = z.object({
-    nickName: z.string().nonempty(),
-    name: z.string().nonempty(),
-    password: z.string().nonempty(),
-    description: z.string().optional(),
-    dateBird: z.date().nonempty()
+  nickName: z.string().trim().min(1),
+  name: z.string().min(1),
+  password: z.string().min(1),
+  description: z.string(),
+  dateBirth: z.date(),
 });
+
+// DATA TRANSFER OBJECT

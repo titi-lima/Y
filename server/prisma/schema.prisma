@@ -8,12 +8,12 @@ generator client {
 }
 
 model User {
-  id String @id @default(cuid())
-  nickName String @unique
-  name String
-  password String
+  id          String   @id @default(cuid())
+  nickName    String   @unique
+  name        String
+  password    String
   description String
-  dateBirth DateTime
-  follows User[] @relation("follow")
-  followsBy User[] @relation("follow")
+  dateBirth   DateTime
+  follows     User[]   @relation("follow")
+  followsBy   User[]   @relation("follow")
 }
