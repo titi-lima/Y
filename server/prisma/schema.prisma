@@ -16,4 +16,26 @@ model User {
   dateBirth   DateTime
   follows     User[]   @relation("follow")
   followsBy   User[]   @relation("follow")
+  posts       Post[]
+}
+
+model Post{
+  id          String   @id @default(cuid())
+  author      User     @relation(fields: [authorId], references: [id])
+  authorId    String 
+  date        DateTime
+  text        String
+  midia_link  String?
+  likes       Int      @default(0)
+  comments    Comment[]
+
+}
+
+model Comment{
+  id          String   @id @default(cuid())
+  post        Post     @relation(fields: [postId], references: [id])
+  postId      String
+  author      String
+  date        DateTime
+  text        String
 }
