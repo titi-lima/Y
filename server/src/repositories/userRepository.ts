@@ -22,4 +22,17 @@ export class UserRepository {
     });
     return user?.followsBy;
   }
+
+  async findPostsByUserId(userId: string) {
+    const user = await prisma.user.findUnique({
+      where: { id: userId },
+      select: {
+        posts: true,
+      },
+    });
+    return user?.posts;
+  }
+
+  // async findUserPostsByDate(userId: string, date: Date)
+  
 }
