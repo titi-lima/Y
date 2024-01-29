@@ -30,7 +30,7 @@ class AuthController {
       }
 
       const accessToken = jwt.sign(
-        { id: user.id },
+        { nickName: user.nickName },
         process.env.JWT_SECRET as string,
         {
           expiresIn: '1d',
@@ -57,7 +57,7 @@ class AuthController {
   async logout(req: Request, res: Response, next: NextFunction) {
     try {
       const accessToken = jwt.sign(
-        { id: null },
+        { nickName: null },
         process.env.JWT_SECRET as string,
         {
           expiresIn: '10',
