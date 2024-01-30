@@ -8,4 +8,17 @@ export const User = z.object({
   dateBirth: z.date(),
 });
 
+export const Post = z.object({
+  author: z.string().trim().min(1),
+  date: z.date(),
+  text: z.string().min(1),
+});
+
+export const Comment = z.object({
+  postId: z.string().min(1),
+  author: z.string().trim().min(1),
+  date: z.date(),
+  text: z.string().min(1),
+});
+
 // DATA TRANSFER OBJECT

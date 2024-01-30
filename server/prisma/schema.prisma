@@ -17,6 +17,8 @@ model User {
   follows     User[]   @relation("follow")
   followsBy   User[]   @relation("follow")
   posts       Post[]
+  likedPosts  Post[]   @relation("liked")
+  comments    Comment[]
 }
 
 model Post{
@@ -25,9 +27,10 @@ model Post{
   authorId    String 
   date        DateTime
   text        String
-  midia_link  String?
+  midiaLink   String?
   likes       Int      @default(0)
   comments    Comment[]
+  usrsWhoLkd  User[]   @relation("liked")
 
 }
 
@@ -35,7 +38,8 @@ model Comment{
   id          String   @id @default(cuid())
   post        Post     @relation(fields: [postId], references: [id])
   postId      String
-  author      String
+  author      User     @relation(fields: [authorId], references: [id])
+  authorId    String
   date        DateTime
   text        String
 }
