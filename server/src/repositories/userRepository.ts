@@ -12,14 +12,23 @@ export class UserRepository {
     return user;
   }
 
-  async findFollowersByUserId(userId: string) {
+  async findFollowersByPorUserId(userId: string) {
     const user = await prisma.user.findUnique({
       where: { id: userId },
       select: {
-        followsBy: true,
-        nickName: true,
+        followersBy: true,
       },
     });
-    return user?.followsBy;
+    return user?.followersBy;
+  }
+
+  async findFollowersPorUserId(userId: string) {
+    const user = await prisma.user.findUnique({
+      where: { id: userId },
+      select: {
+        followers: true,
+      },
+    });
+    return user?.followers;
   }
 }

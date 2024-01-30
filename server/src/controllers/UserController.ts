@@ -34,12 +34,38 @@ class UserController {
     }
   }
 
+  async getFollowersBy(req: Request, res: Response, next: NextFunction) {
+    try {
+      const { id } = req.params;
+      const userRepository = new UserRepository();
+
+      const followers = await userRepository.findFollowersByPorUserId(id);
+
+      if (!followers) {
+        return next({
+          status: 404,
+          message: 'Followers not found',
+        });
+      }
+
+      res.locals = {
+        status: 200,
+        message: 'Followers found',
+        data: followers,
+      };
+
+      return next();
+    } catch (error) {
+      return next(error);
+    }
+  }
+  
   async getFollowers(req: Request, res: Response, next: NextFunction) {
     try {
       const { id } = req.params;
       const userRepository = new UserRepository();
 
-      const followers = await userRepository.findFollowersByUserId(id);
+      const followers = await userRepository.findFollowersPorUserId(id);
 
       if (!followers) {
         return next({
