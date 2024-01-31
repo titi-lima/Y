@@ -5,7 +5,7 @@ Feature: alterar perfil
 
 Scenario: Condicoes Iniciais
   Given o usuário "Breno_Miranda" realizou cadastrou no sistema
-  Then o sistema armazena {usuário: "Breno_Miranda" ,foto_de_perfil: "Unknow.png", ,bio: "",nome_de_perfil: "Breno Miranda" }
+  Then o sistema armazena {usuário: "Breno_Miranda" ,foto_de_perfil: "Unknow.png",bio: "",nome_de_perfil: "Breno Miranda" }
 
 Scenario: Modificar foto de perfil
   Given o usuário está logado como "Breno_Miranda"
