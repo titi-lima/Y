@@ -1,4 +1,4 @@
-Feature: espansao da foto
+Feature: expansao da foto
     As a usuário
     I want to ver minha foto de perfil expandida quando selecionada
     So that meus amigos possam distinguir meu rosto
