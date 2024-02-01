@@ -12,7 +12,24 @@ export class UserRepository {
     return user;
   }
 
-  async findFollowersByPorUserId(userId: string) {
+  async findById(id: string): Promise<User | null> {
+    const user = await prisma.user.findUnique({ 
+      where: { id: id }
+    });
+    return user;
+  }
+
+  async findFollowers(userId: string) {
+    const user = await prisma.user.findUnique({
+      where: { id: userId },
+      select: {
+        followers: true,
+      },
+    });
+    return user?.followers;
+  }
+
+  async findFollowersBy(userId: string) {
     const user = await prisma.user.findUnique({
       where: { id: userId },
       select: {
@@ -22,13 +39,56 @@ export class UserRepository {
     return user?.followersBy;
   }
 
-  async findFollowersPorUserId(userId: string) {
-    const user = await prisma.user.findUnique({
+  async findFollowerExistById(userId: string, newUserId: string): Promise<User | null> {
+    const followers = await this.findFollowers(userId);
+    if (followers) {
+      const newUser = followers.find((seguidor: { id: string; }) => seguidor.id === newUserId);
+      return newUser || null;
+    } else {
+      return null; // Usuário não encontrado
+    }
+  }
+  
+  async findFollowerByExistById(userId: string, newUserId: string): Promise<User | null> {
+    const followersBy = await this.findFollowersBy(userId)
+    if (followersBy) {
+      const newUser = followersBy.find((seguidor: { id: string; }) => seguidor.id == newUserId);
+      return newUser || null
+    }
+    else {
+      return null
+    }
+  }
+
+  async insertFollower(userId: string, newUserId: string) {
+    await prisma.user.update({
       where: { id: userId },
-      select: {
-        followers: true,
+      data: {
+        followers: {
+          connect: { id: newUserId },
+        },
       },
     });
-    return user?.followers;
   }
+  
+  async insertFollowerBy(userId: string, newUserId: string) {
+    await prisma.user.update({
+      where: { id: userId },
+      data: {
+        followersBy: {
+          connect: { id: newUserId },
+        },
+      },
+    });
+  }
+  
+  // async findFollowersByPorFilter(followersBy: string[], str: string): Promise<User | null> {    
+
+  //   return null
+  // }
+
+  // async findFollowersPorFilter(followers: string[], str: string): Promise<User | null> {    
+
+  //   return null
+  // }
 }

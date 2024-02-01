@@ -5,7 +5,7 @@ export const User = z.object({
   name: z.string().min(1),
   password: z.string().min(1),
   description: z.string(),
-  dateBirth: z.date(),
+  dateBirth: z.coerce.date(),
 });
 
 // DATA TRANSFER OBJECT
