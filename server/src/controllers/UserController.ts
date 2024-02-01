@@ -56,13 +56,13 @@ class UserController {
         });
       }
 
-      // const followerExist = userRepository.findFollowerExistById(userId, followerId)
-      // if(followerExist != null) {
-      //   return next({
-      //     status: 400,
-      //     message: 'This newFollowerId is already registred in userId followers',
-      //   });
-      // }
+      const followerExist = userRepository.findFollowerExistById(userId, followerId)
+      if(followerExist != null) {
+        return next({
+          status: 400,
+          message: 'This newFollowerId is already registred in userId followers',
+        });
+      }
       
       userRepository.insertFollower(userId, followerId)
 
