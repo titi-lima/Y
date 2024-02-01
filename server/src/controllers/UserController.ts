@@ -40,6 +40,13 @@ class UserController {
       const { followerId } =  req.body
       const userRepository = new UserRepository()
 
+      if (userId == followerId) {
+        return next({
+          status: 400,
+          message: 'This userId is the same as folowerId',
+        });
+      }
+      
       const user = await userRepository.findById(userId)
       if(user == null) {
         return next({
@@ -84,6 +91,13 @@ class UserController {
       const { userId } = req.params
       const { followerById } = req.body
       const userRepository = new UserRepository
+
+      if (userId == followerById) {
+        return next({
+          status: 400,
+          message: 'This userId is the same as folowerId',
+        });
+      }
 
       const user = userRepository.findById(userId)
       if(!user) {
