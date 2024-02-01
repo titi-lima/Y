@@ -41,7 +41,7 @@ class UserController {
       const { followerId } =  req.body
       const userRepository = new UserRepository
       const user = userRepository.findById(userId)
-      if(!user) {
+      if(user == null) {
         return next({
           status: 400,
           message: 'This userId is not registred',
@@ -49,20 +49,20 @@ class UserController {
       }
       
       const newUser = userRepository.findById(followerId)
-      if(!newUser) {
+      if(newUser == null) {
         return next({
           status: 400,
           message: 'This newFollowerId is not registred',
         });
       }
 
-      const followerExist = userRepository.findFollowerExistById(userId, followerId)
-      if(followerExist != null) {
-        return next({
-          status: 400,
-          message: 'This newFollowerId is already registred in userId followers',
-        });
-      }
+      // const followerExist = userRepository.findFollowerExistById(userId, followerId)
+      // if(followerExist != null) {
+      //   return next({
+      //     status: 400,
+      //     message: 'This newFollowerId is already registred in userId followers',
+      //   });
+      // }
       
       userRepository.insertFollower(userId, followerId)
 
