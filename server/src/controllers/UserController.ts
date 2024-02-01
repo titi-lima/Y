@@ -34,12 +34,12 @@ class UserController {
     }
   }
 
-
   async insertFollower(req: Request, res: Response, next: NextFunction) {
     try {
       const { userId } = req.params
       const { followerId } =  req.body
       const userRepository = new UserRepository
+      
       const user = userRepository.findById(userId)
       if(user == null) {
         return next({
