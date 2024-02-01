@@ -38,9 +38,9 @@ class UserController {
     try {
       const { userId } = req.params
       const { followerId } =  req.body
-      const userRepository = new UserRepository
-      
-      const user = userRepository.findById(userId)
+      const userRepository = new UserRepository()
+
+      const user = await userRepository.findById(userId)
       if(user == null) {
         return next({
           status: 400,
@@ -48,7 +48,7 @@ class UserController {
         });
       }
       
-      const newUser = userRepository.findById(followerId)
+      const newUser = await userRepository.findById(followerId)
       if(newUser == null) {
         return next({
           status: 400,
@@ -56,7 +56,8 @@ class UserController {
         });
       }
 
-      const followerExist = userRepository.findFollowerExistById(userId, followerId)
+      const followerExist = await userRepository.findFollowerExistById(userId, followerId)
+      console.log(followerExist)
       if(followerExist != null) {
         return next({
           status: 400,
@@ -64,12 +65,14 @@ class UserController {
         });
       }
       
-      userRepository.insertFollower(userId, followerId)
+      await userRepository.insertFollower(userId, followerId)
 
       res.locals = {
         status: 201,
         message: 'User insert',
       }
+
+      return next()
 
     } catch (error) {
       return next(error)
@@ -117,58 +120,72 @@ class UserController {
       return next(error)
     }
   }
+  
+  async getFollowers(req: Request, res: Response, next: NextFunction) {
+    try {
+      const { id } = req.params;
+      const userRepository = new UserRepository();
 
-  // async getFollowersBy(req: Request, res: Response, next: NextFunction) {
-  //   try {
-  //     const { id } = req.params;
-  //     const userRepository = new UserRepository();
+      const followers = await userRepository.findFollowers(id);
 
-  //     const followers = await userRepository.findFollowersBy(id);
+      if (followers == undefined){
+        return next({
+          status: 404,
+          message: 'This id is not registred',
+        });
+      }
 
-  //     if (!followers) {
-  //       return next({
-  //         status: 404,
-  //         message: 'Followers not found',
-  //       });
-  //     }
+      if (followers.length == 0) {
+        return next({
+          status: 404,
+          message: 'Followers not found',
+        });
+      }
 
-  //     res.locals = {
-  //       status: 200,
-  //       message: 'Followers found',
-  //       data: followers,
-  //     };
+      res.locals = {
+        status: 200,
+        message: 'Followers found',
+        data: followers,
+      };
 
-  //     return next();
-  //   } catch (error) {
-  //     return next(error);
-  //   }
-  // }
+      return next();
+    } catch (error) {
+      return next(error);
+    }
+  }
 
-  // async getFollowers(req: Request, res: Response, next: NextFunction) {
-  //   try {
-  //     const { id } = req.params;
-  //     const userRepository = new UserRepository();
+  async getFollowersBy(req: Request, res: Response, next: NextFunction) {
+    try {
+      const { id } = req.params;
+      const userRepository = new UserRepository();
 
-  //     const followers = await userRepository.findFollowers(id);
+      const followersBy = await userRepository.findFollowersBy(id);
 
-  //     if (!followers) {
-  //       return next({
-  //         status: 404,
-  //         message: 'Followers not found',
-  //       });
-  //     }
+      if (followersBy == undefined){
+        return next({
+          status: 404,
+          message: 'This id is not registred',
+        });
+      }
 
-  //     res.locals = {
-  //       status: 200,
-  //       message: 'Followers found',
-  //       data: followers,
-  //     };
+      if (followersBy.length == 0) {
+        return next({
+          status: 404,
+          message: 'Followers not found',
+        });
+      }
 
-  //     return next();
-  //   } catch (error) {
-  //     return next(error);
-  //   }
-  // }
+      res.locals = {
+        status: 200,
+        message: 'Followers found',
+        data: followersBy,
+      }
+
+      return next();
+    } catch (error) {
+      return next(error);
+    }
+  }
 
   // async getFollowersPorFilter(req:Request, res: Response, next: NextFunction) {
   //   try {
@@ -210,16 +227,7 @@ class UserController {
   //     const { id, str } = req.params;
   //     const userRepository = new UserRepository();
 
-  //     const followersBy = await userRepository.findFollowersBy(id);
-
-  //     if (!followersBy) {
-  //       return next({
-  //         status: 404,
-  //         message: 'Followers not found',
-  //       });
-  //     }
-
-  //     const followersByWithFilter = await userRepository.findFollowersByPorFilter(followersBy, str)
+  //     const followersByWithFilter = await userRepository.findFollowersByPorFilter(id, str)
 
   //     if (!followersByWithFilter) {
   //       return next({

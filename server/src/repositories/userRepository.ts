@@ -82,10 +82,22 @@ export class UserRepository {
     });
   }
   
-  // async findFollowersByPorFilter(followersBy: string[], str: string): Promise<User | null> {    
+  async findFollowersByPorFilter(userId: string, str: string) {    
+    const user = await prisma.user.findMany({
+      where: { 
+        nickName: {
+          contains: str
+        },
+        followers: {
+          some: {
+            id: userId
+          }
+        }
 
-  //   return null
-  // }
+      }
+    });
+    return user;
+  }
 
   // async findFollowersPorFilter(followers: string[], str: string): Promise<User | null> {    
 
