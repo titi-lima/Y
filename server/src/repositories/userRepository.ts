@@ -81,26 +81,90 @@ export class UserRepository {
       },
     });
   }
-  
-  async findFollowersByPorFilter(userId: string, str: string) {    
-    const user = await prisma.user.findMany({
-      where: { 
-        nickName: {
-          contains: str
-        },
-        followers: {
-          some: {
-            id: userId
-          }
-        }
 
-      }
-    });
-    return user;
+  async removeFollower(userId: string, removeUserId: string) {
+    try {
+      await prisma.user.update({
+        where: { id: userId },
+        data: {
+          followers: {
+            disconnect: { id: removeUserId },
+          },
+        },
+      });
+      console.log(`Usuário ${userId} deixou de seguir ${removeUserId}.`);
+    } catch (error) {
+      console.error("Erro ao remover seguidor: ", error);
+      throw error;
+    }
   }
 
-  // async findFollowersPorFilter(followers: string[], str: string): Promise<User | null> {    
+  async removeFollowerBy(userId: string, removeUserId: string) {
+    try {
+      await prisma.user.update({
+        where: { id: userId },
+        data: {
+          followersBy: {
+            disconnect: { id: removeUserId },
+          },
+        },
+      });
+      console.log(`Usuário ${removeUserId} deixou de seguir ${userId}.`);
+    } catch (error) {
+      console.error("Erro ao remover seguidor: ", error);
+      throw error;
+    }
+  }
+  
+  async findFollowersByPorFilter(userId: string, str: string) {    
+    try {
+      const users = await prisma.user.findUnique({
+        where: { 
+          id: userId
+        },
+        select: {
+          followersBy: {
+            where: {
+              nickName: {
+                contains: str
+              }
+            },
+            select: {
+              nickName: true
+            }
+          }
+        },
+      });
+      return users?.followersBy;
+    } catch (error) {
+      console.error("Erro na consulta: ", error);
+      throw error;
+    }
+  }
 
-  //   return null
-  // }
+  async findFollowersPorFilter(userId: string, str: string) {   
+    try {
+      const users = await prisma.user.findUnique({
+        where: { 
+          id: userId
+        },
+        select: {
+          followers: {
+            where: {
+              nickName: {
+                contains: str
+              }
+            },
+            select: {
+              nickName: true
+            }
+          }
+        },
+      });
+      return users?.followers;
+    } catch (error) {
+      console.error("Erro na consulta: ", error);
+      throw error;
+    }
+  }
 }

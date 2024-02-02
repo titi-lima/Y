@@ -64,7 +64,6 @@ class UserController {
       }
 
       const followerExist = await userRepository.findFollowerExistById(userId, followerId)
-      console.log(followerExist)
       if(followerExist != null) {
         return next({
           status: 400,
@@ -76,7 +75,7 @@ class UserController {
 
       res.locals = {
         status: 201,
-        message: 'User insert',
+        message: 'User insert follower',
       }
 
       return next()
@@ -127,8 +126,110 @@ class UserController {
 
       res.locals = {
         status: 201,
-        message: 'User insert',
+        message: 'User insert followerBy',
       }
+
+    } catch (error) {
+      return next(error)
+    }
+  }
+
+  async removeFollower(req: Request, res: Response, next: NextFunction) {
+    try {
+      const { userId } = req.params
+      const { removeFollowerId } =  req.body
+      const userRepository = new UserRepository()
+
+      if (userId == removeFollowerId) {
+        return next({
+          status: 400,
+          message: 'This userId is the same as removeFolowerId',
+        });
+      }
+      
+      const user = await userRepository.findById(userId)
+      if(user == null) {
+        return next({
+          status: 400,
+          message: 'This userId is not registred',
+        });
+      }
+      
+      const newUser = await userRepository.findById(removeFollowerId)
+      if(newUser == null) {
+        return next({
+          status: 400,
+          message: 'This newFollowerId is not registred',
+        });
+      }
+
+      const followerExist = await userRepository.findFollowerExistById(userId, removeFollowerId)
+      if(followerExist == null) {
+        return next({
+          status: 400,
+          message: 'This removeFollowerId is not registred in userId followers',
+        });
+      }
+      
+      await userRepository.removeFollower(userId, removeFollowerId)
+
+      res.locals = {
+        status: 201,
+        message: 'remove follower',
+      }
+
+      return next()
+
+    } catch (error) {
+      return next(error)
+    }
+  }
+
+  async removeFollowerBy(req: Request, res: Response, next: NextFunction) {
+    try {
+      const { userId } = req.params
+      const { removeFollowerId } =  req.body
+      const userRepository = new UserRepository()
+
+      if (userId == removeFollowerId) {
+        return next({
+          status: 400,
+          message: 'This userId is the same as removeFolowerId',
+        });
+      }
+      
+      const user = await userRepository.findById(userId)
+      if(user == null) {
+        return next({
+          status: 400,
+          message: 'This userId is not registred',
+        });
+      }
+      
+      const newUser = await userRepository.findById(removeFollowerId)
+      if(newUser == null) {
+        return next({
+          status: 400,
+          message: 'This newFollowerId is not registred',
+        });
+      }
+
+      const followerExist = await userRepository.findFollowerByExistById(userId, removeFollowerId)
+      if(followerExist == null) {
+        return next({
+          status: 400,
+          message: 'This removeFollowerId is not registred in userId followersBy',
+        });
+      }
+      
+      await userRepository.removeFollowerBy(userId, removeFollowerId)
+
+      res.locals = {
+        status: 201,
+        message: 'remove followerBy',
+      }
+
+      return next()
 
     } catch (error) {
       return next(error)
@@ -149,12 +250,12 @@ class UserController {
         });
       }
 
-      if (followers.length == 0) {
-        return next({
-          status: 404,
-          message: 'Followers not found',
-        });
-      }
+      // if (followers.length == 0) {
+      //   return next({
+      //     status: 404,
+      //     message: 'Followers not found',
+      //   });
+      // }
 
       res.locals = {
         status: 200,
@@ -182,12 +283,13 @@ class UserController {
         });
       }
 
-      if (followersBy.length == 0) {
-        return next({
-          status: 404,
-          message: 'Followers not found',
-        });
-      }
+      // if (followersBy.length == 0) {
+      //   return next({
+      //     status: 404,
+      //     message: 'Followers not found',
+
+      //   });
+      // }
 
       res.locals = {
         status: 200,
@@ -201,66 +303,85 @@ class UserController {
     }
   }
 
-  // async getFollowersPorFilter(req:Request, res: Response, next: NextFunction) {
-  //   try {
-  //     const { id, str } = req.params;
-  //     const userRepository = new UserRepository();
+  async getFilterFollowers(req:Request, res: Response, next: NextFunction) {
+    try {
+      const { id, str } = req.params;
+      const userRepository = new UserRepository();
 
-  //     const followers = await userRepository.findFollowers(id);
+      const user = userRepository.findById(id)
+      if(!user) {
+        return next({
+          status: 400,
+          message: 'This userId is not registred',
+        });
+      }
 
-  //     if (!followers) {
-  //       return next({
-  //         status: 404,
-  //         message: 'Followers not found',
-  //       });
-  //     }
+      let followersWithFilter
+      if (str == "@") {
+        followersWithFilter = await userRepository.findFollowersPorFilter(id, "")
+      }
+      else {
+        followersWithFilter = await userRepository.findFollowersPorFilter(id, str)
+      }
 
-  //     const followersWithFilter = await userRepository.findFollowersPorFilter(followers, str)
+      // if (!followersWithFilter) {
+      //   return next({
+      //     status: 404,
+      //     message: "Followers with filter not found",
+      //   })
+      // }
 
-  //     if (!followersWithFilter) {
-  //       return next({
-  //         status: 404,
-  //         message: "Followers with filter not found",
-  //       })
-  //     }
+      res.locals = {
+        status: 200,
+        message: 'Followers found',
+        data: followersWithFilter,
+      };
 
-  //     res.locals = {
-  //       status: 200,
-  //       message: 'Followers found',
-  //       data: followersWithFilter,
-  //     };
+      return next();
+    } catch (error) {
+      return next(error);
+    }
+  }
 
-  //     return next();
-  //   } catch (error) {
-  //     return next(error);
-  //   }
-  // }
+  async getFilterFollowersBy(req:Request, res: Response, next: NextFunction) {
+    try {
+      const { id, str } = req.params;
+      const userRepository = new UserRepository();
+      
+      const user = userRepository.findById(id)
+      if(!user) {
+        return next({
+          status: 400,
+          message: 'This userId is not registred',
+        });
+      }
 
-  // async getFollowersByPorFilter(req:Request, res: Response, next: NextFunction) {
-  //   try {
-  //     const { id, str } = req.params;
-  //     const userRepository = new UserRepository();
+      let followersByWithFilter
+      if (str == "@") {
+        followersByWithFilter = await userRepository.findFollowersByPorFilter(id, "")
+      }
+      else {
+        followersByWithFilter = await userRepository.findFollowersByPorFilter(id, str)
+      }
 
-  //     const followersByWithFilter = await userRepository.findFollowersByPorFilter(id, str)
+      // if (!followersByWithFilter) {
+      //   return next({
+      //     status: 404,
+      //     message: "FollowersBy with filter not found",
+      //   })
+      // }
 
-  //     if (!followersByWithFilter) {
-  //       return next({
-  //         status: 404,
-  //         message: "Followers with filter not found",
-  //       })
-  //     }
+      res.locals = {
+        status: 200,
+        message: 'FollowersBy found',
+        data: followersByWithFilter,
+      };
 
-  //     res.locals = {
-  //       status: 200,
-  //       message: 'Followers found',
-  //       data: followersByWithFilter,
-  //     };
-
-  //     return next();
-  //   } catch (error) {
-  //     return next(error);
-  //   }
-  // }
+      return next();
+    } catch (error) {
+      return next(error);
+    }
+  }
 }
 
 export default new UserController();
