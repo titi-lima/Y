@@ -32,8 +32,6 @@ export class PostRepository{
       return post?.comments;
     }
 
-    //-------------------------------------------------------------------------------------
-    // Não estou seguro se as funções abaixo alteram corretamente a tabela da relação N-N
     async addLike(postId: string, userId: string) {
       await prisma.post.update({
         where: { id: postId },
@@ -49,12 +47,10 @@ export class PostRepository{
         where: { id: postId },
         data: { 
           likes: { decrement: 1 },
-          usrsWhoLkd: { delete: { id: userId } } 
+          usrsWhoLkd: { disconnect: { id: userId } } 
         }
       });
     }
-    //----------------------------------------------------------------------------------
-
 
     async findUsersWhoLikedByPostId(postId: string) {
       const post = await prisma.post.findUnique({

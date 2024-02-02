@@ -5,19 +5,19 @@ export const User = z.object({
   name: z.string().min(1),
   password: z.string().min(1),
   description: z.string(),
-  dateBirth: z.date(),
+  dateBirth: z.coerce.date(),
 });
 
 export const Post = z.object({
   author: z.string().trim().min(1),
-  date: z.date(),
+  date: z.coerce.date(),
   text: z.string().min(1),
 });
 
 export const Comment = z.object({
   postId: z.string().min(1),
   author: z.string().trim().min(1),
-  date: z.date(),
+  date: z.coerce.date(),
   text: z.string().min(1),
 });
 

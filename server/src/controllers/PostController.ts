@@ -86,18 +86,22 @@ class PostController {
       };
 
       const usrsWhoLkd = await postRepository.findUsersWhoLikedByPostId(id);
-      if(usrsWhoLkd && usrsWhoLkd.includes(checkUser)){
-        return next({
-          status: 403,
-          message: 'User has already liked the post',
-        });
+      if(usrsWhoLkd){
+        for(var usr of usrsWhoLkd){
+          if(usr.id === checkUser.id){
+            return next({
+              status: 403,
+              message: 'User has already liked the post',
+            });
+          }
+        }
       }
 
       await postRepository.addLike(id, checkUser.id);
 
       res.locals = {
         status: 200,
-        message: 'Like added'
+        message: 'Like added',
       };
 
       return next();
@@ -131,15 +135,22 @@ class PostController {
       };
 
       const usrsWhoLkd = await postRepository.findUsersWhoLikedByPostId(id);
-      if(!usrsWhoLkd || !(usrsWhoLkd.includes(checkUser))){
+      var found = false
+      if(usrsWhoLkd){
+        for(var usr of usrsWhoLkd){
+          if(usr.id === checkUser.id){
+            found = true
+          }
+        }
+      }
+      if(!found){
         return next({
           status: 403,
           message: 'User has not liked the post',
         });
       }
-
+      
       await postRepository.removeLike(id, checkUser.id);
-
       res.locals = {
         status: 200,
         message: 'Like removed'
