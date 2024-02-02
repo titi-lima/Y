@@ -23,12 +23,12 @@ class DatabaseConnection {
 
   async clear() {
     const tables = (await this.prisma.$queryRaw`
-      SELECT tablename FROM pg_catalog.pg_tables WHERE schemaname = 'public' AND tablename NOT LIKE '_prisma_%';
-    `) as { tablename: string }[];
+      SELECT name FROM sqlite_master WHERE type='table' AND name NOT LIKE '_prisma_%';
+    `) as { name: string }[];
 
     await Promise.all(
       tables.map(async (table) => {
-        await this.prisma.$executeRawUnsafe(`DELETE FROM "${table.tablename}"`);
+        await this.prisma.$executeRawUnsafe(`DELETE FROM "${table.name}"`);
       }),
     );
   }

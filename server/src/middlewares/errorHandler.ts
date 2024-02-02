@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 import { ZodError } from 'zod';
+import { JsonWebTokenError } from 'jsonwebtoken';
 import { HttpException } from './index';
 
 const errorHandler = (
@@ -16,6 +17,11 @@ const errorHandler = (
   if (error instanceof ZodError) {
     res.locals.status = 400;
     res.locals.message = error.issues[0].message;
+  }
+
+  if (error instanceof JsonWebTokenError) {
+    res.locals.status = 401;
+    res.locals.message = error.message;
   }
 
   return next();
