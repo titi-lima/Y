@@ -17,7 +17,7 @@ export class UserRepository {
       where: { id: userId },
       select: {
         followsBy: true,
-        nickName: true,
+        //nickName: true,
       },
     });
     return user?.followsBy;

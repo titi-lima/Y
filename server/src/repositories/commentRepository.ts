@@ -18,6 +18,11 @@ export class CommentRepository{
       return comment;
     }
 
+    async delete(commentId: string){
+      await prisma.comment.delete({
+        where: { id: commentId }
+      })
+    }
     
 
   }

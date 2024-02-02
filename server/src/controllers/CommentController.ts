@@ -47,6 +47,24 @@ class CommentController {
     }
   }
 
+  async delete(req: Request, res: Response, next: NextFunction) {
+    try {
+      const { id } = req.params;
+      const commentRepository = new CommentRepository();
+
+      await commentRepository.delete(id)
+
+      res.locals = {
+        status: 201,
+        message: 'Comment deleted',
+      };
+
+      return next();
+    } catch (error) {
+      return next(error);
+    }
+  }
+
 }
 
 export default new CommentController();

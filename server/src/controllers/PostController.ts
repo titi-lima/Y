@@ -42,7 +42,7 @@ class PostController {
 
       const comments = await postRepository.findCommentsByPostId(id);
 
-      if (!comments) {
+      if (!comments?.length) {
         return next({
           status: 204,
           message: 'Post has no comments',
@@ -187,6 +187,25 @@ class PostController {
       return next(error);
     }
   }  
+
+  async delete(req: Request, res: Response, next: NextFunction) {
+    try {
+      const { id } = req.params;
+      const postRepository = new PostRepository();
+
+      await postRepository.delete(id)
+
+      res.locals = {
+        status: 201,
+        message: 'Post deleted',
+      };
+
+      return next();
+    } catch (error) {
+      return next(error);
+    }
+  }
+
 
 }
 

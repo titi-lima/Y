@@ -67,7 +67,7 @@ class UserController {
 
       const posts = await userRepository.findPostsByUserId(id);
 
-      if (!posts) {
+      if (!posts?.length) {
         return next({
           status: 204,
           message: 'User has no posts',
@@ -94,19 +94,20 @@ class UserController {
 
       const posts = await userRepository.findPostsByUserId(id);
 
-      if (!posts) {
+      if (!posts?.length) {
         return next({
           status: 204,
           message: 'User has no posts',
         });
       }
 
-      const desired_posts = posts.filter(post => post.date === date)
+      const desired_posts = posts.filter(post => post.date.getTime() === date.getTime())
 
-      if (!desired_posts) {
+      if (!desired_posts.length) {
         return next({
           status: 204,
           message: 'No posts found on this date',
+          data: date
         });
       }
 

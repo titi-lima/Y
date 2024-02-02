@@ -60,7 +60,13 @@ export class PostRepository{
         },
       });
       return post?.usrsWhoLkd;
-    } 
+    }
+    
+    async delete(postId: string){
+      await prisma.post.delete({
+        where: { id: postId }
+      })
+    }
 
   }
   
