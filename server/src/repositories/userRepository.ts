@@ -70,17 +70,6 @@ export class UserRepository {
       },
     });
   }
-  
-  async insertFollowerBy(userId: string, newUserId: string) {
-    await prisma.user.update({
-      where: { id: userId },
-      data: {
-        followersBy: {
-          connect: { id: newUserId },
-        },
-      },
-    });
-  }
 
   async removeFollower(userId: string, removeUserId: string) {
     try {

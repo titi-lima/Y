@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import { UserRepository } from '../repositories';
 import { User } from '../DTOs';
+import { ReplOptions } from 'repl';
 
 class UserController {
   async create(req: Request, res: Response, next: NextFunction) {
@@ -34,6 +35,29 @@ class UserController {
     }
   }
 
+  async getIdByNickName(req: Request, res: Response, next: NextFunction) {
+    const { userNickName } = req.params
+    const userRepository = new UserRepository()
+
+    const user = await userRepository.findByNickName(userNickName);
+    if(user == null) {
+      return next({
+        status: 400,
+        message: 'This nickName is not registred',
+      });
+    }
+
+    console.log(user?.id)
+
+    res.locals = {
+      status: 201,
+      message: 'User: ',
+      data: user?.id,
+    };
+
+    return next();
+  }
+
   async insertFollower(req: Request, res: Response, next: NextFunction) {
     try {
       const { userId } = req.params
@@ -62,7 +86,7 @@ class UserController {
           message: 'This newFollowerId is not registred',
         });
       }
-
+      
       const followerExist = await userRepository.findFollowerExistById(userId, followerId)
       if(followerExist != null) {
         return next({
@@ -79,55 +103,6 @@ class UserController {
       }
 
       return next()
-
-    } catch (error) {
-      return next(error)
-    }
-  }
-
-  async insertFollowerBy(req: Request, res: Response, next: NextFunction) {
-    try {
-      const { userId } = req.params
-      const { followerById } = req.body
-      const userRepository = new UserRepository
-
-      if (userId == followerById) {
-        return next({
-          status: 400,
-          message: 'This userId is the same as folowerId',
-        });
-      }
-
-      const user = userRepository.findById(userId)
-      if(!user) {
-        return next({
-          status: 400,
-          message: 'This userId is not registred',
-        });
-      }
-      
-      const newUser = userRepository.findById(followerById)
-      if(!newUser) {
-        return next({
-          status: 400,
-          message: 'This newUserId is not registred',
-        });
-      }
-
-      const followerByExist = userRepository.findFollowerByExistById(userId, followerById)
-      if(followerByExist != null) {
-        return next({
-          status: 400,
-          message: 'This followerById is already registred in userId followers',
-        });
-      }
-      
-      userRepository.insertFollowerBy(userId, followerById)
-
-      res.locals = {
-        status: 201,
-        message: 'User insert followerBy',
-      }
 
     } catch (error) {
       return next(error)
