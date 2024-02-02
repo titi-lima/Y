@@ -23,7 +23,13 @@ export class UserRepository {
     const user = await prisma.user.findUnique({
       where: { id: userId },
       select: {
-        followers: true,
+        followers: {
+          select: {
+            id: true,
+            nickName: true,
+            name: true,
+          },
+        },
       },
     });
     return user?.followers;
@@ -33,23 +39,29 @@ export class UserRepository {
     const user = await prisma.user.findUnique({
       where: { id: userId },
       select: {
-        followersBy: true,
+        followersBy: {
+          select: {
+            id: true,
+            nickName: true,
+            name: true,
+          },
+        },
       },
     });
     return user?.followersBy;
   }
 
-  async findFollowerExistById(userId: string, newUserId: string): Promise<User | null> {
+  async findFollowerExistById(userId: string, newUserId: string) {
     const followers = await this.findFollowers(userId);
     if (followers) {
-      const newUser = followers.find((seguidor: { id: string; }) => seguidor.id === newUserId);
+      const newUser = followers.find((seguidor: { id: string; }) => seguidor.id == newUserId);
       return newUser || null;
     } else {
       return null; // Usuário não encontrado
     }
   }
   
-  async findFollowerByExistById(userId: string, newUserId: string): Promise<User | null> {
+  async findFollowerByExistById(userId: string, newUserId: string) {
     const followersBy = await this.findFollowersBy(userId)
     if (followersBy) {
       const newUser = followersBy.find((seguidor: { id: string; }) => seguidor.id == newUserId);

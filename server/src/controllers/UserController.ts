@@ -55,10 +55,8 @@ class UserController {
       });
     }
 
-    console.log(user?.id)
-
     res.locals = {
-      status: 201,
+      status: 200,
       message: 'User: ',
       data: user?.id,
     };
@@ -106,7 +104,7 @@ class UserController {
       await userRepository.insertFollower(userId, followerId)
 
       res.locals = {
-        status: 201,
+        status: 200,
         message: 'User insert follower',
       }
 
@@ -157,7 +155,7 @@ class UserController {
       await userRepository.removeFollower(userId, removeFollowerId)
 
       res.locals = {
-        status: 201,
+        status: 200,
         message: 'remove follower',
       }
 
@@ -208,7 +206,7 @@ class UserController {
       await userRepository.removeFollowerBy(userId, removeFollowerId)
 
       res.locals = {
-        status: 201,
+        status: 200,
         message: 'remove followerBy',
       }
 
@@ -232,13 +230,6 @@ class UserController {
           message: 'This id is not registred',
         });
       }
-
-      // if (followers.length == 0) {
-      //   return next({
-      //     status: 404,
-      //     message: 'Followers not found',
-      //   });
-      // }
 
       res.locals = {
         status: 200,
