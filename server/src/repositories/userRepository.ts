@@ -19,6 +19,22 @@ export class UserRepository {
     return user;
   }
 
+  async findFollows(userId: string) {
+    const user = await prisma.user.findUnique({
+      where: { id: userId },
+      select: {
+        follows: {
+          select: {
+            id: true,
+            nickName: true,
+            name: true,
+          },
+        },
+      },
+    });
+    return user?.follows;
+  }
+
   async findFollowers(userId: string) {
     const user = await prisma.user.findUnique({
       where: { id: userId },
@@ -35,36 +51,20 @@ export class UserRepository {
     return user?.followers;
   }
 
-  async findFollowersBy(userId: string) {
-    const user = await prisma.user.findUnique({
-      where: { id: userId },
-      select: {
-        followersBy: {
-          select: {
-            id: true,
-            nickName: true,
-            name: true,
-          },
-        },
-      },
-    });
-    return user?.followersBy;
-  }
-
-  async findFollowerExistById(userId: string, newUserId: string) {
-    const followers = await this.findFollowers(userId);
-    if (followers) {
-      const newUser = followers.find((seguidor: { id: string; }) => seguidor.id == newUserId);
+  async findFollowsExistById(userId: string, newUserId: string) {
+    const follows = await this.findFollows(userId);
+    if (follows) {
+      const newUser = follows.find((seguidor: { id: string; }) => seguidor.id == newUserId);
       return newUser || null;
     } else {
       return null; // Usuário não encontrado
     }
   }
   
-  async findFollowerByExistById(userId: string, newUserId: string) {
-    const followersBy = await this.findFollowersBy(userId)
-    if (followersBy) {
-      const newUser = followersBy.find((seguidor: { id: string; }) => seguidor.id == newUserId);
+  async findFollowersExistById(userId: string, newUserId: string) {
+    const followers = await this.findFollowers(userId)
+    if (followers) {
+      const newUser = followers.find((seguidor: { id: string; }) => seguidor.id == newUserId);
       return newUser || null
     }
     else {
@@ -72,23 +72,23 @@ export class UserRepository {
     }
   }
 
-  async insertFollower(userId: string, newUserId: string) {
+  async insertFollows(userId: string, newUserId: string) {
     await prisma.user.update({
       where: { id: userId },
       data: {
-        followers: {
+        follows: {
           connect: { id: newUserId },
         },
       },
     });
   }
 
-  async removeFollower(userId: string, removeUserId: string) {
+  async removeFollows(userId: string, removeUserId: string) {
     try {
       await prisma.user.update({
         where: { id: userId },
         data: {
-          followers: {
+          follows: {
             disconnect: { id: removeUserId },
           },
         },
@@ -100,12 +100,12 @@ export class UserRepository {
     }
   }
 
-  async removeFollowerBy(userId: string, removeUserId: string) {
+  async removeFollowers(userId: string, removeUserId: string) {
     try {
       await prisma.user.update({
         where: { id: userId },
         data: {
-          followersBy: {
+          followers: {
             disconnect: { id: removeUserId },
           },
         },
@@ -117,33 +117,7 @@ export class UserRepository {
     }
   }
   
-  async findFollowersByPorFilter(userId: string, str: string) {    
-    try {
-      const users = await prisma.user.findUnique({
-        where: { 
-          id: userId
-        },
-        select: {
-          followersBy: {
-            where: {
-              nickName: {
-                contains: str
-              }
-            },
-            select: {
-              nickName: true
-            }
-          }
-        },
-      });
-      return users?.followersBy;
-    } catch (error) {
-      console.error("Erro na consulta: ", error);
-      throw error;
-    }
-  }
-
-  async findFollowersPorFilter(userId: string, str: string) {   
+  async findFollowersPorFilter(userId: string, str: string) {    
     try {
       const users = await prisma.user.findUnique({
         where: { 
@@ -163,6 +137,32 @@ export class UserRepository {
         },
       });
       return users?.followers;
+    } catch (error) {
+      console.error("Erro na consulta: ", error);
+      throw error;
+    }
+  }
+
+  async findFollowsPorFilter(userId: string, str: string) {   
+    try {
+      const users = await prisma.user.findUnique({
+        where: { 
+          id: userId
+        },
+        select: {
+          follows: {
+            where: {
+              nickName: {
+                contains: str
+              }
+            },
+            select: {
+              nickName: true
+            }
+          }
+        },
+      });
+      return users?.follows;
     } catch (error) {
       console.error("Erro na consulta: ", error);
       throw error;

@@ -14,6 +14,6 @@ model User {
   password    String
   description String
   dateBirth   DateTime
-  followers     User[]   @relation("follow")
-  followersBy   User[]   @relation("follow")
+  follows     User[]   @relation("follow")
+  followers   User[]   @relation("follow")
 }
