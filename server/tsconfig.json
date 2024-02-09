@@ -8,7 +8,6 @@
     ],
     "allowJs": true,
     "outDir": "./dist",
-    "rootDir": "./src",
     "removeComments": true,
     "typeRoots": [
       "./node_modules/@types",
@@ -38,7 +37,7 @@
     }
   },
   "include": [
-    "src/**/*",
-    "./tests/"
+    "./src/**/*",
+    "./tests/**/*"
   ],
 }
