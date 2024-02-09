@@ -55,7 +55,7 @@ class CommentController {
       await commentRepository.delete(id)
 
       res.locals = {
-        status: 201,
+        status: 200,
         message: 'Comment deleted',
       };
 

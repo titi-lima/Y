@@ -196,7 +196,7 @@ class PostController {
       await postRepository.delete(id)
 
       res.locals = {
-        status: 201,
+        status: 200,
         message: 'Post deleted',
       };
 

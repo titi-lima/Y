@@ -23,7 +23,7 @@ model User {
 
 model Post{
   id          String   @id @default(cuid())
-  author      User     @relation(fields: [authorId], references: [id])
+  author      User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
   authorId    String 
   date        DateTime
   text        String
@@ -36,9 +36,9 @@ model Post{
 
 model Comment{
   id          String   @id @default(cuid())
-  post        Post     @relation(fields: [postId], references: [id])
+  post        Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
   postId      String
-  author      User     @relation(fields: [authorId], references: [id])
+  author      User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
   authorId    String
   date        DateTime
   text        String
