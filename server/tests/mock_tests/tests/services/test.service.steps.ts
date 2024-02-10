@@ -5,7 +5,7 @@ import TestService from '../../src/services/test.service';
 import OtherRepository from '../../src/repositories/other.repository';
 import TestModel from '../../src/models/test.model';
 
-const feature = loadFeature('tests/features/tests-service.feature');
+const feature = loadFeature('tests/mock_tests/tests/features/tests-service.feature');
 
 defineFeature(feature, (test) => {
     // mocking the repository

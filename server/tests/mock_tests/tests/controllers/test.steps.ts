@@ -4,7 +4,7 @@ import app from '../../src/app';
 import { di } from '../../src/di';
 import TestRepository from '../../src/repositories/test.repository';
 
-const feature = loadFeature('tests/features/tests.feature');
+const feature = loadFeature('tests/mock_tests/tests/features/tests.feature');
 const request = supertest(app);
 
 defineFeature(feature, (test) => {
