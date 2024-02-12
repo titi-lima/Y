@@ -3,25 +3,21 @@ import supertest from 'supertest';
 import { connection } from '../../Helper/database.config';
 import * as step from './shared_Steps';
 
-const feature = loadFeature('tests/integration/BDD/post_test.feature');
+const feature = loadFeature('tests/integration/BDD/post_example.feature');
 
 defineFeature(feature, (test) => {
   interface shared_res {response?: supertest.Response};
   var cap: shared_res = {};
 
-  
   beforeAll(async () => {
     await connection.create();
   });
-  
-  // beforeEach(() => {
-  //   userRepository = new UserRepository();
-  // });
-
+  beforeEach(() => {
+    cap = {};
+  });
   afterEach(async () => {
     await connection.clear();
   });
-
   afterAll(async () => {
     await connection.close();
   });

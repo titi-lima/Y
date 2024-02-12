@@ -11,16 +11,41 @@ Feature: Histórico de postagens do usuário
 
 ## Sucessful Scenarios
 
-Scenario: Buscar postagens em data fornecida diretamente
+Scenario: Buscar postagens em todas as datas
     Given há no sistema um usuário com '"id": "000"'
     And há no sistema um post com '"id": "aaa", "authorId": "000", "date": "2023-11-20"'
     And há no sistema um post com '"id": "bbb", "authorId": "000", "date": "2023-11-20"'
+    And há no sistema um post com '"id": "ccc", "authorId": "000", "date": "2024-02-12"'
+    When uma requisição GET for enviada para "/users/000/posts"
+    Then o status da resposta deve ser "200"
+    And a resposta deve conter a mensagem "Posts found"
+    And a resposta deve ser uma lista de "posts"
+    And um item com '"id": "aaa"' está na lista
+    And um item com '"id": "bbb"' está na lista
+    And um item com '"id": "ccc"' está na lista
+
+Scenario: Buscar postagens em data específica
+    Given há no sistema um usuário com '"id": "000"'
+    And há no sistema um post com '"id": "aaa", "authorId": "000", "date": "2023-11-20"'
+    And há no sistema um post com '"id": "bbb", "authorId": "000", "date": "2023-11-20"'
+    And há no sistema um post com '"id": "ccc", "authorId": "000", "date": "2024-02-12"'
     When uma requisição GET for enviada para "/users/000/posts/2023-11-20"
     Then o status da resposta deve ser "200"
     And a resposta deve conter a mensagem "Posts found"
     And a resposta deve ser uma lista de "posts"
-    # And o post de id “brenom.p4” está na lista
-    # And o post de id “brenom.p5” está na lista
+    And um item com '"id": "aaa"' está na lista
+    And um item com '"id": "bbb"' está na lista
+    And um item com '"id": "ccc"' não está na lista
+
+#-------------------------------------------------------------
+
+## Failure Scenarios
+
+Scenario: Buscar postagens em data inválida
+    Given há no sistema um usuário com '"id": "000"'
+    When uma requisição GET for enviada para "/users/000/posts/2023-11-40"
+    Then o status da resposta deve ser "400"
+    And a resposta deve conter a mensagem "Invalid date"
 
 
 #=============================================================

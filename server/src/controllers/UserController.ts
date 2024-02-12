@@ -75,6 +75,13 @@ class UserController {
 
       const posts = await userRepository.findPostsByUserId(id);
 
+      if (!posts) {
+        return next({
+          status: 400,
+          message: 'User not found',
+        });
+      }
+
       if (!posts?.length) {
         return next({
           status: 204,
@@ -98,10 +105,25 @@ class UserController {
     try {
       const { id, date_str } = req.params;
       const date = new Date(date_str)
+      
+      if (isNaN(date.getTime())) {
+        return next({
+          status: 400,
+          message: 'Invalid date',
+        });
+      }
+
       const userRepository = new UserRepository();
 
       const posts = await userRepository.findPostsByUserId(id);
 
+      if (!posts) {
+        return next({
+          status: 400,
+          message: 'User not found',
+        });
+      }
+      
       if (!posts?.length) {
         return next({
           status: 204,

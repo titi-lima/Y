@@ -1,11 +1,12 @@
 import supertest from 'supertest';
 import app from '../../../src/app';
-import { UserRepository, PostRepository} from '../../../src/repositories';
+import { UserRepository, PostRepository, CommentRepository} from '../../../src/repositories';
 import { DefineStepFunction } from 'jest-cucumber';
-import { Post } from '@prisma/client';
+import { Comment, Post } from '@prisma/client';
 
-const userRepository = new UserRepository
-const postRepository = new PostRepository
+const userRepository = new UserRepository();
+const postRepository= new PostRepository();
+const commentRepository = new CommentRepository();
 const request = supertest(app);
 interface shared_res {response?: supertest.Response};
 
@@ -23,6 +24,14 @@ const test_user = {
 
 const test_post ={
   id: "p0",
+  authorId: "u0",
+  date: new Date(),
+  text: ".",
+}
+
+const test_comment ={
+  id: "c0",
+  postId: "p0",
   authorId: "u0",
   date: new Date(),
   text: ".",
@@ -72,7 +81,7 @@ export const givenPostNoSist = (given: DefineStepFunction) => {
       var post = JSON.parse("{" + data + "}");
       if(!("authorId" in post)) {
         await userRepository.create(test_user);
-        post.authorId = test_post.id;
+        post.authorId = test_user.id;
       }
       if(!("date" in post)) {
         post.date = test_post.date;
@@ -87,6 +96,35 @@ export const givenPostNoSist = (given: DefineStepFunction) => {
   );
 };
 
+export const givenCommNoSist = (given: DefineStepFunction) => {
+  given(
+    /^há no sistema um comentário com '(.*)'$/,
+    async (data) => {
+      var comment = JSON.parse("{" + data + "}");
+      if(!("postId" in comment)) {
+        const user = await userRepository.findByUserId(test_user.id);
+        if(!user) {await userRepository.create(test_user);}
+        const post = await postRepository.findByPostId(test_post.id);
+        if(!post) {await postRepository.create(test_post);}
+        comment.postId = test_post.id;
+      }
+      if(!("authorId" in comment)) {
+        const user = await userRepository.findByUserId(test_user.id);
+        if(!user) {await userRepository.create(test_user);}
+        comment.authorId = test_user.id;
+      }
+      if(!("date" in comment)) {
+        comment.date = test_comment.date;
+      }
+      else{
+        comment.date = new Date(comment.date);
+      }
+      if(!("text" in comment)) {comment.text = test_comment.text;}
+      comment = await commentRepository.create(comment);
+      console.log(comment);
+    }
+  );
+};
 
 // WHEN
 
@@ -101,12 +139,21 @@ export const whenPOSTcomJSON = (when: DefineStepFunction, cap: shared_res) => {
   );
 };
 
-
 export const whenGET = (when: DefineStepFunction, cap: shared_res) => {
   when(
     /^uma requisição GET for enviada para "(.*)"$/,
     async (url) => {
       cap.response = await request.get(url);
+      console.log(cap.response.body);
+    }
+  );
+};
+
+export const whenDELETE = (when: DefineStepFunction, cap: shared_res) => {
+  when(
+    /^uma requisição DELETE for enviada para "(.*)"$/,
+    async (url) => {
+      cap.response = await request.delete(url);
       console.log(cap.response.body);
     }
   );
@@ -133,14 +180,36 @@ export const thenMsg = (then: DefineStepFunction, cap: shared_res) => {
   );
 }
 
-export const thenListOf = (then: DefineStepFunction, cap: shared_res) => {
+export const thenListaDe = (then: DefineStepFunction, cap: shared_res) => {
   then(
     /^a resposta deve ser uma lista de "(.*)"$/,
     (list_type) => {
       if(list_type == "posts"){
-        // let post_list: Post[]
         expect(cap.response?.body.data).toBeInstanceOf(Array<Post>);
       }
+      else if(list_type == "comments"){
+        expect(cap.response?.body.data).toBeInstanceOf(Array<Comment>);
+      }
+    }
+  );
+}
+
+export const thenItemNaLista = (then: DefineStepFunction, cap: shared_res) => {
+  then(
+    /^um item com '(.*)' está na lista$/,
+    (data) => {
+      const match = JSON.parse("{" + data + "}");
+      expect(cap.response?.body.data).toContainEqual(expect.objectContaining(match));
+    }
+  );
+}
+
+export const thenItemForaLista = (then: DefineStepFunction, cap: shared_res) => {
+  then(
+    /^um item com '(.*)' não está na lista$/,
+    (data) => {
+      const match = JSON.parse("{" + data + "}");
+      expect(cap.response?.body.data).not.toContainEqual(expect.objectContaining(match));
     }
   );
 }

@@ -3,7 +3,7 @@ import supertest from 'supertest';
 import { connection } from '../../Helper/database.config';
 import * as step from './shared_Steps';
 
-const feature = loadFeature('../features/post_hist.feature');
+const feature = loadFeature('../features/post_comm.feature');
 
 defineFeature(feature, (test) => {
   interface shared_res {response?: supertest.Response};
@@ -22,40 +22,31 @@ defineFeature(feature, (test) => {
     await connection.close();
   });
 
-  test('Buscar postagens em todas as datas', ({ given, when, then}) => {
+  test('Criar comentário', ({ given, when, then}) => {
     step.givenUsrNoSist(given);
     step.givenPostNoSist(given);
+    step.whenPOSTcomJSON(when, cap);
+    step.thenStatus(then, cap);
+    step.thenMsg(then, cap);
+
+  });
+
+  test('Buscar comentários de postagem', ({ given, when, then}) => {
     step.givenPostNoSist(given);
-    step.givenPostNoSist(given);
+    step.givenCommNoSist(given);
+    step.givenCommNoSist(given);
     step.whenGET(when, cap);
     step.thenStatus(then, cap);
     step.thenMsg(then, cap);
     step.thenListaDe(then, cap);
     step.thenItemNaLista(then, cap);
     step.thenItemNaLista(then, cap);
-    step.thenItemNaLista(then, cap);
 
   });
 
-
-  test('Buscar postagens em data específica', ({ given, when, then}) => {
-    step.givenUsrNoSist(given);
-    step.givenPostNoSist(given);
-    step.givenPostNoSist(given);
-    step.givenPostNoSist(given);
-    step.whenGET(when, cap);
-    step.thenStatus(then, cap);
-    step.thenMsg(then, cap);
-    step.thenListaDe(then, cap);
-    step.thenItemNaLista(then, cap);
-    step.thenItemNaLista(then, cap);
-    step.thenItemForaLista(then, cap);
-
-  });
-
-  test('Buscar postagens em data inválida', ({ given, when, then}) => {
-    step.givenUsrNoSist(given);
-    step.whenGET(when, cap);
+  test('Apagar comentário', ({ given, when, then}) => {
+    step.givenCommNoSist(given);
+    step.whenDELETE(when, cap);
     step.thenStatus(then, cap);
     step.thenMsg(then, cap);
 
