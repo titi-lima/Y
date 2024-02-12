@@ -10,8 +10,12 @@ class PostController {
       const userRepository = new UserRepository();
       const validatedData = Post.parse(postData); // passe o mouse por cima de validatedData no VSCode e veja o tipo!
 
-      const checkAuthor = await userRepository.findByNickName(
-        validatedData.author,
+      // const checkAuthor = await userRepository.findByNickName(
+      //   validatedData.author,
+      // );
+
+      const checkAuthor = await userRepository.findByUserId(
+        validatedData.authorId,
       );
 
       if (!checkAuthor) {
@@ -21,7 +25,7 @@ class PostController {
         });
       };
 
-      const post = await postRepository.create(checkAuthor.id, validatedData.date, validatedData.text);
+      const post = await postRepository.create(validatedData);
 
       res.locals = {
         status: 201,
@@ -41,6 +45,13 @@ class PostController {
       const postRepository = new PostRepository();
 
       const comments = await postRepository.findCommentsByPostId(id);
+
+      if(!comments){
+        return next({
+          status: 400,
+          message: 'Post not found',
+        });
+      }
 
       if (!comments?.length) {
         return next({
@@ -63,7 +74,7 @@ class PostController {
   
   async addLike(req: Request, res: Response, next: NextFunction) {
     try {
-      const { id, user } = req.params;
+      const { id, userId } = req.params;
       const postRepository = new PostRepository();
       const userRepository = new UserRepository();
 
@@ -76,7 +87,8 @@ class PostController {
         });
       };
 
-      const checkUser = await userRepository.findByNickName(user);  
+      // const checkUser = await userRepository.findByNickName(user);
+      const checkUser = await userRepository.findByUserId(userId);   
 
       if (!checkUser) {
         return next({
@@ -112,7 +124,7 @@ class PostController {
   
   async removeLike(req: Request, res: Response, next: NextFunction) {
     try {
-      const { id, user } = req.params;
+      const { id, userId } = req.params;
       const postRepository = new PostRepository();
       const userRepository = new UserRepository();
 
@@ -125,7 +137,8 @@ class PostController {
         });
       };
 
-      const checkUser = await userRepository.findByNickName(user);  
+      // const checkUser = await userRepository.findByNickName(user);
+      const checkUser = await userRepository.findByUserId(userId);   
 
       if (!checkUser) {
         return next({

@@ -9,14 +9,16 @@ export const User = z.object({
 });
 
 export const Post = z.object({
-  author: z.string().trim().min(1),
+  // author: z.string().trim().min(1),
+  authorId: z.string().min(1),
   date: z.coerce.date(),
   text: z.string().min(1),
 });
 
 export const Comment = z.object({
   postId: z.string().min(1),
-  author: z.string().trim().min(1),
+  // author: z.string().trim().min(1),
+  authorId: z.string().min(1),
   date: z.coerce.date(),
   text: z.string().min(1),
 });

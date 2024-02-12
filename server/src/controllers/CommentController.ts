@@ -22,8 +22,12 @@ class CommentController {
         });
       }
 
-      const checkAuthor = await userRepository.findByNickName(
-        validatedData.author,
+      // const checkAuthor = await userRepository.findByNickName(
+      //   validatedData.author,
+      // );
+
+      const checkAuthor = await userRepository.findByUserId(
+        validatedData.authorId,
       );
 
       if (!checkAuthor) {
@@ -33,7 +37,7 @@ class CommentController {
         });
       }
 
-      const comment = await commentRepository.create(checkPost.id, checkAuthor.id, validatedData.date, validatedData.text);
+      const comment = await commentRepository.create(validatedData);
 
       res.locals = {
         status: 201,

@@ -2,7 +2,8 @@ import { Prisma, Comment } from '@prisma/client';
 import prisma from '../database';
 
 export class CommentRepository{
-    async create(postId: string, authorId: string, date: Date, text: string): Promise<Comment> {
+    async create(data: Prisma.CommentUncheckedCreateInput): Promise<Comment> {
+      const {postId: postId, authorId: authorId, ...rest} = data;
       const comment = await prisma.comment.create({
         data: {
           post:{
@@ -11,8 +12,7 @@ export class CommentRepository{
           author: {
             connect: { id: authorId }
           },
-          date: date,
-          text: text
+          ...rest
         }
       });
       return comment;

@@ -2,14 +2,15 @@ import { Prisma, Post } from '@prisma/client';
 import prisma from '../database';
 
 export class PostRepository{
-    async create(authorId: string, date: Date, text: string): Promise<Post>{
+  
+    async create(data: Prisma.PostUncheckedCreateInput): Promise<Post>{
+      const {authorId: authorId, ...rest} = data;
       const post = await prisma.post.create({
         data: {
           author: {
             connect: { id: authorId }
           },
-          date: date,
-          text: text
+          ...rest,
         }
       });
       return post;
