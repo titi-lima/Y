@@ -1,5 +1,6 @@
 import { Prisma, User } from '@prisma/client';
 import prisma from '../database';
+import { error } from 'console';
 
 export class UserRepository {
   async create(data: Prisma.UserCreateInput): Promise<User> {
@@ -168,6 +169,20 @@ export class UserRepository {
     } catch (error) {
       console.error('Erro na consulta: ', error);
       throw error;
+    }
+  }
+  async changeBioByUserID(userId: string, newDescription: string){
+    try{
+     await prisma.user.update({
+      where: { 
+        id: userId
+      },
+      data: {
+        description: newDescription
+      },
+     });
+    }catch (error) {
+      return error;
     }
   }
 }
