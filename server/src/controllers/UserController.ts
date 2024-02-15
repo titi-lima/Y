@@ -2,7 +2,6 @@ import { Request, Response, NextFunction } from 'express';
 import { hash } from 'bcryptjs';
 import { UserRepository } from '../repositories';
 import { User } from '../DTOs';
-import { ReplOptions } from 'repl';
 
 class UserController {
   async create(req: Request, res: Response, next: NextFunction) {
@@ -44,11 +43,11 @@ class UserController {
   }
 
   async getIdByNickName(req: Request, res: Response, next: NextFunction) {
-    const { userNickName } = req.params
-    const userRepository = new UserRepository()
+    const { userNickName } = req.params;
+    const userRepository = new UserRepository();
 
     const user = await userRepository.findByNickName(userNickName);
-    if(user == null) {
+    if (user == null) {
       return next({
         status: 400,
         message: 'This nickName is not registred',
@@ -66,164 +65,171 @@ class UserController {
 
   async insertFollows(req: Request, res: Response, next: NextFunction) {
     try {
-      const { userId } = req.params
-      const { followsId } =  req.body
-      const userRepository = new UserRepository()
+      const { userId } = req.params;
+      const { followsId } = req.body;
+      const userRepository = new UserRepository();
 
-      if (userId == followsId) {
+      if (userId === followsId) {
         return next({
           status: 400,
           message: 'This userId is the same as followsId',
         });
       }
-      
-      const user = await userRepository.findById(userId)
-      if(user == null) {
+
+      const user = await userRepository.findById(userId);
+      if (user == null) {
         return next({
           status: 400,
           message: 'This userId is not registred',
         });
       }
-      
-      const newUser = await userRepository.findById(followsId)
-      if(newUser == null) {
+
+      const newUser = await userRepository.findById(followsId);
+      if (newUser == null) {
         return next({
           status: 400,
           message: 'This newFollowsId is not registred',
         });
       }
-      
-      const followsExist = await userRepository.findFollowsExistById(userId, followsId)
-      if(followsExist != null) {
+
+      const followsExist = await userRepository.findFollowsExistById(
+        userId,
+        followsId,
+      );
+      if (followsExist != null) {
         return next({
           status: 400,
           message: 'This newFollowsId is already registred in userId follows',
         });
       }
-      
-      await userRepository.insertFollows(userId, followsId)
+
+      await userRepository.insertFollows(userId, followsId);
 
       res.locals = {
         status: 200,
         message: 'User insert follows',
-      }
+      };
 
-      return next()
-
+      return next();
     } catch (error) {
-      return next(error)
+      return next(error);
     }
   }
 
   async removeFollows(req: Request, res: Response, next: NextFunction) {
     try {
-      const { userId } = req.params
-      const { removeFollowsId } =  req.body
-      const userRepository = new UserRepository()
+      const { userId } = req.params;
+      const { removeFollowsId } = req.body;
+      const userRepository = new UserRepository();
 
-      if (userId == removeFollowsId) {
+      if (userId === removeFollowsId) {
         return next({
           status: 400,
           message: 'This userId is the same as removeFollowsId',
         });
       }
-      
-      const user = await userRepository.findById(userId)
-      if(user == null) {
+
+      const user = await userRepository.findById(userId);
+      if (user == null) {
         return next({
           status: 400,
           message: 'This userId is not registred',
         });
       }
-      
-      const newUser = await userRepository.findById(removeFollowsId)
-      if(newUser == null) {
+
+      const newUser = await userRepository.findById(removeFollowsId);
+      if (newUser == null) {
         return next({
           status: 400,
           message: 'This newFollowsId is not registred',
         });
       }
 
-      const followsExist = await userRepository.findFollowsExistById(userId, removeFollowsId)
-      if(followsExist == null) {
+      const followsExist = await userRepository.findFollowsExistById(
+        userId,
+        removeFollowsId,
+      );
+      if (followsExist == null) {
         return next({
           status: 400,
           message: 'This removeFollowsId is not registred in userId Follows',
         });
       }
-      
-      await userRepository.removeFollows(userId, removeFollowsId)
+
+      await userRepository.removeFollows(userId, removeFollowsId);
 
       res.locals = {
         status: 200,
         message: 'remove follows',
-      }
+      };
 
-      return next()
-
+      return next();
     } catch (error) {
-      return next(error)
+      return next(error);
     }
   }
 
   async removeFollowers(req: Request, res: Response, next: NextFunction) {
     try {
-      const { userId } = req.params
-      const { removeFollowersId } =  req.body
-      const userRepository = new UserRepository()
+      const { userId } = req.params;
+      const { removeFollowersId } = req.body;
+      const userRepository = new UserRepository();
 
-      if (userId == removeFollowersId) {
+      if (userId === removeFollowersId) {
         return next({
           status: 400,
           message: 'This userId is the same as removeFolowerId',
         });
       }
-      
-      const user = await userRepository.findById(userId)
-      if(user == null) {
+
+      const user = await userRepository.findById(userId);
+      if (user == null) {
         return next({
           status: 400,
           message: 'This userId is not registred',
         });
       }
-      
-      const newUser = await userRepository.findById(removeFollowersId)
-      if(newUser == null) {
+
+      const newUser = await userRepository.findById(removeFollowersId);
+      if (newUser == null) {
         return next({
           status: 400,
           message: 'This newFollowersId is not registred',
         });
       }
 
-      const followersExist = await userRepository.findFollowersExistById(userId, removeFollowersId)
-      if(followersExist == null) {
+      const followersExist = await userRepository.findFollowersExistById(
+        userId,
+        removeFollowersId,
+      );
+      if (followersExist == null) {
         return next({
           status: 400,
-          message: 'This removeFollowersId is not registred in userId Followers',
+          message:
+            'This removeFollowersId is not registred in userId Followers',
         });
       }
-      
-      await userRepository.removeFollowers(userId, removeFollowersId)
+
+      await userRepository.removeFollowers(userId, removeFollowersId);
 
       res.locals = {
         status: 200,
         message: 'remove Followers',
-      }
+      };
 
-      return next()
-
+      return next();
     } catch (error) {
-      return next(error)
+      return next(error);
     }
   }
-  
+
   async getFollows(req: Request, res: Response, next: NextFunction) {
     try {
       const { id } = req.params;
       const userRepository = new UserRepository();
 
-      const user = await userRepository.findById(id)
-      if(user == null) {
+      const user = await userRepository.findById(id);
+      if (user == null) {
         return next({
           status: 400,
           message: 'This userId is not registred',
@@ -232,7 +238,7 @@ class UserController {
 
       const follows = await userRepository.findFollows(id);
 
-      if (follows == undefined){
+      if (follows === undefined) {
         return next({
           status: 404,
           message: 'This id is not registred',
@@ -256,8 +262,8 @@ class UserController {
       const { id } = req.params;
       const userRepository = new UserRepository();
 
-      const user = await userRepository.findById(id)
-      if(user == null) {
+      const user = await userRepository.findById(id);
+      if (user == null) {
         return next({
           status: 400,
           message: 'This userId is not registred',
@@ -266,7 +272,7 @@ class UserController {
 
       const followers = await userRepository.findFollowers(id);
 
-      if (followers == undefined){
+      if (followers === undefined) {
         return next({
           status: 404,
           message: 'This id is not registred',
@@ -285,7 +291,7 @@ class UserController {
         status: 200,
         message: 'Followers found',
         data: followers,
-      }
+      };
 
       return next();
     } catch (error) {
@@ -293,25 +299,24 @@ class UserController {
     }
   }
 
-  async getFilterFollows(req:Request, res: Response, next: NextFunction) {
+  async getFilterFollows(req: Request, res: Response, next: NextFunction) {
     try {
       const { id, str } = req.params;
       const userRepository = new UserRepository();
 
-      const user = userRepository.findById(id)
-      if(!user) {
+      const user = userRepository.findById(id);
+      if (!user) {
         return next({
           status: 400,
           message: 'This userId is not registred',
         });
       }
 
-      let followsWithFilter
-      if (str == "@") {
-        followsWithFilter = await userRepository.findFollowsPorFilter(id, "")
-      }
-      else {
-        followsWithFilter = await userRepository.findFollowsPorFilter(id, str)
+      let followsWithFilter;
+      if (str === '@') {
+        followsWithFilter = await userRepository.findFollowsPorFilter(id, '');
+      } else {
+        followsWithFilter = await userRepository.findFollowsPorFilter(id, str);
       }
 
       // if (!followsWithFilter) {
@@ -333,25 +338,30 @@ class UserController {
     }
   }
 
-  async getFilterFollowers(req:Request, res: Response, next: NextFunction) {
+  async getFilterFollowers(req: Request, res: Response, next: NextFunction) {
     try {
       const { id, str } = req.params;
       const userRepository = new UserRepository();
-      
-      const user = userRepository.findById(id)
-      if(!user) {
+
+      const user = userRepository.findById(id);
+      if (!user) {
         return next({
           status: 400,
           message: 'This userId is not registred',
         });
       }
 
-      let followersWithFilter
-      if (str == "@") {
-        followersWithFilter = await userRepository.findFollowersPorFilter(id, "")
-      }
-      else {
-        followersWithFilter = await userRepository.findFollowersPorFilter(id, str)
+      let followersWithFilter;
+      if (str === '@') {
+        followersWithFilter = await userRepository.findFollowersPorFilter(
+          id,
+          '',
+        );
+      } else {
+        followersWithFilter = await userRepository.findFollowersPorFilter(
+          id,
+          str,
+        );
       }
 
       // if (!followersWithFilter) {

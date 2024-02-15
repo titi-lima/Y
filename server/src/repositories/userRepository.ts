@@ -13,8 +13,8 @@ export class UserRepository {
   }
 
   async findById(id: string): Promise<User | null> {
-    const user = await prisma.user.findUnique({ 
-      where: { id: id }
+    const user = await prisma.user.findUnique({
+      where: { id },
     });
     return user;
   }
@@ -54,22 +54,24 @@ export class UserRepository {
   async findFollowsExistById(userId: string, newUserId: string) {
     const follows = await this.findFollows(userId);
     if (follows) {
-      const newUser = follows.find((seguidor: { id: string; }) => seguidor.id == newUserId);
+      const newUser = follows.find(
+        (seguidor: { id: string }) => seguidor.id === newUserId,
+      );
       return newUser || null;
-    } else {
-      return null; // Usuário não encontrado
     }
+    return null; // Usuário não encontrado
   }
-  
+
   async findFollowersExistById(userId: string, newUserId: string) {
-    const followers = await this.findFollowers(userId)
+    const followers = await this.findFollowers(userId);
     if (followers) {
-      const newUser = followers.find((seguidor: { id: string; }) => seguidor.id == newUserId);
-      return newUser || null
+      const newUser = followers.find(
+        (seguidor: { id: string }) => seguidor.id === newUserId,
+      );
+      return newUser || null;
     }
-    else {
-      return null
-    }
+
+    return null;
   }
 
   async insertFollows(userId: string, newUserId: string) {
@@ -95,7 +97,7 @@ export class UserRepository {
       });
       console.log(`Usuário ${userId} deixou de seguir ${removeUserId}.`);
     } catch (error) {
-      console.error("Erro ao remover seguidor: ", error);
+      console.error('Erro ao remover seguidor: ', error);
       throw error;
     }
   }
@@ -112,59 +114,59 @@ export class UserRepository {
       });
       console.log(`Usuário ${removeUserId} deixou de seguir ${userId}.`);
     } catch (error) {
-      console.error("Erro ao remover seguidor: ", error);
+      console.error('Erro ao remover seguidor: ', error);
       throw error;
     }
   }
-  
-  async findFollowersPorFilter(userId: string, str: string) {    
+
+  async findFollowersPorFilter(userId: string, str: string) {
     try {
       const users = await prisma.user.findUnique({
-        where: { 
-          id: userId
+        where: {
+          id: userId,
         },
         select: {
           followers: {
             where: {
               nickName: {
-                contains: str
-              }
+                contains: str,
+              },
             },
             select: {
-              nickName: true
-            }
-          }
+              nickName: true,
+            },
+          },
         },
       });
       return users?.followers;
     } catch (error) {
-      console.error("Erro na consulta: ", error);
+      console.error('Erro na consulta: ', error);
       throw error;
     }
   }
 
-  async findFollowsPorFilter(userId: string, str: string) {   
+  async findFollowsPorFilter(userId: string, str: string) {
     try {
       const users = await prisma.user.findUnique({
-        where: { 
-          id: userId
+        where: {
+          id: userId,
         },
         select: {
           follows: {
             where: {
               nickName: {
-                contains: str
-              }
+                contains: str,
+              },
             },
             select: {
-              nickName: true
-            }
-          }
+              nickName: true,
+            },
+          },
         },
       });
       return users?.follows;
     } catch (error) {
-      console.error("Erro na consulta: ", error);
+      console.error('Erro na consulta: ', error);
       throw error;
     }
   }
