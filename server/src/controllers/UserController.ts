@@ -42,6 +42,33 @@ class UserController {
     }
   }
 
+  async getById(req: Request, res: Response, next: NextFunction) {
+    try {
+      const { userId } = req.params;
+      const userRepository = new UserRepository();
+      const user = await userRepository.findById(userId);
+
+      if (!user) {
+        return next({
+          status: 404,
+          message: 'User not found',
+        });
+      }
+
+      const { password: _, ...userWithoutPassword } = user;
+
+      res.locals = {
+        status: 200,
+        message: 'User found',
+        data: userWithoutPassword,
+      };
+
+      return next();
+    } catch (error) {
+      return next(error);
+    }
+  }
+
   async getIdByNickName(req: Request, res: Response, next: NextFunction) {
     const { userNickName } = req.params;
     const userRepository = new UserRepository();
