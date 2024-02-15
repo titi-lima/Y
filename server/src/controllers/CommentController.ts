@@ -26,7 +26,7 @@ class CommentController {
       //   validatedData.author,
       // );
 
-      const checkAuthor = await userRepository.findByUserId(
+      const checkAuthor = await userRepository.findById(
         validatedData.authorId,
       );
 

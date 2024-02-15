@@ -14,7 +14,7 @@ class PostController {
       //   validatedData.author,
       // );
 
-      const checkAuthor = await userRepository.findByUserId(
+      const checkAuthor = await userRepository.findById(
         validatedData.authorId,
       );
 
@@ -88,7 +88,7 @@ class PostController {
       };
 
       // const checkUser = await userRepository.findByNickName(user);
-      const checkUser = await userRepository.findByUserId(userId);   
+      const checkUser = await userRepository.findById(userId);   
 
       if (!checkUser) {
         return next({
@@ -138,7 +138,7 @@ class PostController {
       };
 
       // const checkUser = await userRepository.findByNickName(user);
-      const checkUser = await userRepository.findByUserId(userId);   
+      const checkUser = await userRepository.findById(userId);   
 
       if (!checkUser) {
         return next({

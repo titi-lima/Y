@@ -65,7 +65,7 @@ export const givenUsrForaSist = (given: DefineStepFunction) => {
   given(
     /^não há no sistema um usuário com id "(.*)"$/,
     async (user_id) => {
-      const user = await userRepository.findByUserId(user_id);
+      const user = await userRepository.findById(user_id);
       if(user){
         console.log("Usuário estava no sistema");
         // Adiciona função que deleta o usuário
@@ -102,14 +102,14 @@ export const givenCommNoSist = (given: DefineStepFunction) => {
     async (data) => {
       var comment = JSON.parse("{" + data + "}");
       if(!("postId" in comment)) {
-        const user = await userRepository.findByUserId(test_user.id);
+        const user = await userRepository.findById(test_user.id);
         if(!user) {await userRepository.create(test_user);}
         const post = await postRepository.findByPostId(test_post.id);
         if(!post) {await postRepository.create(test_post);}
         comment.postId = test_post.id;
       }
       if(!("authorId" in comment)) {
-        const user = await userRepository.findByUserId(test_user.id);
+        const user = await userRepository.findById(test_user.id);
         if(!user) {await userRepository.create(test_user);}
         comment.authorId = test_user.id;
       }

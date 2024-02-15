@@ -7,11 +7,6 @@ export class UserRepository {
     return user;
   }
 
-  async findByUserId(userId: string): Promise<User | null> {
-    const user = await prisma.user.findUnique({ where: { id: userId } });
-    return user;
-  }
-
   async findByNickName(nickName: string): Promise<User | null> {
     const user = await prisma.user.findUnique({ where: { nickName } });
     return user;
