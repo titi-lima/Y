@@ -15,7 +15,7 @@ model User {
   description String
   dateBirth   DateTime
   follows     User[]   @relation("follow")
-  followsBy   User[]   @relation("follow")
+  followers   User[]   @relation("follow")
   posts       Post[]
   likedPosts  Post[]   @relation("liked")
   comments    Comment[]
