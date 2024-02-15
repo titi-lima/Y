@@ -13,6 +13,6 @@ userRouter.route('/:id/follows').get(UserController.getFollows);
 userRouter.route('/:id/followers').get(UserController.getFollowers);
 userRouter.route('/:id/findFilterFollows/:str').get(UserController.getFilterFollows)
 userRouter.route('/:id/findFilterFollowers/:str').get(UserController.getFilterFollowers)
-userRouter.route('/:id/changeBio').put(UserController.putNewBio)
+userRouter.route('/:id/changeDescription').put(UserController.putNewDescription)
 
 export default userRouter;
