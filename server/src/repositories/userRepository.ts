@@ -173,14 +173,14 @@ export class UserRepository {
   }
   async changeBioByUserID(userId: string, newDescription: string){
     try{
-     await prisma.user.update({
-      where: { 
-        id: userId
-      },
-      data: {
-        description: newDescription
-      },
-     });
+      await prisma.user.update({
+        where: { 
+          id: userId
+        },
+        data: {
+          description: newDescription
+        },
+      });
     }catch (error) {
       return error;
     }
