@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import { hash } from 'bcryptjs';
 import { UserRepository} from '../repositories';
-import { User , validateDescription} from '../DTOs';
+import { User , validateDescription , validateName} from '../DTOs';
 
 class UserController {
   async create(req: Request, res: Response, next: NextFunction) {
@@ -411,6 +411,23 @@ class UserController {
       });
     }catch (error) {
       return next(error);
+    }
+  }
+  async changeUserName(req: Request, res: Response, next: NextFunction){
+    try{
+      const {userId} = req.params;
+      const {name} = req.body;
+      const validate_name = validateName.parse(name);
+      const userRepository = new UserRepository();
+
+      await userRepository.changeUserNameById(userId,validate_name);
+      
+      res.status(200).send({
+        sucess : true,
+        message: "User name sucessfully updated"
+      })
+    }catch (error) {
+      return next(error)
     }
   }
 }
