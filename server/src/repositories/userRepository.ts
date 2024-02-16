@@ -196,4 +196,18 @@ export class UserRepository {
       throw error
     }
   }
+  async changeUserNameById(userId: string, name: string){
+    try{
+      await prisma.user.update({
+        where: { 
+          id: userId
+        },
+        data: {
+          name: name
+        },
+      });
+    }catch (error) {
+      throw  error;
+    }
+  }
 }
