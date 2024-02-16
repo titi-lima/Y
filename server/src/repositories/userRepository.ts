@@ -182,7 +182,18 @@ export class UserRepository {
         },
       });
     }catch (error) {
-      return error;
+      throw  error;
+    }
+  }
+  async getDescriptionByUserID(userId: string){
+    try{
+      const description = await prisma.user.findUnique({
+        where: { id: userId,},
+        select: {description: true,},
+      });
+      return description;
+    }catch (error) {
+      throw error
     }
   }
 }
