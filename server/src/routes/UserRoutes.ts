@@ -15,5 +15,6 @@ userRouter.route('/:id/findFilterFollows/:str').get(UserController.getFilterFoll
 userRouter.route('/:id/findFilterFollowers/:str').get(UserController.getFilterFollowers)
 userRouter.route('/:userId/changeDescription').put(UserController.putNewDescription)
 userRouter.route('/:userId/getDescription').get(UserController.getDescriptionByUserId)
+userRouter.route('/:userId/chengeUserName').put(UserController.changeUserName)
 
 export default userRouter;
