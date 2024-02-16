@@ -430,6 +430,20 @@ class UserController {
       return next(error)
     }
   }
+  async getUserNameById(req: Request, res: Response, next: NextFunction){
+    try{
+      const {userId} = req.params
+      const userRepository = new UserRepository();
+      const name = await userRepository.getUserNameById(userId)
+      res.status(200).send({
+        sucess: true,
+        message: "name: ",
+        data: name
+      });
+    }catch (error) {
+      return next(error);
+    }
+  }
 }
 
 export default new UserController();
