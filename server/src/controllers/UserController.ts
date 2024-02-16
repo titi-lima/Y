@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import { hash } from 'bcryptjs';
-import { UserRepository } from '../repositories';
-import { User } from '../DTOs';
+import { UserRepository} from '../repositories';
+import { User , validateDescription} from '../DTOs';
 
 class UserController {
   async create(req: Request, res: Response, next: NextFunction) {
@@ -379,6 +379,23 @@ class UserController {
 
       return next();
     } catch (error) {
+      return next(error);
+    }
+  }
+  async putNewDescription(req: Request, res: Response, next: NextFunction){
+    try{
+      const {userId}= req.params;
+      const {description} = req.body;
+      const validate_description = validateDescription.parse(description);
+      const userRepository = new UserRepository();
+
+      await userRepository.changeBioByUserID(userId,validate_description);
+
+      res.status(200).send({
+        sucess: true,
+        message: "Bio sucessfully updated "
+      });
+    }catch (error) {
       return next(error);
     }
   }
