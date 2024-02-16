@@ -399,6 +399,20 @@ class UserController {
       return next(error);
     }
   }
+  async getDescriptionByUserId(req: Request, res: Response, next: NextFunction){
+    try{
+      const {userId} = req.params
+      const userRepository = new UserRepository();
+      const description = await userRepository.getDescriptionByUserID(userId)
+      res.status(200).send({
+        sucess: true,
+        message: "description: ",
+        data: description
+      });
+    }catch (error) {
+      return next(error);
+    }
+  }
 }
 
 export default new UserController();
