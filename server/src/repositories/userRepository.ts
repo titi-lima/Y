@@ -210,4 +210,15 @@ export class UserRepository {
       throw  error;
     }
   }
+  async getUserNameById(userId: string){
+    try{
+      const name = await prisma.user.findUnique({
+        where: { id: userId,},
+        select: {name: true,},
+      });
+      return name;
+    }catch (error) {
+      throw error
+    }
+  }
 }
