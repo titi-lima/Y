@@ -17,5 +17,6 @@ userRouter.route('/:userId/changeDescription').put(UserController.putNewDescript
 userRouter.route('/:userId/getDescription').get(UserController.getDescriptionByUserId)
 userRouter.route('/:userId/changeUserName').put(UserController.changeUserName)
 userRouter.route('/:userId/getUserName').get(UserController.getUserNameById)
+userRouter.route('/:userId/changeNickName').put(UserController.changeNickName)
 
 export default userRouter;
