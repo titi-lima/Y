@@ -382,6 +382,7 @@ class UserController {
       return next(error);
     }
   }
+
   async putNewDescription(req: Request, res: Response, next: NextFunction){
     try{
       const {userId}= req.params;
@@ -399,6 +400,7 @@ class UserController {
       return next(error);
     }
   }
+
   async getDescriptionByUserId(req: Request, res: Response, next: NextFunction){
     try{
       const {userId} = req.params
@@ -413,6 +415,7 @@ class UserController {
       return next(error);
     }
   }
+
   async changeUserName(req: Request, res: Response, next: NextFunction){
     try{
       const {userId} = req.params;
@@ -430,6 +433,7 @@ class UserController {
       return next(error)
     }
   }
+
   async getUserNameById(req: Request, res: Response, next: NextFunction){
     try{
       const {userId} = req.params;
@@ -444,6 +448,7 @@ class UserController {
       return next(error);
     }
   }
+  
   async changeNickName(req: Request, res: Response, next: NextFunction){
     try{
       const {userId} = req.params;
