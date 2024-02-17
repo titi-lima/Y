@@ -4,10 +4,10 @@ Feature: edit user profile
     So that i can show who i am to others users
 
 Scenario: modificar nome de usuário com sucesso
-    Given o usuário com {nickname: "luke",nome: "lucas"} está cadastrado no sistema
-    When o usuário com {nickname: "luke"} modifica seu nome para "roberto"
+    Given o usuário com '{"nickname": "luke","nome": "lucas"}' está cadastrado no sistema
+    When o usuário com '{nickname: "luke"}' modifica seu nome para 'roberto'
     Then o sistema retorna uma mensagem de sucesso
-    And o usuário {nickname: "luke",nome: "roberto"} está cadastrado no sistema
+    And o usuário '{nickname: "luke",nome: "roberto"}' está cadastrado no sistema
 
 Scenario: modificar bio do usuário com sucesso
     Given o usuário com {nickname: "bruninho",descrição: "bruno de Ess"} está cadastrado no sistema

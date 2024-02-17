@@ -42,7 +42,7 @@ const test_comment ={
 
 export const givenUsrNoSist = (given: DefineStepFunction) => {
   given(
-    /^há no sistema um usuário com '(.*)'$/,
+    /^há no sistema um usuário com '(.*)'$ | ^o usuário com '{(.*)}' está cadastrado no sistema$/,
     async (data) => {
       var user = JSON.parse("{" + data + "}");
       if(!("nickName" in user)) {user.nickName = test_user.nickName;}
@@ -212,4 +212,38 @@ export const thenItemForaLista = (then: DefineStepFunction, cap: shared_res) => 
       expect(cap.response?.body.data).not.toContainEqual(expect.objectContaining(match));
     }
   );
+}
+
+export const changeUserName = (when: DefineStepFunction) => {
+  when(
+    /^o usuário com '{nickname: "(.*)"}' modifica seu nome para '(.*)')$/,
+    async (nickname, name) => {
+      const user = await userRepository.findByNickName(nickname);
+      if (user != null){
+        await userRepository.changeUserNameById(user.id,name)
+        console.log("user name changed")
+      }else {
+        console.log("system can't change name from user that doesnt exist")
+      }
+    }
+  );
+};
+
+export const pass = (then: DefineStepFunction) => {
+  then(
+    /^.*$/,
+    async () => {
+
+    }
+  )
+}
+
+export const checkUserInformation = (then : DefineStepFunction) => {
+  then(
+    /^o usuário '{nickname: "(.*)",nome: "(.*))"}' está cadastrado no sistema$/,
+    async (nickname, name) => {
+      const user = await userRepository.findByNickName(nickname);
+      expect(user?.name).toEqual(name)
+    }
+  )
 }
