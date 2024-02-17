@@ -20,7 +20,7 @@ class AuthController {
         });
       }
 
-      const checkPassword = compare(password, user.password);
+      const checkPassword = await compare(password, user.password);
 
       if (!checkPassword) {
         return next({

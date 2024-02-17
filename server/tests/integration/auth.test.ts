@@ -4,7 +4,7 @@ import { defineFeature, loadFeature } from 'jest-cucumber';
 import { connection } from '../Helper/database.config';
 import app from '../../src/app';
 
-const feature = loadFeature('../features/auth.feature');
+const feature = loadFeature('./features/auth.feature');
 
 defineFeature(feature, (test) => {
   const fakeUser = {
@@ -63,6 +63,30 @@ defineFeature(feature, (test) => {
     when,
     then,
   }) => {
+    given(/^eu tenho um usuário com o nickname "(.*)"$/, async (nickname) => {
+      response = await request(app).get(`/users/${nickname}/getIdByNickName`);
+
+      response = await request(app).get(`/users/${response.body.data}`);
+
+      expect(response.status).toBe(200);
+      expect(response.body.data).toHaveProperty('nickName', nickname);
+    });
+
+    when(
+      /^eu tento fazer login com o nickname "(.*)" e a senha "(.*)"$/,
+      async (nickName, password) => {
+        response = await request(app)
+          .post('/sessions')
+          .send({ nickName, password });
+      },
+    );
+
+    then(/^eu devo receber um código de erro "(.*)"$/, async (statusCode) => {
+      expect(response.status).toBe(Number(statusCode));
+    });
+  });
+
+  test('Autenticar um usuário com senha inválida', ({ given, when, then }) => {
     given(/^eu tenho um usuário com o nickname "(.*)"$/, async (nickname) => {
       response = await request(app).get(`/users/${nickname}/getIdByNickName`);
 
