@@ -2,45 +2,42 @@ Feature: List Follower
     As a user
     I want to be able to list my follower
     
-    Scenario: Lista de seguidores
-        Given o usuário "Breno" está na página "Minha Lista"
-        And o usuário “Breno“ segue o usuário “Ruy“ 
-        And o usuário “Breno“ segue o usuário “Odilon“ 
-        When "Breno" seleciona o campo “Seguindo“
-        Then "Breno" está na página "Minha Lista“
-        And “Breno“ vê “Ruy“ com a foto “Ruy.png“ na lista
-        And “Breno“ vê  “Odilon“ com a foto “Odilon.png“ na lista
+    Scenario: Lista de seguindo
+        Given há no sistema um usuário com '"id": "111", "nickName": "BrenoM"'
+        And há no sistema um usuário com '"id": "222", "nickName": "Ruy"'
+        And há no sistema um usuário com '"id": "333", "nickName": "Odilon"'
+        And o usuário com id '111' segue o usuário '222'
+        And o usuário com id '111' segue o usuário '333'
+        When o usuario com id '111' envia uma requisição GET para "/users/111/follows"
+        Then o status da resposta deve ser 200
+        And a resposta deve conter um array com apenas o nome "Ruy" e "Odilon"
 
     Scenario: Lista de seguidores
-        Given o usuário "Breno" está na página "Minha Lista""
-        And o usuário  “Ruy“ segue o usuário  “Breno“ 
-        And o usuário “Odilon“ segue o usuário “Breno“ 
-        And o usuário “Dudu_de_Infra“ segue o usuário “Breno“
-        When "Breno" seleciona o campo “Seguidores“
-        Then "Breno" está na página "Minha Lista“
-        And “Breno“ vê “Ruy“ com a foto “Ruy.png“ na lista
-        And “Breno“ vê  “Odilon“ com a foto “Odilon.png“na  lista
-        And “Breno“ vê “Dudu_de_Infra“ com a foto “LordFarQuar.png“ na lista
-
-
-    Scenario: Buscar na lista de seguidores
-        Given o usuário "Breno" está na página "Minha Lista""
-        And o usuário  “Ruy“ segue o usuário  “Breno“ 
-        And o usuário “Odilon“ segue o usuário “Breno“ 
-        And o usuário “Dudu_de_Infra“ segue o usuário “Breno“
-        When "Breno" seleciona o campo “Seguidores“
-        And “Breno” seleciona o campo “buscar usuário”
-        And “Breno“ digita “Ruy”
-        Then "Breno" está na página "Minha Lista“
-        And “Breno“ vê apenas o usuário “Ruy“ com a foto “Ruy.png“ na lista
+        Given há no sistema um usuário com '"id": "111", "nickName": "BrenoM"'
+        And há no sistema um usuário com '"id": "222", "nickName": "Ruy"'
+        And há no sistema um usuário com '"id": "333", "nickName": "Odilon"'
+        And o usuário com id '222' segue o usuário '111'
+        And o usuário com id '333' segue o usuário '111'
+        When o usuario com id '111' envia uma requisição GET para "/users/111/followers"
+        Then o status da resposta deve ser 200
+        And a resposta deve conter um array com apenas os nomes de "Ruy" e "Odilon"
 
     Scenario: Buscar na lista de seguindo
-        Given o usuário "Breno" está na página "Minha Lista"
-        And o usuário  “Breno“ segue o usuário  “Ruy“ 
-        And o usuário “Breno“ segue o usuário “Odilon“ 
-        And o usuário “Breno“ segue o usuário “Dudu_de_Infra“
-        When "Breno" seleciona o campo “Seguindo“
-        And “Breno” seleciona o campo “buscar usuário”
-        And “Breno“ digita “Odilon”
-        Then "Breno" está na página "Minha Lista“
-        And “Breno“ vê apenas o usuário “Odilon“ com a foto “Odilon.png“ na lista
+        Given há no sistema um usuário com '"id": "111", "nickName": "BrenoM"'
+        And há no sistema um usuário com '"id": "222", "nickName": "Ruy"'
+        And há no sistema um usuário com '"id": "333", "nickName": "Odilon"'
+        And o usuário com id '111' segue o usuário '222'
+        And o usuário com id '111' segue o usuário '333'
+        When o usuario com id '111' envia uma requisição GET para "/users/111/findFilterFollows/Ru"
+        Then o status da resposta deve ser 200
+        And a resposta deve conter um array com apenas o nome de "Ruy" 
+
+    Scenario: Buscar na lista de seguidores
+        Given há no sistema um usuário com '"id": "111", "nickName": "BrenoM"'
+        And há no sistema um usuário com '"id": "222", "nickName": "Ruy"'
+        And há no sistema um usuário com '"id": "333", "nickName": "Odilon"'
+        And o usuário com id '222' segue o usuário '111'
+        And o usuário com id '333' segue o usuário '111'
+        When o usuario com id '111' envia uma requisição GET para "/users/111/findFilterFollows/Ru"
+        Then o status da resposta deve ser 200
+        And a resposta deve conter um array com apenas o nome de "Ruy" 
