@@ -170,4 +170,35 @@ export class UserRepository {
       throw error;
     }
   }
+
+  async findPostsByUserId(userId: string) {
+    const user = await prisma.user.findUnique({
+      where: { id: userId },
+      select: {
+        posts: true,
+      },
+    });
+    return user?.posts;
+  }
+  
+  async findLikedPostsByUserId(userId: string) {
+    const user = await prisma.user.findUnique({
+      where: { id: userId },
+      select: {
+        likedPosts: true
+      },
+    });
+    return user?.likedPosts;
+  }
+
+  async findCommentsByUserId(userId: string) {
+    const user = await prisma.user.findUnique({
+      where: { id: userId },
+      select: {
+        comments: true,
+      },
+    });
+    return user?.comments;
+  }
+
 }

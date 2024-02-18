@@ -13,5 +13,7 @@ userRouter.route('/:id/follows').get(UserController.getFollows);
 userRouter.route('/:id/followers').get(UserController.getFollowers);
 userRouter.route('/:id/findFilterFollows/:str').get(UserController.getFilterFollows)
 userRouter.route('/:id/findFilterFollowers/:str').get(UserController.getFilterFollowers)
+userRouter.route('/:id/posts').get(UserController.getPosts);
+userRouter.route('/:id/posts/:date_str').get(UserController.getPostsByDate);
 
 export default userRouter;
