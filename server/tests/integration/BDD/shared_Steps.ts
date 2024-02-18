@@ -61,6 +61,15 @@ export const givenUsrNoSist = (given: DefineStepFunction) => {
   );
 };
 
+export const givenAddFollows = (given: DefineStepFunction) => {
+  given(
+    /^o usuário com id '(.*)' segue o usuário '(.*)'$/,
+    async (userId: string, newUserId: string) => {
+      await userRepository.insertFollows(userId, newUserId);
+    }
+  );
+};
+
 export const givenUsrForaSist = (given: DefineStepFunction) => {
   given(
     /^não há no sistema um usuário com id "(.*)"$/,
@@ -190,6 +199,16 @@ export const thenListaDe = (then: DefineStepFunction, cap: shared_res) => {
       else if(list_type == "comments"){
         expect(cap.response?.body.data).toBeInstanceOf(Array<Comment>);
       }
+    }
+  );
+}
+
+export const thenArrayDeUsers = (then: DefineStepFunction, cap: shared_res) => {
+  then(
+    /^a requisição deve retornar um array '(.*)'$/,
+    (arrayUsers) => {
+      let jsonArrayUsers = JSON.parse(arrayUsers)
+      expect(cap.response?.body.data).toStrictEqual(jsonArrayUsers);
     }
   );
 }

@@ -8,9 +8,9 @@ Feature: List Follower
         And há no sistema um usuário com '"id": "333", "nickName": "Odilon"'
         And o usuário com id '111' segue o usuário '222'
         And o usuário com id '111' segue o usuário '333'
-        When o usuario com id '111' envia uma requisição GET para "/users/111/follows"
-        Then o status da resposta deve ser 200
-        And a resposta deve conter um array com apenas o nome "Ruy" e "Odilon"
+        When uma requisição GET for enviada para "/users/111/follows"
+        Then o status da resposta deve ser "200"
+        And a requisição deve retornar um array '[{"id":"222", "name":"Test Name", "nickName":"Ruy"}, {"id":"333", "name":"Test Name", "nickName":"Odilon"}]'
 
     Scenario: Lista de seguidores
         Given há no sistema um usuário com '"id": "111", "nickName": "BrenoM"'
@@ -18,9 +18,9 @@ Feature: List Follower
         And há no sistema um usuário com '"id": "333", "nickName": "Odilon"'
         And o usuário com id '222' segue o usuário '111'
         And o usuário com id '333' segue o usuário '111'
-        When o usuario com id '111' envia uma requisição GET para "/users/111/followers"
-        Then o status da resposta deve ser 200
-        And a resposta deve conter um array com apenas os nomes de "Ruy" e "Odilon"
+        When uma requisição GET for enviada para "/users/111/followers"
+        Then o status da resposta deve ser "200"
+        And a requisição deve retornar um array '[{"id":"222", "name":"Test Name", "nickName":"Ruy"}, {"id":"333", "name":"Test Name", "nickName":"Odilon"}]'
 
     Scenario: Buscar na lista de seguindo
         Given há no sistema um usuário com '"id": "111", "nickName": "BrenoM"'
@@ -28,9 +28,9 @@ Feature: List Follower
         And há no sistema um usuário com '"id": "333", "nickName": "Odilon"'
         And o usuário com id '111' segue o usuário '222'
         And o usuário com id '111' segue o usuário '333'
-        When o usuario com id '111' envia uma requisição GET para "/users/111/findFilterFollows/Ru"
-        Then o status da resposta deve ser 200
-        And a resposta deve conter um array com apenas o nome de "Ruy" 
+        When uma requisição GET for enviada para "/users/111/findFilterFollows/Ru"
+        Then o status da resposta deve ser "200"
+        And a requisição deve retornar um array '[{"id":"222", "name":"Test Name", "nickName":"Ruy"}]'
 
     Scenario: Buscar na lista de seguidores
         Given há no sistema um usuário com '"id": "111", "nickName": "BrenoM"'
@@ -38,6 +38,6 @@ Feature: List Follower
         And há no sistema um usuário com '"id": "333", "nickName": "Odilon"'
         And o usuário com id '222' segue o usuário '111'
         And o usuário com id '333' segue o usuário '111'
-        When o usuario com id '111' envia uma requisição GET para "/users/111/findFilterFollows/Ru"
-        Then o status da resposta deve ser 200
-        And a resposta deve conter um array com apenas o nome de "Ruy" 
+        When uma requisição GET for enviada para "/users/111/findFilterFollowers/Ru"
+        Then o status da resposta deve ser "200"
+        And a requisição deve retornar um array '[{"id":"222", "name":"Test Name", "nickName":"Ruy"}]'
