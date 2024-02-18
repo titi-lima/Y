@@ -1,7 +1,7 @@
 import { Prisma, User } from '@prisma/client';
 import prisma from '../database';
 import { error } from 'console';
-import { HttpException } from 'src/middlewares';
+import { HttpException } from '../middlewares';
 
 export class UserRepository {
   async create(data: Prisma.UserCreateInput): Promise<User> {
