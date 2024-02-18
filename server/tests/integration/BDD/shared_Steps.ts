@@ -216,7 +216,7 @@ export const thenItemForaLista = (then: DefineStepFunction, cap: shared_res) => 
 
 export const changeUserName = (when: DefineStepFunction) => {
   when(
-    /^o usuário com '{nickname: "(.*)"}' modifica seu nome para '(.*)')$/,
+    /^o usuário com '{nickname: "(.*)"}' modifica seu nome para '(.*)'$/,
     async (nickname, name) => {
       const user = await userRepository.findByNickName(nickname);
       if (user != null){
@@ -232,7 +232,7 @@ export const changeUserName = (when: DefineStepFunction) => {
 export const pass = (then: DefineStepFunction) => {
   then(
     /^.*$/,
-    async () => {
+    () => {
 
     }
   )
@@ -240,7 +240,7 @@ export const pass = (then: DefineStepFunction) => {
 
 export const checkUserInformation = (then : DefineStepFunction) => {
   then(
-    /^o usuário '{nickname: "(.*)",nome: "(.*))"}' está cadastrado no sistema$/,
+    /^o usuário '{nickname: "(.*)",nome: "(.*)"}' está cadastrado no sistema$/,
     async (nickname, name) => {
       const user = await userRepository.findByNickName(nickname);
       expect(user?.name).toEqual(name)
