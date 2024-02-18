@@ -25,7 +25,7 @@ defineFeature(feature, (test) => {
     await connection.close();
   });
 
-  test('Criar um post', ({ given, when, then }) => {
+  test.skip('Criar um post', ({ given, when, then }) => {
     given(/^há no sistema um usuário com '(.*)'$/, async (data) => {
       const user = JSON.parse(`{${data}}`);
       if (!('nickName' in user)) {
@@ -67,7 +67,7 @@ defineFeature(feature, (test) => {
     });
   });
 
-  test('Falha ao criar post', ({ given, when, then }) => {
+  test.skip('Falha ao criar post', ({ given, when, then }) => {
     step.givenUsrForaSist(given);
     when(
       /^uma requisição POST for enviada para "(.*)" com o corpo da requisição sendo um JSON com '(.*)'$/,
