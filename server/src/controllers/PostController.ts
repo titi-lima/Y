@@ -99,7 +99,7 @@ class PostController {
 
       const usrsWhoLkd = await postRepository.findUsersWhoLikedByPostId(id);
       if(usrsWhoLkd){
-        for(var usr of usrsWhoLkd){
+        for(const usr of usrsWhoLkd){
           if(usr.id === checkUser.id){
             return next({
               status: 403,
@@ -148,9 +148,9 @@ class PostController {
       };
 
       const usrsWhoLkd = await postRepository.findUsersWhoLikedByPostId(id);
-      var found = false
+      let found = false
       if(usrsWhoLkd){
-        for(var usr of usrsWhoLkd){
+        for(const usr of usrsWhoLkd){
           if(usr.id === checkUser.id){
             found = true
           }

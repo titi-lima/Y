@@ -1,4 +1,5 @@
 import { z } from 'zod';
+
 export const validateDescription = z.string().max(300)
 export const validateName = z.string().min(1)
 export const validateNickName = z.string().trim().min(1)
