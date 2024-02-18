@@ -1,5 +1,7 @@
 import { z } from 'zod';
-
+export const validateDescription = z.string().max(300)
+export const validateName = z.string().min(1)
+export const validateNickName = z.string().trim().min(1)
 export const User = z.object({
   nickName: z
     .string({ required_error: 'O nickname é obrigatório.' })
@@ -15,6 +17,21 @@ export const User = z.object({
   dateBirth: z.coerce.date({
     required_error: 'A data de nascimento é obrigatória.',
   }),
+});
+
+export const Post = z.object({
+  // author: z.string().trim().min(1),
+  authorId: z.string().min(1),
+  date: z.coerce.date(),
+  text: z.string().min(1),
+});
+
+export const Comment = z.object({
+  postId: z.string().min(1),
+  // author: z.string().trim().min(1),
+  authorId: z.string().min(1),
+  date: z.coerce.date(),
+  text: z.string().min(1),
 });
 
 // DATA TRANSFER OBJECT

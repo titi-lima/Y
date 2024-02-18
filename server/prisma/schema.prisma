@@ -16,4 +16,30 @@ model User {
   dateBirth   DateTime
   follows     User[]   @relation("follow")
   followers   User[]   @relation("follow")
+  posts       Post[]
+  likedPosts  Post[]   @relation("liked")
+  comments    Comment[]
+}
+
+model Post{
+  id          String   @id @default(cuid())
+  author      User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  authorId    String 
+  date        DateTime
+  text        String
+  midiaLink   String?
+  likes       Int      @default(0)
+  comments    Comment[]
+  usrsWhoLkd  User[]   @relation("liked")
+
+}
+
+model Comment{
+  id          String   @id @default(cuid())
+  post        Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  postId      String
+  author      User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  authorId    String
+  date        DateTime
+  text        String
 }

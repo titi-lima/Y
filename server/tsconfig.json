@@ -39,5 +39,5 @@
   "include": [
     "./src/**/*",
     "./tests/**/*"
-  ],
+, "setupTests.ts", "jest.config.js"  ],
 }

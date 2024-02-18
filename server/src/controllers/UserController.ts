@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import { hash } from 'bcryptjs';
-import { UserRepository } from '../repositories';
-import { User } from '../DTOs';
+import { UserRepository} from '../repositories';
+import { User , validateDescription , validateName, validateNickName} from '../DTOs';
 
 class UserController {
   async create(req: Request, res: Response, next: NextFunction) {
@@ -17,7 +17,7 @@ class UserController {
       if (checkNickName) {
         return next({
           status: 400,
-          message: 'This NickName is already registred',
+          message: 'This NickName is already registered',
         });
       }
 
@@ -407,6 +407,176 @@ class UserController {
       return next();
     } catch (error) {
       return next(error);
+    }
+  }
+
+  async getPosts(req: Request, res: Response, next: NextFunction) {
+    try {
+      const { id } = req.params;
+      const userRepository = new UserRepository();
+
+      const posts = await userRepository.findPostsByUserId(id);
+
+      if (!posts) {
+        return next({
+          status: 400,
+          message: 'User not found',
+        });
+      }
+
+      if (!posts?.length) {
+        return next({
+          status: 204,
+          message: 'User has no posts',
+        });
+      }
+
+      res.locals = {
+        status: 200,
+        message: 'Posts found',
+        data: posts,
+      };
+
+      return next();
+    } catch (error) {
+      return next(error);
+    }
+  }
+
+  async getPostsByDate(req: Request, res: Response, next: NextFunction) {
+    try {
+      const { id, date_str } = req.params;
+      const date = new Date(date_str)
+      
+      if (isNaN(date.getTime())) {
+        return next({
+          status: 400,
+          message: 'Invalid date',
+        });
+      }
+
+      const userRepository = new UserRepository();
+
+      const posts = await userRepository.findPostsByUserId(id);
+
+      if (!posts) {
+        return next({
+          status: 400,
+          message: 'User not found',
+        });
+      }
+      
+      if (!posts?.length) {
+        return next({
+          status: 204,
+          message: 'User has no posts',
+        });
+      }
+
+      const desired_posts = posts.filter(post => post.date.getTime() === date.getTime())
+
+      if (!desired_posts.length) {
+        return next({
+          status: 204,
+          message: 'No posts found on this date',
+          data: date
+        });
+      }
+
+      res.locals = {
+        status: 200,
+        message: 'Posts found',
+        data: desired_posts,
+      };
+
+      return next();
+    } catch (error) {
+      return next(error);
+    }
+  }
+  
+
+  async putNewDescription(req: Request, res: Response, next: NextFunction){
+    try{
+      const {userId}= req.params;
+      const {description} = req.body;
+      const validate_description = validateDescription.parse(description);
+      const userRepository = new UserRepository();
+
+      await userRepository.changeBioByUserID(userId,validate_description);
+
+      res.status(200).send({
+        sucess: true,
+        message: "Bio sucessfully updated "
+      });
+    }catch (error) {
+      return next(error);
+    }
+  }
+
+  async getDescriptionByUserId(req: Request, res: Response, next: NextFunction){
+    try{
+      const {userId} = req.params
+      const userRepository = new UserRepository();
+      const description = await userRepository.getDescriptionByUserID(userId)
+      res.status(200).send({
+        sucess: true,
+        message: "description: ",
+        data: description
+      });
+    }catch (error) {
+      return next(error);
+    }
+  }
+
+  async changeUserName(req: Request, res: Response, next: NextFunction){
+    try{
+      const {userId} = req.params;
+      const {name} = req.body;
+      const validate_name = validateName.parse(name);
+      const userRepository = new UserRepository();
+
+      await userRepository.changeUserNameById(userId,validate_name);
+      
+      res.status(200).send({
+        sucess : true,
+        message: "User name sucessfully updated"
+      })
+    }catch (error) {
+      return next(error)
+    }
+  }
+
+  async getUserNameById(req: Request, res: Response, next: NextFunction){
+    try{
+      const {userId} = req.params;
+      const userRepository = new UserRepository();
+      const name = await userRepository.getUserNameById(userId);
+      res.status(200).send({
+        sucess: true,
+        message: "name: ",
+        data: name
+      });
+    }catch (error) {
+      return next(error);
+    }
+  }
+  
+  async changeNickName(req: Request, res: Response, next: NextFunction){
+    try{
+      const {userId} = req.params;
+      const {nickName} = req.body;
+      const validateNick = validateNickName.parse(nickName);
+      const userRepository = new UserRepository();
+      
+      await userRepository.changeNickName(userId,validateNick)
+
+      res.status(200).send({
+        sucess : true,
+        message : "nickName sucessfully updated",
+      })
+    }catch (error){
+      return next(error)
     }
   }
 }
