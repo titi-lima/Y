@@ -31,8 +31,9 @@ export default {
   // ],
 
   testMatch: [
-    '<rootDir>/tests/unit/*.test.ts',
-    '<rootDir>/tests/integration/*.test.ts',
+    // '<rootDir>/tests/integration/*.test.ts',
+    '<rootDir>/tests/integration/BDD/*.test.ts',
+    // '<rootDir>/tests/unit/BDD/*.test.ts',
   ],
 
   // Indicates which provider should be used to instrument code for coverage
@@ -138,7 +139,7 @@ export default {
   // setupFiles: [],
 
   // A list of paths to modules that run some code to configure or set up the testing framework before each test
-  // setupFilesAfterEnv: [],
+  // setupFilesAfterEnv: ['./setupTests.ts'],
 
   // The number of seconds after which a test is considered as slow and reported as such in the results.
   // slowTestThreshold: 5,
