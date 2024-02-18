@@ -213,3 +213,28 @@ export const thenItemForaLista = (then: DefineStepFunction, cap: shared_res) => 
     }
   );
 }
+
+export const thenCommNoSist = (then: DefineStepFunction, cap: shared_res) => {
+  then(
+    /^há no sistema um comentário criado com '(.*)'$/,
+    async (data) => {
+      const match = JSON.parse("{" + data + "}");
+      if(match.date){
+        match.date = new Date(match.date);
+      }
+      var comment = await commentRepository.findByCommentId(cap.response?.body.data.id);
+      console.log(comment)
+      expect(comment).toMatchObject(match);
+    }
+  );
+}
+
+export const thenCommForaSist = (then: DefineStepFunction) => {
+  then(
+    /^não há mais no sistema um comentário com id "(.*)"$/,
+    async (commentId) => {
+      var comment = await commentRepository.findByCommentId(commentId);
+      expect(comment).toBeNull();
+    }
+  );
+}

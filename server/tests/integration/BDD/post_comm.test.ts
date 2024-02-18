@@ -28,6 +28,7 @@ defineFeature(feature, (test) => {
     step.whenPOSTcomJSON(when, cap);
     step.thenStatus(then, cap);
     step.thenMsg(then, cap);
+    step.thenCommNoSist(then, cap);
 
   });
 
@@ -49,6 +50,7 @@ defineFeature(feature, (test) => {
     step.whenDELETE(when, cap);
     step.thenStatus(then, cap);
     step.thenMsg(then, cap);
+    step.thenCommForaSist(then);
 
   });
 

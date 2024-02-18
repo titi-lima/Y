@@ -31,8 +31,6 @@ export default {
   // ],
 
   testMatch: [
-    // '<rootDir>/tests/unit/*.test.ts',
-    // '<rootDir>/tests/integration/*.test.ts',
     '<rootDir>/tests/integration/BDD/*.test.ts',
     // '<rootDir>/tests/unit/BDD/*.test.ts',
   ],
