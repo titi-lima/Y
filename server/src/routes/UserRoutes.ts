@@ -13,6 +13,11 @@ userRouter.route('/:id/follows').get(UserController.getFollows);
 userRouter.route('/:id/followers').get(UserController.getFollowers);
 userRouter.route('/:id/findFilterFollows/:str').get(UserController.getFilterFollows)
 userRouter.route('/:id/findFilterFollowers/:str').get(UserController.getFilterFollowers)
+userRouter.route('/:userId/changeDescription').put(UserController.putNewDescription)
+userRouter.route('/:userId/getDescription').get(UserController.getDescriptionByUserId)
+userRouter.route('/:userId/changeUserName').put(UserController.changeUserName)
+userRouter.route('/:userId/getUserName').get(UserController.getUserNameById)
+userRouter.route('/:userId/changeNickName').put(UserController.changeNickName)
 userRouter.route('/:id/posts').get(UserController.getPosts);
 userRouter.route('/:id/posts/:date_str').get(UserController.getPostsByDate);
 
