@@ -22,7 +22,7 @@ defineFeature(feature, (test) => {
     await connection.close();
   });
 
-  test('Buscar postagens em todas as datas', ({ given, when, then}) => {
+  test('Buscar postagens de usuário em todas as datas', ({ given, when, then}) => {
     step.givenUsrNoSist(given);
     step.givenPostNoSist(given);
     step.givenPostNoSist(given);
@@ -38,7 +38,7 @@ defineFeature(feature, (test) => {
   });
 
 
-  test('Buscar postagens em data específica', ({ given, when, then}) => {
+  test('Buscar postagens de usuário em data específica', ({ given, when, then}) => {
     step.givenUsrNoSist(given);
     step.givenPostNoSist(given);
     step.givenPostNoSist(given);
@@ -53,7 +53,7 @@ defineFeature(feature, (test) => {
 
   });
 
-  test('Buscar postagens em data inválida', ({ given, when, then}) => {
+  test('Buscar postagens de usuário em data inválida', ({ given, when, then}) => {
     step.givenUsrNoSist(given);
     step.whenGET(when, cap);
     step.thenStatus(then, cap);

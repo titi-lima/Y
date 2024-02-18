@@ -18,6 +18,13 @@ export class CommentRepository{
       return comment;
     }
 
+    async findByCommentId(commentId: string) {
+      const comment = await prisma.comment.findUnique({
+        where: { id: commentId },
+      });
+      return comment;
+    }
+
     async delete(commentId: string){
       await prisma.comment.delete({
         where: { id: commentId }
