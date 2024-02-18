@@ -4,16 +4,16 @@ import { UserRepository, PostRepository, CommentRepository} from '../../../src/r
 import { DefineStepFunction } from 'jest-cucumber';
 import { Comment, Post } from '@prisma/client';
 
-const userRepository = new UserRepository();
-const postRepository= new PostRepository();
-const commentRepository = new CommentRepository();
-const request = supertest(app);
-interface shared_res {response?: supertest.Response};
+export const userRepository = new UserRepository();
+export const postRepository= new PostRepository();
+export const commentRepository = new CommentRepository();
+export const request = supertest(app);
+export interface shared_res {response?: supertest.Response};
 
 
 // Modelos genéricos para teste
 
-const test_user = {
+export const test_user = {
   id: "u0",
   nickName: "TestNick",
   name: "Test Name",
@@ -22,14 +22,14 @@ const test_user = {
   dateBirth: new Date(),
 };
 
-const test_post ={
+export const test_post ={
   id: "p0",
   authorId: "u0",
   date: new Date(),
   text: ".",
 }
 
-const test_comment ={
+export const test_comment ={
   id: "c0",
   postId: "p0",
   authorId: "u0",
@@ -210,6 +210,31 @@ export const thenItemForaLista = (then: DefineStepFunction, cap: shared_res) => 
     (data) => {
       const match = JSON.parse("{" + data + "}");
       expect(cap.response?.body.data).not.toContainEqual(expect.objectContaining(match));
+    }
+  );
+}
+
+export const thenCommNoSist = (then: DefineStepFunction, cap: shared_res) => {
+  then(
+    /^há no sistema um comentário criado com '(.*)'$/,
+    async (data) => {
+      const match = JSON.parse("{" + data + "}");
+      if(match.date){
+        match.date = new Date(match.date);
+      }
+      var comment = await commentRepository.findByCommentId(cap.response?.body.data.id);
+      console.log(comment)
+      expect(comment).toMatchObject(match);
+    }
+  );
+}
+
+export const thenCommForaSist = (then: DefineStepFunction) => {
+  then(
+    /^não há mais no sistema um comentário com id "(.*)"$/,
+    async (commentId) => {
+      var comment = await commentRepository.findByCommentId(commentId);
+      expect(comment).toBeNull();
     }
   );
 }

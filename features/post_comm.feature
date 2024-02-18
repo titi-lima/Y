@@ -17,6 +17,7 @@ Scenario: Criar comentário
     When uma requisição POST for enviada para "/comments" com o corpo da requisição sendo um JSON com '"postId": "aaa", "authorId": "111", "date": "2024-02-01", "text": "Que legal!"'
     Then o status da resposta deve ser "201"
     And a resposta deve conter a mensagem "Comment created"
+    And há no sistema um comentário criado com '"postId": "aaa", "authorId": "111", "date": "2024-02-01", "text": "Que legal!"'
 
 Scenario: Buscar comentários de postagem
     Given há no sistema um post com '"id": "aaa"'
@@ -33,7 +34,8 @@ Scenario: Apagar comentário
     Given há no sistema um comentário com '"id": "AAA"'
     When uma requisição DELETE for enviada para "/comments/AAA"
     Then o status da resposta deve ser "200"
-    And a resposta deve conter a mensagem "Comment deleted" 
+    And a resposta deve conter a mensagem "Comment deleted"
+    And não há mais no sistema um comentário com id "AAA"
 
 #-------------------------------------------------------------
 
