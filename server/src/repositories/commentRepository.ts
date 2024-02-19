@@ -3,7 +3,7 @@ import prisma from '../database';
 
 export class CommentRepository{
     async create(data: Prisma.CommentUncheckedCreateInput): Promise<Comment> {
-      const {postId: postId, authorId: authorId, ...rest} = data;
+      const {postId, authorId, ...rest} = data;
       const comment = await prisma.comment.create({
         data: {
           post:{
@@ -14,6 +14,13 @@ export class CommentRepository{
           },
           ...rest
         }
+      });
+      return comment;
+    }
+
+    async findByCommentId(commentId: string) {
+      const comment = await prisma.comment.findUnique({
+        where: { id: commentId },
       });
       return comment;
     }

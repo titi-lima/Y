@@ -11,7 +11,7 @@ Feature: Histórico de postagens do usuário
 
 ## Sucessful Scenarios
 
-Scenario: Buscar postagens em todas as datas
+Scenario: Buscar postagens de usuário em todas as datas
     Given há no sistema um usuário com '"id": "000"'
     And há no sistema um post com '"id": "aaa", "authorId": "000", "date": "2023-11-20"'
     And há no sistema um post com '"id": "bbb", "authorId": "000", "date": "2023-11-20"'
@@ -24,7 +24,7 @@ Scenario: Buscar postagens em todas as datas
     And um item com '"id": "bbb"' está na lista
     And um item com '"id": "ccc"' está na lista
 
-Scenario: Buscar postagens em data específica
+Scenario: Buscar postagens de usuário em data específica
     Given há no sistema um usuário com '"id": "000"'
     And há no sistema um post com '"id": "aaa", "authorId": "000", "date": "2023-11-20"'
     And há no sistema um post com '"id": "bbb", "authorId": "000", "date": "2023-11-20"'
@@ -41,7 +41,7 @@ Scenario: Buscar postagens em data específica
 
 ## Failure Scenarios
 
-Scenario: Buscar postagens em data inválida
+Scenario: Buscar postagens de usuário em data inválida
     Given há no sistema um usuário com '"id": "000"'
     When uma requisição GET for enviada para "/users/000/posts/2023-11-40"
     Then o status da resposta deve ser "400"

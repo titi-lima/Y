@@ -4,7 +4,7 @@ import prisma from '../database';
 export class PostRepository{
   
     async create(data: Prisma.PostUncheckedCreateInput): Promise<Post>{
-      const {authorId: authorId, ...rest} = data;
+      const {authorId, ...rest} = data;
       const post = await prisma.post.create({
         data: {
           author: {
