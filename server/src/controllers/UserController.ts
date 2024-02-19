@@ -192,7 +192,7 @@ class UserController {
 
       res.locals = {
         status: 200,
-        message: 'remove follows',
+        message: 'Remove follows',
       };
 
       return next();
