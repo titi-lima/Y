@@ -17,3 +17,9 @@ Feature: User Authentication
     Given eu tenho um usuário com o nickname "johndoe"
     When eu tento fazer login com o nickname "johndoe" e a senha "123"
     Then eu devo receber um código de erro "400"
+
+  Scenario: Fazer logout de um usuário
+    Given eu tenho um usuário com o nickname "johndoe"
+    And eu estou autenticado com o nickname "johndoe" e a senha "123456"
+    When eu tento fazer logout
+    Then eu devo receber um código de sucesso "200"
