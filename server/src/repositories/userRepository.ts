@@ -135,7 +135,9 @@ export class UserRepository {
               },
             },
             select: {
+              id: true,
               nickName: true,
+              name: true
             },
           },
         },
@@ -161,7 +163,9 @@ export class UserRepository {
               },
             },
             select: {
+              id: true,
               nickName: true,
+              name: true
             },
           },
         },

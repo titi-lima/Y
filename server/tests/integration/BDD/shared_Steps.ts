@@ -70,6 +70,15 @@ export const givenUsrNoSist = (given: DefineStepFunction) => {
   });
 };
 
+export const givenAddFollows = (given: DefineStepFunction) => {
+  given(
+    /^o usuário com id '(.*)' segue o usuário '(.*)'$/,
+    async (userId: string, newUserId: string) => {
+      await userRepository.insertFollows(userId, newUserId);
+    }
+  );
+};
+
 export const givenUsrForaSist = (given: DefineStepFunction) => {
   given(/^não há no sistema um usuário com id "(.*)"$/, async (user_id) => {
     const user = await userRepository.findById(user_id);
@@ -184,6 +193,16 @@ export const thenListaDe = (then: DefineStepFunction, cap: shared_res) => {
     }
   });
 };
+
+export const thenArrayDeUsers = (then: DefineStepFunction, cap: shared_res) => {
+  then(
+    /^a requisição deve retornar um array '(.*)'$/,
+    (arrayUsers) => {
+      let jsonArrayUsers = JSON.parse(arrayUsers)
+      expect(cap.response?.body.data).toStrictEqual(jsonArrayUsers);
+    }
+  );
+}
 
 export const thenItemNaLista = (then: DefineStepFunction, cap: shared_res) => {
   then(/^um item com '(.*)' está na lista$/, (data) => {
