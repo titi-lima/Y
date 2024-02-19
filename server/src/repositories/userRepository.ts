@@ -1,6 +1,6 @@
 import { Prisma, User } from '@prisma/client';
-import prisma from '../database';
 import { error } from 'console';
+import prisma from '../database';
 import { HttpException } from '../middlewares';
 
 export class UserRepository {
@@ -172,6 +172,7 @@ export class UserRepository {
       throw error;
     }
   }
+
   async changeBioByUserID(userId: string, newDescription: string){
     try{
       await prisma.user.update({
@@ -186,6 +187,7 @@ export class UserRepository {
       throw  error;
     }
   }
+
   async getDescriptionByUserID(userId: string){
     try{
       const description = await prisma.user.findUnique({
@@ -197,6 +199,7 @@ export class UserRepository {
       throw error
     }
   }
+
   async changeUserNameById(userId: string, name: string){
     try{
       await prisma.user.update({
@@ -204,13 +207,14 @@ export class UserRepository {
           id: userId
         },
         data: {
-          name: name
+          name
         },
       });
     }catch (error) {
       throw  error;
     }
   }
+
   async getUserNameById(userId: string){
     try{
       const name = await prisma.user.findUnique({
@@ -222,6 +226,7 @@ export class UserRepository {
       throw error
     }
   }
+
   async changeNickName(userId: string, nickName: string){
     try{
       await prisma.user.update({
@@ -229,13 +234,13 @@ export class UserRepository {
           id: userId
         },
         data: {
-          nickName: nickName
+          nickName
         },
       });
     } catch (error) {
       if (error instanceof Prisma.PrismaClientKnownRequestError){
-        //Unique constraint failed on the {nickName}
-        //https://www.prisma.io/docs/orm/reference/error-reference
+        // Unique constraint failed on the {nickName}
+        // https://www.prisma.io/docs/orm/reference/error-reference
         if (error.code == "P2002"){
           // Conflict status (409)
           // https://developer.mozilla.org/en-US/docs/Web/HTTP/Status
