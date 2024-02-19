@@ -299,7 +299,7 @@ describe('User Test', () => {
     const rota1 = `/users/${id1.followsId}/insertFollows`;
     await request(app).post(rota1).send(id2);
 
-    const rota2 = '/users/' + 'IncorrectId' + '/follows';
+    const rota2 = '/users/IncorrectId/follows';
     const response = await request(app).get(rota2);
 
     JSON.stringify(response.body.data);
@@ -434,7 +434,7 @@ describe('User Test', () => {
     const rota1 = `/users/${id1.followsId}/insertFollows`;
     await request(app).post(rota1).send(id2);
 
-    const rota2 = '/users/' + 'IncorrectId' + '/followers';
+    const rota2 = '/users/IncorrectId/followers';
     const response = await request(app).get(rota2);
 
     JSON.stringify(response.body.data);
