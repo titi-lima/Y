@@ -109,4 +109,40 @@ defineFeature(feature, (test) => {
       expect(response.status).toBe(Number(statusCode));
     });
   });
+
+  test('Fazer logout de um usuário', ({ given, when, then }) => {
+    given(/^eu tenho um usuário com o nickname "(.*)"$/, async (nickname) => {
+      response = await request(app).get(`/users/${nickname}/getIdByNickName`);
+
+      response = await request(app).get(`/users/${response.body.data}`);
+
+      expect(response.status).toBe(200);
+      expect(response.body.data).toHaveProperty('nickName', nickname);
+    });
+
+    given(
+      /^eu estou autenticado com o nickname "(.*)" e a senha "(.*)"$/,
+      async (nickname, password) => {
+        response = await request(app)
+          .post('/sessions')
+          .send({ nickName: nickname, password });
+
+        expect(response.status).toBe(200);
+        expect(response.body.data).toHaveProperty('accessToken');
+      },
+    );
+
+    when(/^eu tento fazer logout$/, async () => {
+      response = await request(app)
+        .delete('/sessions')
+        .set('Authorization', `Bearer ${response.body.data.accessToken}`);
+    });
+
+    then(
+      /^eu devo receber um código de sucesso "(.*)"$/,
+      async (statusCode) => {
+        expect(response.status).toBe(Number(statusCode));
+      },
+    );
+  });
 });

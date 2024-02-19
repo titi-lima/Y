@@ -1,10 +1,11 @@
 import { Router } from 'express';
 
+import auth from '../middlewares/auth';
 import { AuthController } from '../controllers';
 
 const authRouter = Router();
 
-authRouter.post('/', AuthController.login);
-authRouter.delete('/', AuthController.logout);
+authRouter.route('/').post(AuthController.login);
+authRouter.route('/').delete([auth], AuthController.logout);
 
 export default authRouter;
