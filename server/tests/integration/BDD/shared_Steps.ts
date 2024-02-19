@@ -1,7 +1,8 @@
 /* eslint-disable no-param-reassign */
 import supertest from 'supertest';
 import { DefineStepFunction } from 'jest-cucumber';
-import { Comment, Post } from '@prisma/client';
+import { Comment, Post, Prisma , User} from '@prisma/client';
+import { CommentController } from '@controllers';
 import app from '../../../src/app';
 import {
   UserRepository,
@@ -80,13 +81,27 @@ export const givenAddFollows = (given: DefineStepFunction) => {
 };
 
 export const givenUsrForaSist = (given: DefineStepFunction) => {
-  given(/^não há no sistema um usuário com id "(.*)"$/, async (user_id) => {
-    const user = await userRepository.findById(user_id);
-    if (user) {
-      console.log('Usuário estava no sistema');
-      // Adiciona função que deleta o usuário
+  given(
+    /^(o usuário com|não há no sistema um usuário com id) ["'](.*)["']( não está cadastrado no sistema)?$/,
+    async (str1,user_id,str2) => {
+      let user;
+      if (str1 == "o usuário com"){
+        const user_info = JSON.parse(user_id);
+        if("id" in user_info){
+          user = await userRepository.findById(user_info.id);
+        }else if ("nickName" in user_info){
+          user = await userRepository.findByNickName(user_info.nickName);
+        }
+      }else{
+        user = await userRepository.findById(user_id);
+      }
+      if(user){
+        console.log("Usuário estava no sistema");
+        // Adiciona função que deleta o usuário
+      }else{
+        console.log("Usuário " + user_id +" não está no sistema")
+      }
     }
-  });
 };
 
 export const givenPostNoSist = (given: DefineStepFunction) => {
@@ -170,6 +185,55 @@ export const whenDELETE = (when: DefineStepFunction, cap: shared_res) => {
   });
 };
 
+export const changeUserName = (when: DefineStepFunction) => {
+  when(
+    /^o usuário com '{nickName: "(.*)"}' modifica seu nome para '(.*)'$/,
+    async (nickname, name) => {
+      const user = await userRepository.findByNickName(nickname);
+      if (user != null){
+        await userRepository.changeUserNameById(user.id,name)
+        console.log("user name changed")
+      }else {
+        console.log("system can't change name from user that doesnt exist")
+      }
+    }
+  );
+};
+
+export const changeNickName = (when: DefineStepFunction) => {
+  when(
+    /^o usuário com '{nickName: "(.*)"}' modifica seu nickname para '(.*)'$/,
+    async (nickname, name) => {
+      const user = await userRepository.findByNickName(nickname);
+      if (user != null){
+        try{
+          await userRepository.changeNickName(user.id,name)
+          console.log("user nickname changed")
+        }catch(e){
+          console.log(e)
+        }
+      }else {
+        console.log("system can't change nickname from user that doesnt exist")
+      }
+    }
+  );
+};
+
+export const changeBio = (when: DefineStepFunction) => {
+  when(
+    /^o usuário com '{nickName: "(.*)"}' modifica sua descrição para '(.*)'$/,
+    async (nickname, description) => {
+      const user = await userRepository.findByNickName(nickname);
+      if (user != null){
+        await userRepository.changeBioByUserID(user.id,description);
+        console.log("user bio changed")
+      }else {
+        console.log("system can't change bio from user that doesnt exist")
+      }
+    }
+  );
+};
+=======
 // THEN
 
 export const thenStatus = (then: DefineStepFunction, cap: shared_res) => {
@@ -247,4 +311,60 @@ export const thenCommForaSist = (then: DefineStepFunction) => {
       expect(comment).toBeNull();
     },
   );
+}
+
+export const pass = (then: DefineStepFunction) => {
+  then(
+    /^.*$/,
+    () => {
+
+    }
+  )
+}
+
+export const thenUserInSystem = (then : DefineStepFunction) => {
+  then(
+    /^o usuário (com )?'(.*)' está cadastrado no sistema$/,
+    async (com,user_data) => {
+      const test_user = JSON.parse(user_data);
+      let user = JSON.parse("{}")
+      let tests = 0
+      let pass = 0
+      try{
+        if("nickName" in test_user) {
+          user = await userRepository.findByNickName(test_user.nickName);
+        }else if ("id" in test_user){
+          user = await userRepository.findById(test_user.id);
+        }
+        if("name" in test_user) {
+          if(user.name != test_user.name){
+            throw new Error("users name are differents")
+          }
+        }
+        if("password" in test_user) {
+          if(user.password != test_user.password){
+            throw new Error("users password are differents")
+          }
+        }
+        if("description" in test_user) {
+          if(user.description != test_user.description){
+            throw new Error("users description are differents")
+          }
+        }
+        if("dateBirth" in test_user) {
+          if(user.dateBirth != test_user.dateBirth){
+            throw new Error("users dateBirth are differents")
+          }
+        }
+        console.log(user)
+        console.log(test_user)
+        expect(true).toEqual(true)
+      }catch (error){
+        expect(true).toEqual(false)
+        console.log(error)
+      }
+    }
+  )
+}
+=======
 };
