@@ -34,7 +34,7 @@ defineFeature(feature, (test) => {
     step.givenUsrNoSist(given);
     step.givenUsrNoSist(given);
     step.givenAddFollows(given);
-    step.whenPOSTcomJSON(when, cap);
+    step.whenDELETEcomJSON(when, cap);
     step.thenStatus(then, cap);
     step.thenMsg(then, cap);
   });

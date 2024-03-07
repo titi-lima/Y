@@ -174,6 +174,17 @@ export const whenPOSTcomJSON = (when: DefineStepFunction, cap: shared_res) => {
   );
 };
 
+export const whenDELETEcomJSON = (when: DefineStepFunction, cap: shared_res) => {
+  when(
+    /^uma requisição DELETE for enviada para "(.*)" com o corpo da requisição sendo um JSON com '(.*)'$/,
+    async (url, data) => {
+      const post = JSON.parse(`{${data}}`);
+      cap.response = await request.delete(url).send(post);
+      console.log(cap.response.body);
+    },
+  );
+};
+
 export const whenGET = (when: DefineStepFunction, cap: shared_res) => {
   when(/^uma requisição GET for enviada para "(.*)"$/, async (url) => {
     cap.response = await request.get(url);
