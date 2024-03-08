@@ -28,7 +28,7 @@ Feature: List Follower
         And há no sistema um usuário com '"id": "333", "nickName": "Odilon"'
         And o usuário com id '111' segue o usuário '222'
         And o usuário com id '111' segue o usuário '333'
-        When uma requisição GET for enviada para "/users/111/findFilterFollows/Ru"
+        When uma requisição GET for enviada para "/users/111/filterFollows/Ru"
         Then o status da resposta deve ser "200"
         And a requisição deve retornar um array '[{"id":"222", "name":"Test Name", "nickName":"Ruy"}]'
 
@@ -38,6 +38,6 @@ Feature: List Follower
         And há no sistema um usuário com '"id": "333", "nickName": "Odilon"'
         And o usuário com id '222' segue o usuário '111'
         And o usuário com id '333' segue o usuário '111'
-        When uma requisição GET for enviada para "/users/111/findFilterFollowers/Ru"
+        When uma requisição GET for enviada para "/users/111/filterFollowers/Ru"
         Then o status da resposta deve ser "200"
         And a requisição deve retornar um array '[{"id":"222", "name":"Test Name", "nickName":"Ruy"}]'
