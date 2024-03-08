@@ -7,7 +7,7 @@ import { Inter } from 'next/font/google'
 
 const inter = Inter({ subsets: ['latin'] })
 
-const myListPage = () => {
+const FollowsList = () => {
     let arraySeguindoBruto = [{nome: "Luis", nickName: "LuisF"}, {nome: "Tiago", nickName: "Titi"}, {nome: "Luan Jardim", nickName: "LuanGarden"}]
     let arraySeguidoresBruto = [{nome: "Pedro coelho", nickName: "PedroNC2"}, {nome: "Luis", nickName: "LuisF"}, {nome: "Tiago", nickName: "Tiati"}]
 
@@ -73,4 +73,4 @@ const myListPage = () => {
     );
 };
 
-export default myListPage;
+export default FollowsList;
