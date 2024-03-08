@@ -1,0 +1,29 @@
+.name {
+    position: relative;
+    top: 30%;
+    left: 7%;
+    overflow: hidden;
+
+    font-family: var(--standard-font);
+    font-style: normal;
+    font-weight: 800;
+    font-size: 2em;
+    color: var(--main-color);
+    text-shadow: -1px -1px 0 var(--secondary-color), 1px -1px 0 var(--secondary-color), -1px 1px 0 var(--secondary-color), 1px 1px 0 var(--secondary-color);
+    /* border: solid black; */
+}
+
+.nick {
+    position: relative;
+    top: 30%;
+    left: 7%;
+    overflow: hidden;
+
+    font-family: var(--standard-font);
+    font-style: normal;
+    font-weight: 800;
+    font-size: 1em;
+    color: var(--main-color);
+    text-shadow: -1px -1px 0 var(--secondary-color), 1px -1px 0 var(--secondary-color), -1px 1px 0 var(--secondary-color), 1px 1px 0 var(--secondary-color);
+    /* border: solid black; */
+}

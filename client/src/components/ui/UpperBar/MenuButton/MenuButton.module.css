@@ -10,7 +10,8 @@
 .line1 {
   position: relative;
   margin-top: 20%;
-  background: var(--main-color);
   width: 100%;
   height: 10%;
+
+  background: var(--main-color);
 }

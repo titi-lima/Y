@@ -4,6 +4,8 @@ import { UpperBar } from '../../components/ui/UpperBar/UpperBar'
 import '../globals.css'
 import { ProfilePicture } from '@/components/ui/ProfilePicFrame/ProfilePicture'
 import { GenericPost } from '@/components/ui/Generic_post/GenericPost'
+import classes from './MyProfile.module.css'
+import { MiddleBar } from '@/components/ui/MiddleBar/MiddleBar'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -18,20 +20,42 @@ export default function DraftPage({
   children: React.ReactNode
 }) {
   return (
+
     <html lang="pt-br" style={{height: '100%'}}>
+
     <body   className={inter.className}
-            style = {{backgroundColor: 'var(--background-color', height: '100%'}}>
+            style = {{backgroundColor: 'var(--background-color)', height: '100%'}}>
         {children}
-        <UpperBar text="Meu perfil">
-        </UpperBar>
+
+        <UpperBar text="Meu perfil" />
+
         <section style={{position: 'relative', height: '50%'}}>
-            <ProfilePicture marginTop = "40%" left = "5%" scale = "20%">
-            </ProfilePicture>
+          <ProfilePicture top = "30%" left = "5%" scale = "20%"/>
+          <div className={classes.name}>Name</div>
+          <div className={classes.nick}>Nick</div>
         </section>
-        <div style={{position: 'relative', height: '8%', backgroundColor: 'white'}}></div>
-        <GenericPost></GenericPost>
-        <GenericPost></GenericPost>
+
+        <MiddleBar/>
+        
+        <section style = {{position: 'relative', height: '100%'}} >
+          <GenericPost text = 'Text1' n_likes={0} n_comm={0}/>
+          <GenericPost text = 'Text2' n_likes={0} n_comm={0}/>
+        </section>
+   
     </body>
+
     </html>
+
   )
 }
+
+// const Bla = () => {
+//   return(
+//     <section>
+//       <button onClick={()=> console.log("Clicou")}>
+
+//       </button>
+//     </section>
+//   )
+// }
+// export default Bla;
