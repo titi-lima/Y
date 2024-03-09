@@ -11,8 +11,8 @@ import { z } from "zod";
 
 const formSchema = z.object({
   name: z.string({ required_error: 'O nome é obrigatório.' }),
-  username: z.string({ required_error: 'O username é obrigatório.' }),
-  email: z.string({ required_error: 'O email é obrigatório.' }),
+  nickName: z.string({ required_error: 'O username é obrigatório.' }),
+  description: z.string({ required_error: 'A bio é obrigatória.' }),
   password: z.string({ required_error: 'A senha é obrigatória.' }),
 });
 
@@ -39,11 +39,15 @@ export default function Register() {
     }
   };
 
+  const handleLogin = () => {
+    router.push('/');
+  };
+
   return (
     <div className="h-screen w-full flex justify-center items-center">
-      <div className="border p-20 flex flex-col items-center">
+      <div className="border p-20 flex flex-col justify-center items-center">
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(handleSubmit)} className="w-64 h-64 flex flex-col justify-center items-center gap-5">
+          <form onSubmit={form.handleSubmit(handleSubmit)} className="w-96 h-96 flex flex-col justify-center items-center gap-5">
             <FormField
               control={form.control}
               name="name"
@@ -58,7 +62,7 @@ export default function Register() {
             />
             <FormField
               control={form.control}
-              name="username"
+              name="nickName"
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
@@ -70,11 +74,11 @@ export default function Register() {
             />
             <FormField
               control={form.control}
-              name="email"
+              name="description"
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
-                    <Input placeholder="Email" {...field} />
+                    <Input placeholder="Bio" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -96,6 +100,8 @@ export default function Register() {
             <button className="w-full text-sm p-2 font-bold text-white bg-blue-400 rounded-full" type="submit" disabled={loading}>Cadastre-se</button>
           </form>
         </Form>
+
+        <p className="text-sm mt-10">Já tem conta? <span className='text-blue-400 font-bold hover:cursor-pointer' onClick={handleLogin}>Faça login</span></p>
       </div>
     </div>
   );

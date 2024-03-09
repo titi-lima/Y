@@ -7,11 +7,11 @@ import { UserRepository } from '../repositories';
 class AuthController {
   async login(req: Request, res: Response, next: NextFunction) {
     try {
-      const { nickName, password } = req.body;
+      const { username, password } = req.body;
 
       const userRepository = new UserRepository();
 
-      const user = await userRepository.findByNickName(nickName);
+      const user = await userRepository.findByNickName(username);
 
       if (!user) {
         return next({

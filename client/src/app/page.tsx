@@ -37,7 +37,7 @@ import { authOptions } from "./api/auth/[...nextauth]";
 // }
 
 const formSchema = z.object({
-  email: z.string({ required_error: 'O email é obrigatório.' }),
+  username: z.string({ required_error: 'O username é obrigatório.' }),
   password: z.string({ required_error: 'A senha é obrigatória.' }),
 });
 
@@ -53,7 +53,7 @@ export default function Home() {
   async function handleSubmit(data: z.infer<typeof formSchema>) {
     try {
       setLoading(true)
-      const response = await api.post('/users', data)
+      const response = await api.post('/sessions', data)
 
       console.log(response.data)
 
@@ -85,11 +85,11 @@ export default function Home() {
             <form onSubmit={form.handleSubmit(handleSubmit)} className="w-64 h-64 flex flex-col justify-center items-center gap-4">
               <FormField
                 control={form.control}
-                name="email"
+                name="username"
                 render={({ field }) => (
                   <FormItem>
                     <FormControl>
-                      <Input placeholder="Email" {...field} />
+                      <Input placeholder="Username" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
