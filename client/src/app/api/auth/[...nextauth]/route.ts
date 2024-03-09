@@ -39,7 +39,6 @@ const nextAuthOptions: NextAuthOptions = {
 
     async session({ session, token }) {
       session.user = token.user as any;
-      console.log(session);
       return session;
     },
   },
