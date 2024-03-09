@@ -8,38 +8,36 @@ generator client {
 }
 
 model User {
-  id          String   @id @default(cuid())
-  nickName    String   @unique
+  id          String    @id @default(cuid())
+  nickName    String    @unique
   name        String
   password    String
   description String
-  dateBirth   DateTime
-  follows     User[]   @relation("follow")
-  followers   User[]   @relation("follow")
+  follows     User[]    @relation("follow")
+  followers   User[]    @relation("follow")
   posts       Post[]
-  likedPosts  Post[]   @relation("liked")
+  likedPosts  Post[]    @relation("liked")
   comments    Comment[]
 }
 
-model Post{
-  id          String   @id @default(cuid())
-  author      User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
-  authorId    String 
-  date        DateTime
-  text        String
-  midiaLink   String?
-  likes       Int      @default(0)
-  comments    Comment[]
-  usrsWhoLkd  User[]   @relation("liked")
-
+model Post {
+  id         String    @id @default(cuid())
+  author     User      @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  authorId   String
+  date       DateTime
+  text       String
+  midiaLink  String?
+  likes      Int       @default(0)
+  comments   Comment[]
+  usrsWhoLkd User[]    @relation("liked")
 }
 
-model Comment{
-  id          String   @id @default(cuid())
-  post        Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
-  postId      String
-  author      User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
-  authorId    String
-  date        DateTime
-  text        String
+model Comment {
+  id       String   @id @default(cuid())
+  post     Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  postId   String
+  author   User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  authorId String
+  date     DateTime
+  text     String
 }
