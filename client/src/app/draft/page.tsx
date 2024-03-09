@@ -6,6 +6,7 @@ import { ProfilePicture } from '@/components/ui/ProfilePicFrame/ProfilePicture'
 import { GenericPost } from '@/components/ui/Generic_post/GenericPost'
 import classes from './MyProfile.module.css'
 import { MiddleBar } from '@/components/ui/MiddleBar/MiddleBar'
+import { UserProfile } from '@/components/ui/UserProfile/userprofile'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -26,18 +27,14 @@ export default function DraftPage({
     <body   className={inter.className}
             style = {{backgroundColor: 'var(--background-color)', height: '100%'}}>
         {children}
-
+        
         <UpperBar text="Meu perfil" />
-
-        <section style={{position: 'relative', height: '50%'}}>
-          <ProfilePicture top = "30%" left = "5%" scale = "20%"/>
-          <div className={classes.name}>Name</div>
-          <div className={classes.nick}>Nick</div>
+        <section style={{position: 'relative', height :  '40%', top : '15%'}}>
+          <UserProfile userName='lucas' nickName='luke' numFollow={10} numFollowers={10} numPosts={1}/>
+          <MiddleBar/>
         </section>
 
-        <MiddleBar/>
-        
-        <section style = {{position: 'relative', height: '100%'}} >
+        <section style = {{position: 'relative', height: '100%', top: '15%'}} >
           <GenericPost text = 'Text1' n_likes={0} n_comm={0}/>
           <GenericPost text = 'Text2' n_likes={0} n_comm={0}/>
         </section>
