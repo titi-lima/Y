@@ -1,0 +1,26 @@
+.author_nick {
+    position: relative;
+    /* left: 1%; */
+    /* overflow: hidden; */
+
+    font-family: var(--standard-font);
+    font-style: normal;
+    font-weight: 800;
+    font-size: 1em;
+
+    color: var(--main-color);
+    /* border: solid black; */
+}
+
+.post_date {
+    position: relative;
+    left: 12%;
+    overflow: hidden;
+
+    font-family: var(--standard-font);
+    font-style: normal;
+    font-weight: 800;
+    font-size: 0.8em;
+
+    color: var(--background-color)
+}
