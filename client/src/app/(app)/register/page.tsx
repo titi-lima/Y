@@ -1,13 +1,14 @@
 'use client';
 
-import { Form, FormField, FormItem, FormControl, FormMessage } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { api } from "@/lib/api";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+
+import { Form, FormField, FormItem, FormControl, FormMessage } from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { api } from "@/lib/api";
 
 const formSchema = z.object({
   name: z.string({ required_error: 'O nome é obrigatório.' }),
@@ -26,12 +27,13 @@ export default function Register() {
     resolver: zodResolver(formSchema),
   });
 
+
   const handleSubmit = async (data: z.infer<typeof formSchema>) => {
     try {
       setLoading(true);
 
-      const response = await api.post('/users', data);
-      console.log(response.data);
+      await api.post('/users', data);
+
       router.push('/');
     } catch (error) {
       console.error(error);

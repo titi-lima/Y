@@ -6,10 +6,6 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { useRouter } from "next/navigation";
 import { z } from 'zod';
-// import { GetServerSidePropsContext } from "next";
-// import { getServerSession } from "next-auth";
-
-
 
 import { Logo } from "@/assets";
 import { Input } from "@/components/ui/input";
@@ -20,26 +16,13 @@ import {
   FormItem,
   FormMessage,
 } from "@/components/ui/form"
-import { api } from "@/lib/api";
-import { authOptions } from "./api/auth/[...nextauth]";
-
-// export async function getServerSideProps(ctx: GetServerSidePropsContext) {
-//   const session = await getServerSession(ctx.req, ctx.res, authOptions);
-
-//   if (session) {
-//     return {
-//       redirect: {
-//         destination: "/home",
-//         permanent: false,
-//       },
-//     };
-//   }
-// }
+import { signIn } from "next-auth/react";
 
 const formSchema = z.object({
   username: z.string({ required_error: 'O username é obrigatório.' }),
   password: z.string({ required_error: 'A senha é obrigatória.' }),
 });
+
 
 export default function Home() {
   const [loading, setLoading] = useState(false)
@@ -53,11 +36,13 @@ export default function Home() {
   async function handleSubmit(data: z.infer<typeof formSchema>) {
     try {
       setLoading(true)
-      const response = await api.post('/sessions', data)
+      await signIn('credentials', {
+        username: data.username,
+        password: data.password,
+        redirect: false,
+      })
 
-      console.log(response.data)
-
-      router.push('/home')
+      router.replace('/home')
     } catch (error) {
       setLoading(false)
       console.log(error)
