@@ -10,8 +10,11 @@ interface Props {
 
 export const MiddleBar: FC<Props> = memo(function MiddleBar(props) {
   return (
-    <div style={{height: '8%'}}>
-      <button className={classes.option}>Postagens</button>
+    <div style={{height: '20%'}}>
+      <div className= {classes.rowBox}>
+        <button className={classes.option}>Histórico de Postagens</button>
+        <button className={classes.option}>Sobre</button>
+      </div>
       <hr className={classes.centre}/>
     </div>
   );
