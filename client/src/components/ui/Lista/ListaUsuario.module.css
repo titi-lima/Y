@@ -1,0 +1,23 @@
+.name {
+    font-family: var(--standard-font);
+    font-style: normal;
+    font-weight: 800;
+    font-size: 2em;
+    color: var(--main-color);
+    text-shadow: -1px -1px 0 var(--secondary-color), 1px -1px 0 var(--secondary-color), -1px 1px 0 var(--secondary-color), 1px 1px 0 var(--secondary-color);
+}
+
+.nick {
+    font-family: var(--standard-font);
+    font-style: normal;
+    font-weight: 800;
+    font-size: 1em;
+    color: var(--main-color);
+    text-shadow: -1px -1px 0 var(--secondary-color), 1px -1px 0 var(--secondary-color), -1px 1px 0 var(--secondary-color), 1px 1px 0 var(--secondary-color);
+}
+
+.box {
+    display: flex; /* Define o contêiner como flexível */
+    align-items: center; /* Alinha os itens ao centro ao longo do eixo transversal */
+    flex-grow: 1; /* Permite que o item cresça e ocupe todo o espaço disponível no contêiner flexível */
+}

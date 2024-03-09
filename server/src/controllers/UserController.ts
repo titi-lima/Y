@@ -257,10 +257,10 @@ class UserController {
 
   async getFollows(req: Request, res: Response, next: NextFunction) {
     try {
-      const { id } = req.params;
+      const { userId } = req.params;
       const userRepository = new UserRepository();
 
-      const user = await userRepository.findById(id);
+      const user = await userRepository.findById(userId);
       if (user == null) {
         return next({
           status: 400,
@@ -268,7 +268,7 @@ class UserController {
         });
       }
 
-      const follows = await userRepository.findFollows(id);
+      const follows = await userRepository.findFollows(userId);
 
       if (follows === undefined) {
         return next({
@@ -291,10 +291,10 @@ class UserController {
 
   async getFollowers(req: Request, res: Response, next: NextFunction) {
     try {
-      const { id } = req.params;
+      const { userId } = req.params;
       const userRepository = new UserRepository();
 
-      const user = await userRepository.findById(id);
+      const user = await userRepository.findById(userId);
       if (user == null) {
         return next({
           status: 400,
@@ -302,7 +302,7 @@ class UserController {
         });
       }
 
-      const followers = await userRepository.findFollowers(id);
+      const followers = await userRepository.findFollowers(userId);
 
       if (followers === undefined) {
         return next({
@@ -333,10 +333,10 @@ class UserController {
 
   async getFilterFollows(req: Request, res: Response, next: NextFunction) {
     try {
-      const { id, str } = req.params;
+      const { userId, str } = req.params;
       const userRepository = new UserRepository();
 
-      const user = userRepository.findById(id);
+      const user = userRepository.findById(userId);
       if (!user) {
         return next({
           status: 400,
@@ -346,9 +346,9 @@ class UserController {
 
       let followsWithFilter;
       if (str === '@') {
-        followsWithFilter = await userRepository.findFollowsPorFilter(id, '');
+        followsWithFilter = await userRepository.findFollowsPorFilter(userId, '');
       } else {
-        followsWithFilter = await userRepository.findFollowsPorFilter(id, str);
+        followsWithFilter = await userRepository.findFollowsPorFilter(userId, str);
       }
 
       // if (!followsWithFilter) {
@@ -372,10 +372,10 @@ class UserController {
 
   async getFilterFollowers(req: Request, res: Response, next: NextFunction) {
     try {
-      const { id, str } = req.params;
+      const { userId, str } = req.params;
       const userRepository = new UserRepository();
 
-      const user = userRepository.findById(id);
+      const user = userRepository.findById(userId);
       if (!user) {
         return next({
           status: 400,
@@ -386,12 +386,12 @@ class UserController {
       let followersWithFilter;
       if (str === '@') {
         followersWithFilter = await userRepository.findFollowersPorFilter(
-          id,
+          userId,
           '',
         );
       } else {
         followersWithFilter = await userRepository.findFollowersPorFilter(
-          id,
+          userId,
           str,
         );
       }

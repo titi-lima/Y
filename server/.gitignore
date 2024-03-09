@@ -4,5 +4,5 @@ coverage/
 .eslintcache
 logs/
 dist/
-*.sqlite*
+*sqlite*
 tests/mock_tests/
