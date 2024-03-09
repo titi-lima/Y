@@ -93,7 +93,7 @@ export default function Home() {
                 )}
               />
 
-              <button className="w-full text-sm p-2 font-bold text-white bg-blue-400 rounded-full" type="submit" disabled={loading}>Login</button>
+              <button name="login" className="w-full text-sm p-2 font-bold text-white bg-blue-400 rounded-full" type="submit" disabled={loading}>Login</button>
             </form>
           </Form>
 
