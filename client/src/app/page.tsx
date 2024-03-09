@@ -6,6 +6,8 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { useRouter } from "next/navigation";
 import { z } from 'zod';
+// import { GetServerSidePropsContext } from "next";
+// import { getServerSession } from "next-auth";
 
 
 
@@ -19,7 +21,20 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { api } from "@/lib/api";
+import { authOptions } from "./api/auth/[...nextauth]";
 
+// export async function getServerSideProps(ctx: GetServerSidePropsContext) {
+//   const session = await getServerSession(ctx.req, ctx.res, authOptions);
+
+//   if (session) {
+//     return {
+//       redirect: {
+//         destination: "/home",
+//         permanent: false,
+//       },
+//     };
+//   }
+// }
 
 const formSchema = z.object({
   email: z.string({ required_error: 'O email é obrigatório.' }),
@@ -40,9 +55,9 @@ export default function Home() {
       setLoading(true)
       const response = await api.post('/users', data)
 
-      router.push('/home')
-
       console.log(response.data)
+
+      router.push('/home')
     } catch (error) {
       setLoading(false)
       console.log(error)
@@ -93,7 +108,7 @@ export default function Home() {
                 )}
               />
 
-              <button className="w-full text-sm p-2 font-bold text-white bg-blue-400 rounded-full" type="submit">Login</button>
+              <button className="w-full text-sm p-2 font-bold text-white bg-blue-400 rounded-full" type="submit" disabled={loading}>Login</button>
             </form>
           </Form>
 
