@@ -1,14 +1,18 @@
-'use client'
+"use client"
 
+import React, { useState, useEffect } from 'react';
+import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import { UpperBar } from '../../components/ui/UpperBar/UpperBar'
 import { ProfilePicture } from '@/components/ui/ProfilePicFrame/ProfilePicture'
 import { GenericPost } from '@/components/ui/GenericPost/GenericPost'
 import classes from './MyProfile.module.css'
 import { MiddleBar } from '@/components/ui/MiddleBar/MiddleBar'
+import { useRouter } from 'next/navigation';
+import { UserProfile } from '@/components/ui/UserProfile/userprofile'
 import { PostType, UserType } from '@/lib/custom_types'
 import axios from 'axios'
-import { useEffect, useState } from 'react'
+
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -17,6 +21,15 @@ export default function DraftPage({
 }: {
   children: React.ReactNode
 }) {
+  const router = useRouter();
+  const nickName = "Joao";
+
+  const testeButton = () => {
+    const url = `/FollowsList?nickName=${nickName}`;
+    router.push(url);
+  };
+
+
 
   const [user, setUser] = useState<UserType>();
   const [received_posts, setPosts] = useState<PostType[]>();
@@ -64,16 +77,20 @@ export default function DraftPage({
     <body   className={inter.className}
             style = {{backgroundColor: 'var(--background-color)', height: '100%'}}>
         {children}
-
+        
         <UpperBar text="Meu perfil" />
+        <section style={{position: 'relative', height :  '40%', top : '15%'}}>
+          <UserProfile userName='lucas' nickName='luke' numFollow={10} numFollowers={10} numPosts={1}/>
+          <MiddleBar setDate={setDate}/>
+        </section>
 
-        <section style={{position: 'relative', height: '50%'}}>
+        {/* <section style={{position: 'relative', height: '50%'}}>
           <ProfilePicture top = "30%" left = "5%" scale = "20%"/>
           <div className={classes.name}>{user.name}</div>
           <div className={classes.nick}>{user.nickName}</div>
-        </section>
+        </section> */}
 
-        <MiddleBar setDate={setDate}/>
+        {/* <MiddleBar setDate={setDate}/> */}
         
         <section style = {{position: 'relative', height: '100%'}} >
           {post_list}

@@ -1,9 +1,5 @@
 .name {
-    position: relative;
-    top: 30%;
-    left: 7%;
     overflow: hidden;
-
     font-family: var(--standard-font);
     font-style: normal;
     font-weight: 800;
@@ -14,11 +10,7 @@
 }
 
 .nick {
-    position: relative;
-    top: 30%;
-    left: 7%;
     overflow: hidden;
-
     font-family: var(--standard-font);
     font-style: normal;
     font-weight: 800;
@@ -28,14 +20,31 @@
     /* border: solid black; */
 }
 
-.buttonFollows {
+.mainBox{
+    display: flex;
+    flex: row;
+    justify-content: start;
+    align-items: center;
+    padding: 3%;
+    box-sizing: border-box;
+
+}
+
+.infoBox{
+    overflow: hidden;
+    display: flex;
+    flex-direction:row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    width: 40%;
+    height: 40%;
+    background-color: white;
+    border-radius: 20px;
+    border: 3px dotted var(--main-color) ;
+    margin-left: auto;
+    font-family: var(--standard-font);
     font-style: normal;
-    font-weight: 800;
-    font-size: 1.15rem;
-    background-color: var(--secondary-color); /* Cor de fundo do botão */
-    color: var(--main-color); /* Cor do texto do botão */
-    border-radius: 20px; /* Raio da borda para torná-la redonda */
-    padding: 10px 25px; /* Espaçamento interno do botão */
-    cursor: pointer; /* Alterar o cursor do mouse quando passar sobre o botão */
-    border: 3px solid var(--main-color);
+    color: var(--main-color);
+    margin-top: auto;
+
 }

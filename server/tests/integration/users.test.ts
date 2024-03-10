@@ -42,11 +42,11 @@ defineFeature(feature, (test) => {
     );
 
     when(
-      /^eu tento cadastrar um usuario com nickname "(.*)", nome "(.*)", descrição "(.*)", data de nascimento "(.*)" e senha "(.*)"$/,
-      async (nickName, name, description, dateBirth, password) => {
+      /^eu tento cadastrar um usuario com nickname "(.*)", nome "(.*)", descrição "(.*)" e senha "(.*)"$/,
+      async (nickName, name, description, password) => {
         response = await request(app)
           .post('/users')
-          .send({ nickName, password, name, description, dateBirth });
+          .send({ nickName, password, name, description });
       },
     );
 
@@ -81,11 +81,11 @@ defineFeature(feature, (test) => {
     );
 
     when(
-      /^eu tento cadastrar um usuario com nickname "(.*)", nome "(.*)", descrição "(.*)", data de nascimento "(.*)" e senha "(.*)"$/,
-      async (nickName, name, description, dateBirth, password) => {
+      /^eu tento cadastrar um usuario com nickname "(.*)", nome "(.*)", descrição "(.*)" e senha "(.*)"$/,
+      async (nickName, name, description, password) => {
         response = await request(app)
           .post('/users')
-          .send({ nickName, password, name, description, dateBirth });
+          .send({ nickName, password, name, description });
       },
     );
 

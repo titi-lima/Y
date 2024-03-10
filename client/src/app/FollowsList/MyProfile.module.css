@@ -1,0 +1,125 @@
+.name {
+    margin-top: 5rem;
+    overflow: hidden;
+
+    font-family: var(--standard-font);
+    font-style: normal;
+    font-weight: 800;
+    font-size: 2em;
+    color: var(--main-color);
+    text-shadow: -1px -1px 0 var(--secondary-color), 1px -1px 0 var(--secondary-color), -1px 1px 0 var(--secondary-color), 1px 1px 0 var(--secondary-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.nick {
+    position: relative;
+    overflow: hidden;
+
+    font-family: var(--standard-font);
+    font-style: normal;
+    font-weight: 800;
+    font-size: 1em;
+    color: var(--main-color);
+    text-shadow: -1px -1px 0 var(--secondary-color), 1px -1px 0 var(--secondary-color), -1px 1px 0 var(--secondary-color), 1px 1px 0 var(--secondary-color);
+}
+
+
+
+.barra_minhaLista {
+    background-color: var(--secondary-color);
+    width: 100%;
+    font-size: 2rem;
+    border-radius: 2rem;
+    font-weight: 350;
+    color: var(--main-color);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.search_box {
+    margin-bottom: 20px;
+    width: 95%;
+    margin: auto;
+    margin-bottom: 1rem;
+}
+
+.search_text {
+    width: 100%;
+    padding: 10px;
+    font-size: 1rem;
+    border: 3px solid var(--main-color);
+    border-radius: 2rem;
+    
+}
+
+.main_backgroud {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.userName {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    font-size: 2rem;
+    color: var(--main-color);
+}
+
+.selection {
+    display: flex;
+}
+
+.selection > div {
+    width: 50%;
+}
+
+.box {
+    border: 1px solid #bebcda; 
+    background-color: var(--secondary-color);
+    box-sizing: border-box; 
+    text-align: center;
+    font-size: 1.8rem;
+    border-top-right-radius: 1rem;
+    border-top-left-radius: 1rem;
+    width: 50%;
+    margin-left: 1rem;
+    margin-right: 1rem;
+    color: var(--main-color);
+    border-width: 3px;
+}
+
+.box_selected {
+    border: 1px solid #bebcda;
+    background-color: var(--secondary-color);
+    box-sizing: border-box; 
+    text-align: center;
+    font-size: 1.8rem;
+    border-top-right-radius: 1rem;
+    border-top-left-radius: 1rem;
+    width: 50%;
+    margin-left: 1rem;
+    margin-right: 1rem;
+    color: var(--main-color);
+    border-color:  var(--main-color);; 
+    border-width: 3px;
+}
+
+.whiteBox{
+    background-color: var(--secondary-color);
+    border: 3px solid var(--main-color);
+    height: 3rem;
+}
+
+.mainBackgroud {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+}
