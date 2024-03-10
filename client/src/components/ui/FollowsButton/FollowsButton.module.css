@@ -1,0 +1,31 @@
+.name {
+    font-family: var(--standard-font);
+    font-style: normal;
+    font-weight: 800;
+    font-size: 2em;
+    color: var(--main-color);
+    text-shadow: -1px -1px 0 var(--secondary-color), 1px -1px 0 var(--secondary-color), -1px 1px 0 var(--secondary-color), 1px 1px 0 var(--secondary-color);
+}
+
+.nick {
+    font-family: var(--standard-font);
+    font-style: normal;
+    font-weight: 800;
+    font-size: 1em;
+    color: var(--main-color);
+    text-shadow: -1px -1px 0 var(--secondary-color), 1px -1px 0 var(--secondary-color), -1px 1px 0 var(--secondary-color), 1px 1px 0 var(--secondary-color);
+}
+.box {
+    display: flex;
+    align-items: center;
+    flex-grow: 1;
+    padding: 10px 20px; /* Adiciona um preenchimento interno para aumentar o tamanho do botão */
+    border: 3px dotted var(--main-color) ;
+    border-radius: 20px; /* Define a borda arredondada */
+    background-color: var(--secondary-color); /* Define a cor de fundo */
+    color: var(--main-color); /* Define a cor do texto */
+    font-size: 16px; /* Define o tamanho da fonte */
+    cursor: pointer; /* Altera o cursor para indicar que o elemento é clicável */
+    transition: background-color 0.3s; /* Adiciona uma transição suave para a mudança de cor de fundo */
+    margin: 10px auto; /* Adiciona margem superior e inferior de 10px e alinha o botão ao centro horizontalmente */
+}
