@@ -4,17 +4,24 @@ import ListaUsuario from '@/components/ui/Lista/ListaUsuario';
 import classes from './MyProfile.module.css'
 import { UpperBar } from '../../components/ui/UpperBar/UpperBar'
 import { Inter } from 'next/font/google'
+import { useRouter, useSearchParams } from 'next/navigation';
 
 const inter = Inter({ subsets: ['latin'] })
 
 const FollowsList = () => {
+    const searchParams = useSearchParams()
+    const nick = searchParams.get('nickName')
+
+    const nickNameBack = "JoaoH"
+    let txtNavBar = ""
+    nickNameBack == nick ? txtNavBar = "Minha Lista" : txtNavBar = "Lista de " + nick  
+
     let arraySeguindoBruto = [{nome: "Luis", nickName: "LuisF"}, {nome: "Tiago", nickName: "Titi"}, {nome: "Luan Jardim", nickName: "LuanGarden"}]
     let arraySeguidoresBruto = [{nome: "Pedro coelho", nickName: "PedroNC2"}, {nome: "Luis", nickName: "LuisF"}, {nome: "Tiago", nickName: "Tiati"}]
 
     const [selectedOption, setSelectedOption] = useState('seguindo');
     let [arraySeguidores, setArraySeguidores] = useState(arraySeguidoresBruto)
     let [arraySeguindo, setArraySeguindo] = useState(arraySeguindoBruto)
-
 
     const handleOptionClick = (option: string) => {
         setSelectedOption(option);
@@ -33,8 +40,8 @@ const FollowsList = () => {
             <body   className={inter.className}
             style = {{backgroundColor: 'var(--background-color)', height: '100%'}}>
                 <div className={classes.mainBackgroud}>
-                    <UpperBar text="Minha Lista" />
-                    <div className={classes.name}>BrenoM</div>
+                    <UpperBar text={txtNavBar} />
+                    <div className={classes.name}>{nick}</div>
                     <div className={classes.search_box}>
                         <input type="text" className={classes.search_text} placeholder="Search" onChange={filterUser}></input>
                     </div>
