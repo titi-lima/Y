@@ -3,14 +3,18 @@
 import React, { useState } from 'react';
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
-import { UpperBar } from '../../components/ui/UpperBar/UpperBar'
-import '../globals.css'
+import { UpperBar } from '../../../components/ui/UpperBar/UpperBar'
+import '../../globals.css'
 import { ProfilePicture } from '@/components/ui/ProfilePicFrame/ProfilePicture'
 import { GenericPost } from '@/components/ui/Generic_post/GenericPost'
 import classes from './MyProfile.module.css'
 import { MiddleBar } from '@/components/ui/MiddleBar/MiddleBar'
-import { useRouter } from 'next/navigation';
 import { UserProfile } from '@/components/ui/UserProfile/userprofile'
+import { useSession } from 'next-auth/react';
+import { useRouter, useSearchParams } from 'next/navigation';
+import FollowsButton from '@/components/ui/FollowsButton/FollowsButton';
+
+// import { getServerSession } from 'next-auth';
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -24,14 +28,12 @@ export default function DraftPage({
 }: {
   children: React.ReactNode
 }) {
-  const router = useRouter();
-  const nickName = "Joao";
+    const session = useSession();
+    const router = useRouter();
 
-  const testeButton = () => {
-    const url = `/FollowsList?nickName=${nickName}`;
-    router.push(url);
-  };
-
+    const searchParams = useSearchParams()
+    // const nickName = searchParams.get('nickName')
+    const id = searchParams.get('id')
 
   return (
 
@@ -41,21 +43,21 @@ export default function DraftPage({
             style = {{backgroundColor: 'var(--background-color)', height: '100%'}}>
         {children}
         
-        <UpperBar text="Meu perfil" />
+        {/* <UpperBar text="Meu perfil" />
         <section style={{position: 'relative', height :  '40%', top : '15%'}}>
-          <UserProfile userName='lucas' nickName='luke' numFollow={10} numFollowers={10} numPosts={1}/>
+          <UserProfile userName={name} nickName={nickName} numFollow={10} numFollowers={10} numPosts={1}/>
           <MiddleBar/>
-        </section>
+        </section> */}
+        <FollowsButton id={id}></FollowsButton>
 
-        <section style = {{position: 'relative', height: '100%', top: '15%'}} >
+        {/* <section style = {{position: 'relative', height: '100%', top: '15%'}} >
           <GenericPost text = 'Text1' n_likes={0} n_comm={0}/>
           <GenericPost text = 'Text2' n_likes={0} n_comm={0}/>
-        </section>
+        </section> */}
    
     </body>
 
     </html>
-
   )
 }
 

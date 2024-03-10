@@ -21,7 +21,7 @@ export const UserProfile: FC<Props> = memo(function UserProfile(props) {
   const nickName = "Lucas";
 
   const listFollowsButton = () => {
-    const url = `/FollowsList?nickName=${nickName}`;
+    const url = `/followsList?nickName=${nickName}`;
     router.push(url);
   };
 
