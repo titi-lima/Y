@@ -1,6 +1,7 @@
 import { memo } from 'react';
 import type { FC } from 'react';
 import classes from './MenuButton.module.css';
+import { useRouter } from 'next/navigation';
 
 interface Props {
   className?: string;
@@ -10,8 +11,16 @@ interface Props {
 }
 
 export const MenuButton: FC<Props> = memo(function MenuButton(props) {
+  const router = useRouter();
+
+  const MyProfileButton= () => {
+    const url = `/draft`;
+    router.push(url);
+  };
+  
   return (
-    <button className={classes.root}>
+    <button className={classes.root}
+            onClick={MyProfileButton}>
       <hr className={classes.line1}/>
       <hr className={classes.line1}/>
       <hr className={classes.line1}/>

@@ -1,7 +1,6 @@
 "use client"
 
 import React, { useState, useEffect } from 'react';
-import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import { UpperBar } from '../../components/ui/UpperBar/UpperBar'
 import { ProfilePicture } from '@/components/ui/ProfilePicFrame/ProfilePicture'
@@ -14,22 +13,15 @@ import { PostType, UserType } from '@/lib/custom_types'
 import axios from 'axios'
 
 
-const inter = Inter({ subsets: ['latin'] })
+const inter = Inter({ subsets: ['latin'] });
 
-export default function DraftPage({
+const user_id = 'cltja5xsc000010ofm3k2pwix';
+
+export default function MyProfilePage({
   children,
 }: {
   children: React.ReactNode
 }) {
-  const router = useRouter();
-  const nickName = "Joao";
-
-  const testeButton = () => {
-    const url = `/FollowsList?nickName=${nickName}`;
-    router.push(url);
-  };
-
-
 
   const [user, setUser] = useState<UserType>();
   const [received_posts, setPosts] = useState<PostType[]>();
@@ -37,7 +29,7 @@ export default function DraftPage({
 
   useEffect(()=> {
 
-    axios.get("http://localhost:3001/users/cltja5xsc000010ofm3k2pwix")
+    axios.get("http://localhost:3001/users/" + user_id)
     .then(response => setUser(response.data.data))
     .catch(error => console.log(error))
 
@@ -45,7 +37,7 @@ export default function DraftPage({
 
   useEffect(()=> {
 
-    axios.get("http://localhost:3001/users/cltja5xsc000010ofm3k2pwix/posts/" + date)
+    axios.get("http://localhost:3001/users/"+ user_id + "/posts/" + date)
     .then(response => {
       if(response.status == 204){
         setPosts([]);
@@ -79,20 +71,12 @@ export default function DraftPage({
         {children}
         
         <UpperBar text="Meu perfil" />
-        <section style={{position: 'relative', height :  '40%', top : '15%'}}>
-          <UserProfile userName='lucas' nickName='luke' numFollow={10} numFollowers={10} numPosts={1}/>
+        <section style={{marginTop: '90px'}}>
+          <UserProfile userName={user.name} nickName={user.nickName} numFollow={10} numFollowers={10} numPosts={post_list.length}/>
           <MiddleBar setDate={setDate}/>
         </section>
-
-        {/* <section style={{position: 'relative', height: '50%'}}>
-          <ProfilePicture top = "30%" left = "5%" scale = "20%"/>
-          <div className={classes.name}>{user.name}</div>
-          <div className={classes.nick}>{user.nickName}</div>
-        </section> */}
-
-        {/* <MiddleBar setDate={setDate}/> */}
         
-        <section style = {{position: 'relative', height: '100%'}} >
+        <section >
           {post_list}
         </section>
    

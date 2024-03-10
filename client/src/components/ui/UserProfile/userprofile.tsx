@@ -18,7 +18,7 @@ interface Props {
 
 export const UserProfile: FC<Props> = memo(function UserProfile(props) {
   const router = useRouter();
-  const nickName = "Lucas";
+  const nickName = props.userName;
 
   const listFollowsButton = () => {
     const url = `/FollowsList?nickName=${nickName}`;
