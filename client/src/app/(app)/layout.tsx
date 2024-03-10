@@ -1,16 +1,17 @@
-import { Inter } from 'next/font/google'
-import './globals.css'
+import { getServerSession } from "next-auth";
+import { nextAuthOptions } from "../api/auth/[...nextauth]/route";
+import { redirect } from "next/navigation";
 
-const inter = Inter({ subsets: ['latin'] })
-
-export default function AppLayout({
-  children,
-}: {
+interface AuthLayoutProps {
   children: React.ReactNode
-}) {
-  return (
-    <html lang="pt-br">
-      <body className={inter.className}>{children}</body>
-    </html>
-  )
+}
+
+export default async function AuthLayout({ children }: AuthLayoutProps) {
+  const session = await getServerSession(nextAuthOptions);
+
+  if (session) {
+    redirect('/home');
+  }
+
+  return <>{children}</>
 }
