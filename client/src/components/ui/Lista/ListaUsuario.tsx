@@ -3,6 +3,7 @@ import classes from "./ListaUsuario.module.css"
 import { UserProfile } from '../UserProfile/userprofile';
 import { useRouter } from 'next/navigation';
 import { SrvRecord } from 'dns';
+import {useSession } from 'next-auth/react';
 
 interface ListaUsuarioProps {
     name: string
@@ -12,11 +13,19 @@ interface ListaUsuarioProps {
 }
 
 export default function ListaUsuario({ name, nickName, url, id }: ListaUsuarioProps) {
-
+    const session = useSession();
     const router = useRouter();
     const UserProfile = () => {
-        const url = `/user?id=${id}`;
-        router.push(url);
+        let url;
+        if (session.data?.user.id == id) {
+            url = "/home"
+            router.push(url)
+        }
+        else {
+            url = `/user?id=${id}`;
+            router.push(url);
+
+        }
     };
 
     return (

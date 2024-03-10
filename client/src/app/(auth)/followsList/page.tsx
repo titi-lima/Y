@@ -17,10 +17,9 @@ interface UserData {
     name: string;
     url: string;
 }
-  
 
 const FollowsList = () => {
-    const getFollows = async (id?: string) => {
+    const getFollows = async (id?: string | null | undefined) => {
         try {
             let url, response
             let seguindo = []
@@ -37,7 +36,7 @@ const FollowsList = () => {
         };
     }
 
-    const getFollowers = async (id?: string) => {
+    const getFollowers = async (id?: string | null | undefined) => {
         try {
             let url, response
             let seguidores = []
@@ -54,18 +53,38 @@ const FollowsList = () => {
         };
     }
 
+    const getNavBar = async(userId?: string | null) => {
+        try {
+          let url, response, urlFollows
+      
+          url = "/users/" + userId
+          response = await api.get(url)
+          let txt = "Lista de " + response.data.data.name
+          setTxtNavBar(txt)
+        } catch (error) {
+            console.error("Erro ao pegar dados do usuário: ", error)
+        }
+    }
+
     const session = useSession();
+    const searchParams = useSearchParams()
+    const nick = searchParams.get('nickName')
+    const userId = searchParams.get('id')
+
+    console.log(userId)
 
     const [arraySeguidoresBruto, setArraySeguidoresBruto] = useState<UserData[]>([]);
     const [arraySeguindoBruto, setArraySeguindoBruto] = useState<UserData[]>([]);
     const [arraySeguidores, setArraySeguidores] = useState<UserData[]>([]);
     const [arraySeguindo, setArraySeguindo] = useState<UserData[]>([]);
+    const [txtNavBar, setTxtNavBar] = useState<string>("");
 
     useEffect(() => {
         const fetchData = async () => {
             if (session.data?.user.id) {
-                await getFollows(session.data.user.id);
-                await getFollowers(session.data.user.id);
+                await getFollows(userId);
+                await getFollowers(userId);
+                await getNavBar(userId);
             }
         };
         fetchData();
@@ -81,11 +100,6 @@ const FollowsList = () => {
         setArraySeguidores(arraySeguidoresTemp);
         setArraySeguindo(arraySeguindoTemp);
     };
-
-    const searchParams = useSearchParams()
-    const nick = searchParams.get('nickName')
-
-    let txtNavBar = "Minha lista"
 
     const [selectedOption, setSelectedOption] = useState('seguindo');
 

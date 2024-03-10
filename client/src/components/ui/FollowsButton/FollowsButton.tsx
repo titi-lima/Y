@@ -18,7 +18,7 @@ interface UserData {
 }
 
 interface FollowsButtonProps {
-    id: string | null
+    id: string | null  | undefined
 }
 
 export default function FollowsButton( {id}: FollowsButtonProps ) {
@@ -62,8 +62,6 @@ export default function FollowsButton( {id}: FollowsButtonProps ) {
         
             url = "/users/" + userId
             response = await api.get(url)
-            console.log("Usuario: ")
-            console.log(response.data.data)
             setUser(response.data.data)
             
         } catch (error) {
@@ -71,7 +69,7 @@ export default function FollowsButton( {id}: FollowsButtonProps ) {
         }
     }
 
-    const setStringButton = async(sessionId: string, userId: string | null) => {
+    const setStringButton = async(sessionId: string, userId: string | null | undefined) => {
         try {
             let url, response
             let seguindo = []
@@ -85,10 +83,7 @@ export default function FollowsButton( {id}: FollowsButtonProps ) {
             }
             else {
                 setButtonString("Seguir usuário")
-            }
-
-            console.log(seguindo)
-            
+            }            
         } catch (error) {
             console.error("Erro ao pegar dados do usuário: ", error)
         }
