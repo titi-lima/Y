@@ -4,7 +4,6 @@ export type UserType = {
     nickName: string,
     name: string,
     description: string,
-    dateBirth: Date
 };
 
 export type PostType = {

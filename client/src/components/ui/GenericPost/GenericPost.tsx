@@ -52,7 +52,9 @@ export const GenericPost: FC<Props> = memo(function GenericPost(props) {
   set_comments_date.sort((comment1, comment2) => comment1.date.getTime() - comment2.date.getTime());
   // console.log(set_posts_date);
 
-  const comment_list = set_comments_date.map(comment => <CommentBox comment={comment}/>);
+  const comment_list = set_comments_date.map(comment =>
+    <CommentBox key={comment.id} comment={comment}/>
+  );
   
   return (
     <div className={classes.root}>

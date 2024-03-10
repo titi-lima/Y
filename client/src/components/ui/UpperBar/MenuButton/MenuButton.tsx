@@ -14,7 +14,7 @@ export const MenuButton: FC<Props> = memo(function MenuButton(props) {
   const router = useRouter();
 
   const MyProfileButton= () => {
-    const url = `/draft`;
+    const url = `/home`;
     router.push(url);
   };
   

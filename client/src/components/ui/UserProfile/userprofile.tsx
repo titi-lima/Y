@@ -3,7 +3,6 @@ import type { FC } from 'react';
 import classes from './userprofile.module.css'
 import { useRouter } from 'next/navigation';
 import { ProfilePicture } from '../ProfilePicFrame/ProfilePicture';
-// import CommentButton from './CommentButton/CommentButton';
 
 
 interface Props {
