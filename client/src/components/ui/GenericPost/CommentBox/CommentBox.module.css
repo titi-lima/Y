@@ -1,7 +1,5 @@
 .author_nick {
     position: relative;
-    /* left: 1%; */
-    /* overflow: hidden; */
 
     font-family: var(--standard-font);
     font-style: normal;
@@ -15,7 +13,6 @@
 .post_date {
     position: relative;
     left: 12%;
-    overflow: hidden;
 
     font-family: var(--standard-font);
     font-style: normal;

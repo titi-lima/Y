@@ -4,7 +4,7 @@ import { memo, useEffect, useState } from 'react';
 import type { FC } from 'react';
 import classes from './GenericPost.module.css';
 import { ProfilePicture } from '../ProfilePicFrame/ProfilePicture';
-import CommentButton from './CommentButton/CommentButton';
+import { CommentButton } from './CommentButton/CommentButton';
 import {CommentBox} from './CommentBox/CommentBox';
 import { CommentType, PostType, UserType } from '@/lib/custom_types';
 import axios from 'axios';
@@ -15,38 +15,32 @@ interface Props {
 
 
 export const GenericPost: FC<Props> = memo(function GenericPost(props) {
-  
-  const example_comments: CommentType[] = [
-    {
-      id: "cltjdajyo000210ofdvten0tr",
-      postId: "cltja6hii000110ofbogu1krn",
-      authorId: "cltja5xsc000010ofm3k2pwix",
-      date: new Date("2024-02-02T00:00:00.000Z"),
-      text: "Que legal!"
-    }
-  ];
 
   const [user, setUser] = useState<UserType>();
   const [received_comments, setComments] = useState<CommentType[]>();
+  const [reload_comm, setReload] = useState<boolean>(true);
 
-  useEffect(()=> {
-
+  useEffect(()=>{
     axios.get("http://localhost:3001/users/" + props.post.authorId)
     .then(response => setUser(response.data.data))
     .catch(error => console.log(error))
-
-    axios.get("http://localhost:3001/posts/" + props.post.id + "/comments")
-    .then(response => {
-      if(response.status == 204){
-        setComments([]);
-      }
-      else{
-        setComments(response.data.data);
-      }
-    })
-    .catch(error => console.log(error))
-
   }, []);
+
+  useEffect(()=> {
+    if(reload_comm){
+      axios.get("http://localhost:3001/posts/" + props.post.id + "/comments")
+      .then(response => {
+        if(response.status == 204){
+          setComments([]);
+        }
+        else{
+          setComments(response.data.data);
+        }
+      })
+      .catch(error => console.log(error));
+      setReload(false);
+    }
+  }, [reload_comm]);
 
   if(!user || !received_comments) return null
 
@@ -55,7 +49,7 @@ export const GenericPost: FC<Props> = memo(function GenericPost(props) {
     return comment;
   });
 
-  set_comments_date.sort((comment1, comment2) => comment2.date.getTime() - comment1.date.getTime());
+  set_comments_date.sort((comment1, comment2) => comment1.date.getTime() - comment2.date.getTime());
   // console.log(set_posts_date);
 
   const comment_list = set_comments_date.map(comment => <CommentBox comment={comment}/>);
@@ -87,7 +81,7 @@ export const GenericPost: FC<Props> = memo(function GenericPost(props) {
 
       <div>{comment_list}</div>
 
-      <CommentButton/>
+      <CommentButton authorId={props.post.authorId} postId={props.post.id} setReload={setReload}/>
     
     </div>
   );

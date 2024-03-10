@@ -1,8 +1,7 @@
 .button {
     position: relative;
     display: block;
-    /* margin: auto; */
-    padding: 1% 1% 1% 1%;
+    padding: 1%;
     margin-bottom: 2%;
     min-width: 100px;
 
@@ -29,7 +28,7 @@
     padding: 1% 2% 1% 2%;
     margin-bottom: 4%;
     width: 90%;
-    min-height: 50px;
+    min-height: 100px;
     max-height: 300px;
     overflow: auto;
 

@@ -26,14 +26,16 @@ export const CommentBox: FC<Props> = memo(function CommentBox(props){
         <section style={{display: 'flex', marginBottom: '5%'}}>
 
             <ProfilePicture scale='8%'/>
-            <section style={{position: 'relative', left:'1%'}}>
-                <span className={classes.author_nick}>{user.nickName}</span>
-                <span className={classes.post_date}>{props.comment.date.toLocaleString()}</span>
-                <div style={{marginTop:'10%'}}>{props.comment.text}</div>
+            <section style={{marginLeft:'1%'}}>
+                <div style={{position: 'relative', height: '50%'}}>
+                    <span className={classes.author_nick}>{user.nickName}</span>
+                    <span className={classes.post_date}>{props.comment.date.toLocaleString()}</span>
+                </div>
+                <div style={{position: 'relative'}}>
+                    {props.comment.text}
+                </div>
             </section>
-
+        
         </section>
     );
 });
-
-// export default CommentBox;
