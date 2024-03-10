@@ -1,0 +1,41 @@
+.name {
+    position: relative;
+    top: 30%;
+    left: 7%;
+    overflow: hidden;
+
+    font-family: var(--standard-font);
+    font-style: normal;
+    font-weight: 800;
+    font-size: 2em;
+    color: var(--main-color);
+    text-shadow: -1px -1px 0 var(--secondary-color), 1px -1px 0 var(--secondary-color), -1px 1px 0 var(--secondary-color), 1px 1px 0 var(--secondary-color);
+    /* border: solid black; */
+}
+
+.nick {
+    position: relative;
+    top: 30%;
+    left: 7%;
+    overflow: hidden;
+
+    font-family: var(--standard-font);
+    font-style: normal;
+    font-weight: 800;
+    font-size: 1em;
+    color: var(--main-color);
+    text-shadow: -1px -1px 0 var(--secondary-color), 1px -1px 0 var(--secondary-color), -1px 1px 0 var(--secondary-color), 1px 1px 0 var(--secondary-color);
+    /* border: solid black; */
+}
+
+.buttonFollows {
+    font-style: normal;
+    font-weight: 800;
+    font-size: 1.15rem;
+    background-color: var(--secondary-color); /* Cor de fundo do botão */
+    color: var(--main-color); /* Cor do texto do botão */
+    border-radius: 20px; /* Raio da borda para torná-la redonda */
+    padding: 10px 25px; /* Espaçamento interno do botão */
+    cursor: pointer; /* Alterar o cursor do mouse quando passar sobre o botão */
+    border: 3px solid var(--main-color);
+}

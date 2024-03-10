@@ -2,7 +2,8 @@
 
 import React, { useState, useEffect } from 'react';
 import { Inter } from 'next/font/google'
-import { UpperBar } from '../../components/ui/UpperBar/UpperBar'
+import { UpperBar } from '../../../components/ui/UpperBar/UpperBar'
+import '../../globals.css'
 import { ProfilePicture } from '@/components/ui/ProfilePicFrame/ProfilePicture'
 import { GenericPost } from '@/components/ui/GenericPost/GenericPost'
 import classes from './MyProfile.module.css'
@@ -11,6 +12,8 @@ import { useRouter } from 'next/navigation';
 import { UserProfile } from '@/components/ui/UserProfile/userprofile'
 import { PostType, UserType } from '@/lib/custom_types'
 import axios from 'axios'
+import { useSession } from 'next-auth/react';
+// import { getServerSession } from 'next-auth';
 
 
 const inter = Inter({ subsets: ['latin'] });

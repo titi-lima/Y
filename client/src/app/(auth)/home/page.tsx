@@ -20,6 +20,37 @@ export default function Home(){
   const user = useSession().data?.user;
   const [received_posts, setPosts] = useState<PostType[]>();
   const [date, setDate] = useState<string>('');
+  const [numFollows, setNumFollows] = useState<number>(0);
+  const [numFollowers, setNumFollowers] = useState<number>(0);
+  const session = useSession();
+
+  const getNumberFollows = async(userId?: string | null) => {
+    try {
+        let url, response, urlFollows
+    
+        url = "/users/" + userId
+
+        urlFollows = url + "/follows"
+        response = await api.get(urlFollows)
+        setNumFollows(response.data.data.length)
+
+        urlFollows = url + "/followers"
+        response = await api.get(urlFollows)
+        setNumFollowers(response.data.data.length)
+        
+    } catch (error) {
+        console.error("Erro ao pegar dados do usuário: ", error)
+    }
+  }
+
+  useEffect(() => {
+    const fetchData = async () => {
+        if (session.data?.user.id) {
+            await getNumberFollows(session.data?.user.id);
+        }
+    };
+    fetchData();
+}, [session]);
 
   useEffect(()=> {
     if(user){
@@ -60,7 +91,7 @@ export default function Home(){
         <UpperBar text="Meu perfil" />
         
         <section style={{marginTop: '90px'}}>
-          <UserProfile userName={user.name} nickName={user.nickName} numFollow={10} numFollowers={10} numPosts={post_list.length}/>
+          <UserProfile userName={user.name} nickName={user.nickName} numFollow={numFollows} numFollowers={numFollowers} numPosts={post_list.length} userId={session.data?.user.id}/>
         </section>
         
         <section >

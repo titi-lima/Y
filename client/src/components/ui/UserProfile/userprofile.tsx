@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { ProfilePicture } from '../ProfilePicFrame/ProfilePicture';
 
 
+
 interface Props {
   image?: string;
   userName: string;
@@ -12,15 +13,17 @@ interface Props {
   numFollow: number;
   numFollowers: number;
   numPosts: number;
+  userId: string | null | undefined;
 }
 
 
 export const UserProfile: FC<Props> = memo(function UserProfile(props) {
   const router = useRouter();
-  const nickName = props.userName;
+  const id = props.userId;
+  const nickName = props.nickName
 
   const listFollowsButton = () => {
-    const url = `/FollowsList?nickName=${nickName}`;
+    const url = `/followsList?id=${id}&nickName=${nickName}`;
     router.push(url);
   };
 
