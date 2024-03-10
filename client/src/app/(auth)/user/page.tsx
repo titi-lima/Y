@@ -17,7 +17,6 @@ import { PostType, UserType } from '@/lib/custom_types'
 import axios from 'axios'
 import { api } from '@/lib/api'
 
-
 const inter = Inter({ subsets: ['latin'] })
 const user_id = 'cltja5xsc000010ofm3k2pwix';
 
@@ -39,6 +38,7 @@ export default function DraftPage({
   const [numFollows, setNumFollows] = useState<number>(0);
   const [numFollowers, setNumFollowers] = useState<number>(0);
   const [txtNavBar, setTxtNavBar] = useState<string>("");
+  const [seguindo, setSeguindo] = useState<boolean>(false)
   const searchParams = useSearchParams()
   const id = searchParams.get('id')
   const session = useSession();
@@ -49,7 +49,6 @@ export default function DraftPage({
   
       url = "/users/" + userId
       response = await api.get(url)
-      console.log(response)
       setUser(response.data.data)
       let txt = "Perfil de " + response.data.data.name
       setTxtNavBar(txt)
@@ -61,6 +60,12 @@ export default function DraftPage({
       urlFollows = url + "/followers"
       response = await api.get(urlFollows)
       setNumFollowers(response.data.data.length)
+      if (response.data.data.some((usuario: { id: string | null; }) => usuario.id == session.data?.user.id)) {
+        setSeguindo(true)
+      }
+      else {
+        setSeguindo(false)
+      }  
         
     } catch (error) {
         console.error("Erro ao pegar dados do usuário: ", error)
@@ -107,8 +112,11 @@ export default function DraftPage({
   });
 
   set_posts_date.sort((post1, post2) => post2.date.getTime() - post1.date.getTime());
-
+  console.log(seguindo)
+  // let post_list = []
   const post_list = set_posts_date.map(post => <GenericPost post={post}/>);
+  // if (seguindo) {
+  // }
 
   return (
 
@@ -126,7 +134,7 @@ export default function DraftPage({
         </section>
 
         <section >
-          {post_list}
+          { seguindo == true ? post_list : null }
         </section>
    
     </body>
