@@ -478,8 +478,20 @@ class UserController {
         });
       }
 
+      // console.log(date.getTime());
+
+      // for(let post of posts){
+      //   console.log(post.date.getTime());
+      //   console.log(
+      //     (post.date.getTime() >= date.getTime()) &&
+      //     (post.date.getTime() <= (date.getTime() + 24*60*60*1000))
+      //   )
+      // }
+
       const desired_posts = posts.filter(
-        (post) => post.date.getTime() === date.getTime(),
+        (post) => 
+          (post.date.getTime() >= date.getTime()) &&
+          (post.date.getTime() <= (date.getTime() + 24*60*60*1000))
       );
 
       if (!desired_posts.length) {

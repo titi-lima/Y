@@ -3,7 +3,6 @@ import type { FC } from 'react';
 import classes from './userprofile.module.css'
 import { useRouter } from 'next/navigation';
 import { ProfilePicture } from '../ProfilePicFrame/ProfilePicture';
-// import CommentButton from './CommentButton/CommentButton';
 
 
 interface Props {
@@ -18,7 +17,7 @@ interface Props {
 
 export const UserProfile: FC<Props> = memo(function UserProfile(props) {
   const router = useRouter();
-  const nickName = "Lucas";
+  const nickName = props.userName;
 
   const listFollowsButton = () => {
     const url = `/FollowsList?nickName=${nickName}`;

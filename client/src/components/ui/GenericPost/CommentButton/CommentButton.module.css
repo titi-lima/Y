@@ -1,0 +1,37 @@
+.button {
+    position: relative;
+    display: block;
+    padding: 1%;
+    margin-bottom: 2%;
+    min-width: 100px;
+
+    font-family: var(--standard-font);
+    font-style: normal;
+    font-size: 1em;
+    color: var(--secondary-color);
+
+    border-radius: 50px;
+    background-color: var(--main-color);
+    opacity: 0.6;
+    transition: 0.3s;
+
+}
+
+.button:hover {
+    opacity: 1;
+}
+
+.text_area {
+    position: relative;
+    display: block;
+    margin: auto;
+    padding: 1% 2% 1% 2%;
+    margin-bottom: 4%;
+    width: 90%;
+    min-height: 100px;
+    max-height: 300px;
+    overflow: auto;
+
+    border: 3px solid var(--main-color);
+    border-radius: 20px;
+}

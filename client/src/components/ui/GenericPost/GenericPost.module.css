@@ -4,6 +4,7 @@
     margin-bottom: 10%;
     left: 5%;
     width: 90%;
+    padding: 5%;
 
     background: var(--secondary-color);
     border: 4px solid var(--main-color);
@@ -11,10 +12,7 @@
 }
 
 .author_nick {
-    position: absolute;
-    padding-left: 16%;
-    top: 10%;
-    overflow: hidden;
+    position: relative;
 
     font-family: var(--standard-font);
     font-style: normal;
@@ -25,10 +23,7 @@
 }
 
 .post_date {
-    position: absolute;
-    left: 16%;
-    top: 50%;
-    overflow: hidden;
+    position: relative;
 
     font-family: var(--standard-font);
     font-style: normal;
@@ -40,9 +35,6 @@
 
 .post_text {
     position: relative;
-    margin-top: 10%;
-    margin-left: 5%;
-    margin-right: 5%;
 
     font-family: var(--standard-font);
     font-style: normal;
@@ -53,28 +45,9 @@
     position: relative;
     margin-top: 5%;
     margin-bottom: 5%;
-    left: 5%;
 
     font-family: var(--standard-font);
     font-style: normal;
     font-size: 1em;
     color: var(--main-color);
-}
-
-.add_comm {
-    position: relative;
-    display: block;
-    margin: auto;
-    padding: 1% 1% 1% 1%;
-    margin-bottom: 2%;
-
-    font-family: var(--standard-font);
-    font-style: normal;
-    font-size: 1em;
-    color: var(--secondary-color);
-
-    border-radius: 50px;
-    background-color: var(--main-color);
-    transition: background-color 0.3s ease;
-
 }
