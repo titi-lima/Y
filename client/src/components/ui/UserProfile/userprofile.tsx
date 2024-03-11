@@ -34,7 +34,7 @@ export const UserProfile: FC<Props> = memo(function UserProfile(props) {
             <div className={classes.name}>{props.userName}</div>
             <div className={classes.nick}>{props.nickName}</div>
         </div>
-        <button className = {classes.infoBox} onClick={listFollowsButton}>
+        <button className = {classes.infoBox} onClick={listFollowsButton} id="list-follows-button">
             <div><a href='' style={{textDecoration: 'underline'}}>{props.numFollow}</a> Seguidos</div>
             <div><a href='' style={{textDecoration: 'underline'}}>{props.numFollowers}</a> Seguidores</div>
             <div><a href='' style={{textDecoration: 'underline'}}>{props.numPosts}</a> Publicações</div>

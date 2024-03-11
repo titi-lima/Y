@@ -36,6 +36,7 @@ export const PostModal = ({
         <Dialog.DialogDescription>
           <div className="flex flex-1 gap-1 flex-col">
             <Textarea.Textarea
+              id="description"
               placeholder="Escreva algo..."
               value={body.text}
               onChange={(e) => setBody({ ...body, text: e.target.value })}
@@ -55,6 +56,7 @@ export const PostModal = ({
               }}
             />
             <Button.Button
+              id="file"
               className="w-full"
               onClick={() => {
                 fileRef.current?.click();
@@ -73,6 +75,7 @@ export const PostModal = ({
             Cancelar
           </Button.Button>
           <Button.Button
+            id="submit"
             onClick={async () => {
               try {
                 await api.post("/posts", {
