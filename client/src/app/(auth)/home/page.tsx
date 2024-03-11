@@ -76,7 +76,7 @@ export default function MyProfile(){
   set_posts_date.sort(
     (post1, post2) => post2.date.getTime() - post1.date.getTime()
   );
-  console.log(set_posts_date);
+  // console.log(set_posts_date);
 
   const post_list = set_posts_date.map((post) => (
     <GenericPost key={post.id} post={post} />
@@ -85,7 +85,7 @@ export default function MyProfile(){
   return (
     <div
       className={inter.className}
-      style={{ backgroundColor: "var(--background-color)", height: "100%" }}
+      style={{ backgroundColor: "var(--background-color)", height: "100%", border:'solid black'}}
     >
       <UpperBar text="Meu perfil" />
 
@@ -105,9 +105,10 @@ export default function MyProfile(){
         {post_list}
       </section>
       <div className="fixed bottom-8 right-8 bg-blue-500 border-2 border-blue-600 rounded-full p-2 cursor-pointer hover:bg-blue-600 transition-all duration-300 ease-in-out">
-        <Plus onClick={() => setOpen(true)} size={100} color="#fff" />
+        <Plus onClick={() => setOpen(true)} size={100} color="#fff"/>
       </div>
-      <PostModal open={open} setOpen={setOpen} />
+      <PostModal open={open} setOpen={setOpen}/>
+    
     </div>
   );
 }

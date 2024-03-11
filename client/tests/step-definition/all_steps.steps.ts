@@ -5,8 +5,6 @@ import { ICustomWorld } from "../support/custom-world";
 const base_url = "http://localhost:3000/";
 
 
-
-
 //GIVEN
 
 Given(
@@ -22,7 +20,7 @@ Given(
         await this.page!.fill('input[name="username"]', username);
         await this.page!.fill('input[name="password"]', password);
         await this.page!.click('button[type="submit"]');
-        console.log(this.page!.url());
+        // console.log(this.page!.url());
 });
 
 Given(
@@ -33,12 +31,15 @@ Given(
     }
   );
 
-  Given(
+Given(
     "há uma postagem com data {string}",
     async function (this: ICustomWorld, date: string) {
         await expect(this.page!.locator('body')).toContainText(date);
     }
-  );
+);
+
+  
+
 
 //WHEN
 
@@ -77,7 +78,7 @@ When(
     }
   );
 
-  When(
+When(
     "eu busco postagens no dia {string}, mês {string} e ano {string}",
     async function (
         this: ICustomWorld,

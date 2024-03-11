@@ -27,7 +27,7 @@ interface UserData {
   url: string;
 }
 
-export default function DraftPage({ children }: { children: React.ReactNode }) {
+export default function UserPage() {
   const [user, setUser] = useState<UserType>();
   const [received_posts, setPosts] = useState<PostType[]>();
   const [date, setDate] = useState<string>("");
@@ -119,9 +119,8 @@ export default function DraftPage({ children }: { children: React.ReactNode }) {
   return (
     <div
       className={inter.className}
-      style={{ backgroundColor: "var(--background-color)", height: "100%" }}
+      style={{backgroundColor: "var(--background-color)", border:'solid black'}}
     >
-      {children}
 
       <UpperBar text={txtNavBar} />
       <section style={{ paddingTop: "90px" }}>
@@ -141,14 +140,3 @@ export default function DraftPage({ children }: { children: React.ReactNode }) {
     </div>
   );
 }
-
-// const Bla = () => {
-//   return(
-//     <section>
-//       <button onClick={()=> console.log("Clicou")}>
-
-//       </button>
-//     </section>
-//   )
-// }
-// export default Bla;
