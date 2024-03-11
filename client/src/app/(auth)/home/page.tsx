@@ -104,9 +104,12 @@ export default function Home() {
         <MiddleBar setDate={setDate} />
         {post_list}
       </section>
-      <div className="fixed bottom-8 right-8 bg-blue-500 border-2 border-blue-600 rounded-full p-2 cursor-pointer hover:bg-blue-600 transition-all duration-300 ease-in-out">
+      <button
+        id="button"
+        className="fixed bottom-8 right-8 bg-blue-500 border-2 border-blue-600 rounded-full p-2 cursor-pointer hover:bg-blue-600 transition-all duration-300 ease-in-out"
+      >
         <Plus onClick={() => setOpen(true)} size={100} color="#fff" />
-      </div>
+      </button>
       <PostModal open={open} setOpen={setOpen} />
     </div>
   );
