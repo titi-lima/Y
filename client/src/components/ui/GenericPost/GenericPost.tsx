@@ -7,7 +7,8 @@ import { ProfilePicture } from '../ProfilePicFrame/ProfilePicture';
 import { CommentButton } from './CommentButton/CommentButton';
 import {CommentBox} from './CommentBox/CommentBox';
 import { CommentType, PostType, UserType } from '@/lib/custom_types';
-import axios from 'axios';
+import { api } from '@/lib/api';
+import { useSession } from 'next-auth/react';
 
 interface Props {
   post: PostType
@@ -16,19 +17,20 @@ interface Props {
 
 export const GenericPost: FC<Props> = memo(function GenericPost(props) {
 
+  const user_id = useSession().data?.user.id!;
   const [user, setUser] = useState<UserType>();
   const [received_comments, setComments] = useState<CommentType[]>();
   const [reload_comm, setReload] = useState<boolean>(true);
 
   useEffect(()=>{
-    axios.get("http://localhost:3001/users/" + props.post.authorId)
+    api.get("users/" + props.post.authorId)
     .then(response => setUser(response.data.data))
     .catch(error => console.log(error))
   }, []);
 
   useEffect(()=> {
     if(reload_comm){
-      axios.get("http://localhost:3001/posts/" + props.post.id + "/comments")
+      api.get("posts/" + props.post.id + "/comments")
       .then(response => {
         if(response.status == 204){
           setComments([]);
@@ -83,7 +85,7 @@ export const GenericPost: FC<Props> = memo(function GenericPost(props) {
 
       <div>{comment_list}</div>
 
-      <CommentButton authorId={props.post.authorId} postId={props.post.id} setReload={setReload}/>
+      <CommentButton authorId={user_id} postId={props.post.id} setReload={setReload}/>
     
     </div>
   );

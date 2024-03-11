@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import type { Dispatch, FC, SetStateAction } from 'react';
 import classes from './CommentButton.module.css'
-import axios from 'axios';
+import { api } from '@/lib/api';
 
 interface Props {
   authorId: string;
@@ -20,7 +20,7 @@ export const CommentButton: FC<Props> = (props) => {
     
     event.preventDefault();
 
-    axios.post("http://localhost:3001/comments/", {
+    api.post("comments/", {
       postId: props.postId,
       authorId: props.authorId,
       date: new Date(),

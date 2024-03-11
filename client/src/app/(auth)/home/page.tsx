@@ -7,7 +7,6 @@ import { GenericPost } from "@/components/ui/GenericPost/GenericPost";
 import { MiddleBar } from "@/components/ui/MiddleBar/MiddleBar";
 import { UserProfile } from "@/components/ui/UserProfile/userprofile";
 import { PostType, UserType } from "@/lib/custom_types";
-import axios from "axios";
 import { useSession } from "next-auth/react";
 import { api } from "@/lib/api";
 import { PostModal } from "@/components/ui/PostModal";
@@ -15,7 +14,8 @@ import { Plus, PlusCircle, PlusCircleIcon } from "lucide-react";
 
 const inter = Inter({ subsets: ["latin"] });
 
-export default function Home() {
+export default function MyProfile(){
+
   const user = useSession().data?.user;
   const [received_posts, setPosts] = useState<PostType[]>();
   const [date, setDate] = useState<string>("");
@@ -76,7 +76,7 @@ export default function Home() {
   set_posts_date.sort(
     (post1, post2) => post2.date.getTime() - post1.date.getTime()
   );
-  console.log(set_posts_date);
+  // console.log(set_posts_date);
 
   const post_list = set_posts_date.map((post) => (
     <GenericPost key={post.id} post={post} />
@@ -85,7 +85,7 @@ export default function Home() {
   return (
     <div
       className={inter.className}
-      style={{ backgroundColor: "var(--background-color)", height: "100%" }}
+      style={{ backgroundColor: "var(--background-color)", height: "100%", border:'solid black'}}
     >
       <UpperBar text="Meu perfil" />
 

@@ -115,7 +115,7 @@ const FollowsList = () => {
   return (
     <div
       className={inter.className}
-      style={{ backgroundColor: "var(--background-color)", height: "100%" }}
+      style={{ backgroundColor: "var(--background-color)", height: "100%"}}
     >
       <div className={classes.mainBackgroud}>
         <UpperBar text={txtNavBar} />
