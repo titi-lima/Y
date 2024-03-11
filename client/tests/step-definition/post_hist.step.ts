@@ -4,19 +4,6 @@ import { ICustomWorld } from "../support/custom-world";
 
 const base_url = "http://localhost:3000/";
 
-//GIVEN
-
-// Given(
-//   "eu estou logado com username {string} e senha {string}",
-//   async function (this: ICustomWorld, username: string, password: string) {
-//     await this.page!.goto(base_url);
-//     await this.page!.fill('input[name="username"]', username);
-//     await this.page!.fill('input[name="password"]', password);
-//     await this.page!.click('button[type="submit"]');
-//     // console.log(this.page!.url());
-//   }
-// );
-
 Given(
   "há uma postagem com data {string}",
   async function (this: ICustomWorld, date: string) {
@@ -24,11 +11,6 @@ Given(
   }
 );
 
-// Given(
-//     "Given dado que {string1} segue o usuário {string2}",
-//     async function (this: ICustomWorld, string1: string, string2: string) {
-//     }
-// )
 
 //WHEN
 

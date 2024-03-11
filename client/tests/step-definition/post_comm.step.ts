@@ -13,7 +13,7 @@ Given(
 When(
     "eu adiciono o comentário {string} e envio",
     async function (this: ICustomWorld, comm: string) {
-        await this.page!.getByRole('button', { name: 'Adicionar comentário' }).nth(1).click();
+        await this.page!.getByRole('button', { name: 'Adicionar comentário' }).nth(-1).click();
         await this.page!.getByRole('textbox').click();
         await this.page!.getByRole('textbox').fill(comm);
         await this.page!.getByRole('button', { name: 'Enviar' }).click();
