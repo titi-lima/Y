@@ -4,7 +4,7 @@ Feature: File Upload
     So that I can share it with other users
 
     Scenario: Post com imagem
-        Given eu estou logado no sistema com o username "damattag" e a senha "\"guilherme\""
+        Given eu estou logado no sistema com o username "PedroNC" e a senha "40028922"
         And estou na página "/home"
         When eu clico no botão de adicionar post, com id "button"
         Then um modal deve ser aberto

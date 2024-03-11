@@ -11,16 +11,19 @@ Given(
 );
 
 When(
-  "eu preencho o formulário com o username {string}, nome {string}, descrição {string} e senha {string} e aperto no botão de cadastrar",
+  "eu preencho o formulário com um username aleatório de {int} dígitos, nome {string}, descrição {string} e senha {string} e aperto no botão de cadastrar",
   async function (
     this: ICustomWorld,
-    username: string,
+    usernameDigitCount: number,
     name: string,
     description: string,
     password: string
   ) {
     await this.page!.fill('input[name="name"]', name);
-    await this.page!.fill('input[name="nickName"]', username);
+    await this.page!.fill(
+      'input[name="nickName"]',
+      crypto.randomUUID().substring(0, Number(usernameDigitCount))
+    );
     await this.page!.fill('input[name="description"]', description);
     await this.page!.fill('input[name="password"]', password);
     await this.page!.click('button[type="submit"]');

@@ -5,7 +5,7 @@ Feature: Users Feature
 
   Scenario: cadastrar usuário
     Given eu estou na página "register"
-    When eu preencho o formulário com o username "johndoe", nome "John Doe", descrição "I'm a developer" e senha "123456" e aperto no botão de cadastrar
+    When eu preencho o formulário com um username aleatório de 10 dígitos, nome "John Doe", descrição "I'm a developer" e senha "123456" e aperto no botão de cadastrar
     Then sou redirecionado para a tela de login
 
 # Scenario: cadastrar usuário com nickname já existente
