@@ -1,50 +1,52 @@
 .name {
-    overflow: hidden;
-    font-family: var(--standard-font);
-    font-style: normal;
-    font-weight: 800;
-    font-size: 2em;
-    color: var(--main-color);
-    text-shadow: -1px -1px 0 var(--secondary-color), 1px -1px 0 var(--secondary-color), -1px 1px 0 var(--secondary-color), 1px 1px 0 var(--secondary-color);
-    /* border: solid black; */
+  overflow: hidden;
+  font-family: var(--standard-font);
+  font-style: normal;
+  font-weight: 800;
+  font-size: 2em;
+  color: var(--main-color);
+  text-shadow: -1px -1px 0 var(--secondary-color),
+    1px -1px 0 var(--secondary-color), -1px 1px 0 var(--secondary-color),
+    1px 1px 0 var(--secondary-color);
+  /* border: solid black; */
 }
 
 .nick {
-    overflow: hidden;
-    font-family: var(--standard-font);
-    font-style: normal;
-    font-weight: 800;
-    font-size: 1em;
-    color: var(--main-color);
-    text-shadow: -1px -1px 0 var(--secondary-color), 1px -1px 0 var(--secondary-color), -1px 1px 0 var(--secondary-color), 1px 1px 0 var(--secondary-color);
-    /* border: solid black; */
+  overflow: hidden;
+  font-family: var(--standard-font);
+  font-style: normal;
+  font-weight: 800;
+  font-size: 1em;
+  color: var(--main-color);
+  text-shadow: -1px -1px 0 var(--secondary-color),
+    1px -1px 0 var(--secondary-color), -1px 1px 0 var(--secondary-color),
+    1px 1px 0 var(--secondary-color);
+  /* border: solid black; */
 }
 
-.mainBox{
-    display: flex;
-    flex: row;
-    justify-content: start;
-    align-items: center;
-    padding: 3%;
-    box-sizing: border-box;
-
+.mainBox {
+  display: flex;
+  flex: row;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 3%;
+  box-sizing: border-box;
 }
 
-.infoBox{
-    overflow: hidden;
-    display: flex;
-    flex-direction:row;
-    flex-wrap: wrap;
-    justify-content: space-around;
-    width: 40%;
-    height: 40%;
-    background-color: white;
-    border-radius: 20px;
-    border: 3px dotted var(--main-color) ;
-    margin-left: auto;
-    font-family: var(--standard-font);
-    font-style: normal;
-    color: var(--main-color);
-    margin-top: auto;
-
+.infoBox {
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  width: 40%;
+  height: 40%;
+  background-color: white;
+  border-radius: 20px;
+  border: 3px dotted var(--main-color);
+  margin-left: auto;
+  font-family: var(--standard-font);
+  font-style: normal;
+  color: var(--main-color);
+  margin-top: auto;
 }
