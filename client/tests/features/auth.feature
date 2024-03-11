@@ -10,5 +10,5 @@ Feature: User Authentication
 
   Scenario: Login com sucesso
     Given eu estou na página de login
-    When eu preencho o formulário com o username "damattag" e a senha "guilherme", válidos, e aperto no botão login
+    When eu preencho o formulário com o username "PedroNC" e a senha "40028922", válidos, e aperto no botão login
     Then eu devo ser redirecionado para a página "home"
