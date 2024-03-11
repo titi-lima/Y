@@ -20,8 +20,9 @@ export const User = z.object({
 export const Post = z.object({
   // author: z.string().trim().min(1),
   authorId: z.string().min(1),
-  date: z.coerce.date(),
+  date: z.coerce.date().optional(),
   text: z.string().min(1),
+  midiaLink: z.string().optional(),
 });
 
 export const Comment = z.object({
