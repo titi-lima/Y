@@ -2,7 +2,7 @@ import { CommentType, UserType } from "@/lib/custom_types";
 import { ProfilePicture } from "../../ProfilePicFrame/ProfilePicture";
 import classes from './CommentBox.module.css'
 import { FC, memo, useEffect, useState } from "react";
-import axios from "axios";
+import { api } from "@/lib/api";
 
 interface Props {
     comment: CommentType;
@@ -14,7 +14,7 @@ export const CommentBox: FC<Props> = memo(function CommentBox(props){
   
     useEffect(()=> {
   
-      axios.get("http://localhost:3001/users/" + props.comment.authorId)
+      api.get("users/" + props.comment.authorId)
       .then(response => setUser(response.data.data))
       .catch(error => console.log(error))
   

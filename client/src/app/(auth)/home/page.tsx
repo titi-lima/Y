@@ -7,7 +7,6 @@ import { GenericPost } from '@/components/ui/GenericPost/GenericPost'
 import { MiddleBar } from '@/components/ui/MiddleBar/MiddleBar'
 import { UserProfile } from '@/components/ui/UserProfile/userprofile'
 import { PostType, UserType } from '@/lib/custom_types'
-import axios from 'axios'
 import {useSession } from 'next-auth/react';
 import { api } from '@/lib/api';
 
@@ -15,7 +14,7 @@ import { api } from '@/lib/api';
 const inter = Inter({ subsets: ['latin'] });
 
 
-export default function Home(){
+export default function MyProfile(){
 
   const user = useSession().data?.user;
   const [received_posts, setPosts] = useState<PostType[]>();
@@ -52,10 +51,11 @@ export default function Home(){
   
   return (
 
-    <html lang="pt-br" style={{height: '100%'}}>
+    // <html lang="pt-br" style={{height: '100%'}}>
 
     <body   className={inter.className}
-            style = {{backgroundColor: 'var(--background-color)', height: '100%'}}>
+           style = {{backgroundColor: 'var(--background-color)', height: '100%'}}>
+          
         
         <UpperBar text="Meu perfil" />
         
@@ -68,9 +68,9 @@ export default function Home(){
           {post_list}
         </section>
    
-    </body>
+   </body>
 
-    </html>
+    //</html>
 
   )
 }
